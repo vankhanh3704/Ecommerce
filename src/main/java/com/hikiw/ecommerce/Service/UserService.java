@@ -1,6 +1,7 @@
 package com.hikiw.ecommerce.Service;
 
 import com.hikiw.ecommerce.Entity.UserEntity;
+import com.hikiw.ecommerce.Mapper.UserMapper;
 import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
 import com.hikiw.ecommerce.Model.Response.UserResponse;
 import com.hikiw.ecommerce.Repository.UserRepository;
@@ -17,14 +18,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService {
     UserRepository userRepository;
+    UserMapper userMapper;
 
     public UserResponse createUser(UserCreationRequest request){
-        UserEntity userEntity = UserEntity.builder()
-                .username(request.getUsername())
-                .password(request.getPassword())
-                .build();
-        userEntity = userRepository.save(userEntity);
-        log.info("User created with id: {}", userEntity.getId());
-        return new UserResponse(userEntity.getId(), userEntity.getUsername(), userEntity.getPassword());
+        UserEntity userEntity = userMapper.toEntity(request);
+        UserResponse userResponse = userMapper.toUserResponse(userRepository.save(userEntity));
+        return userResponse;
     }
 }
