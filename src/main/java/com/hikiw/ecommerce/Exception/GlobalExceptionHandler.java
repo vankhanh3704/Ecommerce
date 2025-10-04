@@ -25,4 +25,15 @@ public class GlobalExceptionHandler {
                 .body(apiResponse);
     }
 
+    // define cho AppException
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<ApiResponse> handingAppException(AppException e){
+        ApiResponse apiResponse = new ApiResponse();
+        ErrorCode errorCode = e.getErrorCode();
+        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setMessage(errorCode.getMessage());
+        return ResponseEntity
+                .status(errorCode.getHttpStatusCode())
+                .body(apiResponse);
+    }
 }

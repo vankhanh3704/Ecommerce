@@ -1,6 +1,8 @@
 package com.hikiw.ecommerce.Service;
 
 import com.hikiw.ecommerce.Entity.UserEntity;
+import com.hikiw.ecommerce.Enum.ErrorCode;
+import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.UserMapper;
 import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
 import com.hikiw.ecommerce.Model.Request.UserUpdateRequest;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,14 +28,24 @@ public class UserService {
 
 
     public UserResponse createUser(UserCreationRequest request){
+        if(userRepository.existsByUsername(request.getUsername())){
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
         UserEntity userEntity = userMapper.toEntity(request);
-        UserResponse userResponse = userMapper.toUserResponse(userRepository.save(userEntity));
-        return userResponse;
+        try {
+            userEntity = userRepository.save(userEntity);
+        } catch (DataIntegrityViolationException exception) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+        return userMapper.toUserResponse(userEntity);
     }
 
 
     public UserResponse getUserById(Long id){
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not exists"));
+        UserEntity userEntity = userRepository
+                .findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         return userMapper.toUserResponse(userEntity);
     }
 
