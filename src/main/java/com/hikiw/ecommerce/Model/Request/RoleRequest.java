@@ -1,5 +1,6 @@
 package com.hikiw.ecommerce.Model.Request;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class UserCreationRequest {
-    String username;
-    String password;
-
-
+public class RoleRequest {
+    String name;
+    String description;
 }

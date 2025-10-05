@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Entity
 @Builder
 @Data
@@ -22,4 +24,6 @@ public class UserEntity {
     String username;
     String password;
 
+    @ManyToMany
+    Set<RoleEntity> roles;
 }
