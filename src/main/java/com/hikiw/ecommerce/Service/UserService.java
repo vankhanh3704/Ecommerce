@@ -8,12 +8,12 @@ import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
 import com.hikiw.ecommerce.Model.Request.UserUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.UserResponse;
 import com.hikiw.ecommerce.Repository.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,13 +26,17 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     public UserResponse createUser(UserCreationRequest request){
         if(userRepository.existsByUsername(request.getUsername())){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
-
         UserEntity userEntity = userMapper.toEntity(request);
+        // encode password
+        userEntity.setPassword(passwordEncoder.encode(request.getPassword()));
         try {
             userEntity = userRepository.save(userEntity);
         } catch (DataIntegrityViolationException exception) {
