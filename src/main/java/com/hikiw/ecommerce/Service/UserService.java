@@ -1,5 +1,6 @@
 package com.hikiw.ecommerce.Service;
 
+import com.hikiw.ecommerce.Entity.RoleEntity;
 import com.hikiw.ecommerce.Entity.UserEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
@@ -7,7 +8,9 @@ import com.hikiw.ecommerce.Mapper.UserMapper;
 import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
 import com.hikiw.ecommerce.Model.Request.UserUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.UserResponse;
+import com.hikiw.ecommerce.Repository.RoleRepository;
 import com.hikiw.ecommerce.Repository.UserRepository;
+import com.hikiw.ecommerce.constant.PredefinedRole;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -25,6 +29,7 @@ import java.util.List;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
+    RoleRepository  roleRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -37,6 +42,10 @@ public class UserService {
         UserEntity userEntity = userMapper.toEntity(request);
         // encode password
         userEntity.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        HashSet<RoleEntity> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add); // map với role trong db nếu có, không có thì phải tạo
+        userEntity.setRoles(roles);
         try {
             userEntity = userRepository.save(userEntity);
         } catch (DataIntegrityViolationException exception) {

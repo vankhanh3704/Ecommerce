@@ -3,6 +3,7 @@ package com.hikiw.ecommerce.Controller;
 
 import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
 import com.hikiw.ecommerce.Model.Request.UserUpdateRequest;
+import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.UserResponse;
 import com.hikiw.ecommerce.Service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,24 +23,30 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public UserResponse createUser(@RequestBody UserCreationRequest request){
-        return userService.createUser(request);
+    public ApiResponse<UserResponse> createUser(@RequestBody UserCreationRequest request){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.createUser(request)).build();
     }
 
     @GetMapping("/{userId}")
-    public UserResponse getUserById(@PathVariable Long userId){
-        return userService.getUserById(userId);
+    public ApiResponse<UserResponse> getUserById(@PathVariable Long userId){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getUserById(userId)).build();
     }
     @GetMapping
-    public List<UserResponse> getUsers(){
-        return userService.getUsers();
+    public ApiResponse<List<UserResponse>> getUsers(){
+        return ApiResponse.<List<UserResponse>>builder()
+                .result(userService.getUsers())
+                .build();
     }
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
     }
     @PutMapping("/{userId}")
-    public UserResponse updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequest request){
-        return userService.updateUser(userId, request);
+    public ApiResponse<UserResponse> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequest request){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.updateUser(userId, request))
+                .build();
     }
 }
