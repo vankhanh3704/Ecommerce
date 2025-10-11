@@ -42,7 +42,7 @@ public class ApplicationInitConfig {
             if(userRepository.findByUsername(ADMIN_USER_NAME).isEmpty()){
                 RoleEntity adminRole = roleRepository.save(RoleEntity.builder()
                         .name(PredefinedRole.ADMIN_ROLE)
-                        .description("Admin role")
+                        .description("Quản trị viên")
                         .build());
                 var roles = new HashSet<RoleEntity>();
                 roles.add(adminRole);
