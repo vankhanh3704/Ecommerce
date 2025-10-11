@@ -4,12 +4,16 @@ package com.hikiw.ecommerce.Service;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Model.Request.AuthenticationRequest;
+import com.hikiw.ecommerce.Model.Request.IntrospectRequest;
 import com.hikiw.ecommerce.Model.Response.AuthenticationResponse;
+import com.hikiw.ecommerce.Model.Response.IntrospectResponse;
+import com.hikiw.ecommerce.Repository.InvalidatedTokenRepository;
 import com.hikiw.ecommerce.Repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jwt.JWTClaimNames;
+import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -36,6 +41,7 @@ public class AuthenticationService {
 
 
     UserRepository userRepository;
+    InvalidatedTokenRepository invalidatedTokenRepository;
 
 
     // service kiểm tra đăng nhập đc không
@@ -82,6 +88,50 @@ public class AuthenticationService {
             throw new RuntimeException(e);
         }
         var token = jwsObject.serialize();
+        // đăng nhập thành công nó sẽ trả cho mình cái token để đem nó đi authenticate
         return AuthenticationResponse.builder().token(token).authenticated(true).build();
+    }
+
+    // hàm kiểm tra tính hợp lệ, hết hạn ... của token
+    public IntrospectResponse introspectResponse(IntrospectRequest request) throws ParseException, JOSEException {
+        var token = request.getToken();
+        boolean isValid = true;
+        try {
+            verifyToken(token, false);
+        } catch (AppException e) {
+            isValid = false;
+        }
+        return  IntrospectResponse.builder()
+                .valid(isValid)
+                .build();
+    }
+
+    private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
+        // Dùng thư viện Nimbus JOSE + JWT để tạo đối tượng MACVerifier.
+        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+
+        // Chuyển chuỗi JWT thành đối tượng SignedJWT. do bên trong signedJWT có header, payload, signature
+        SignedJWT signedJWT = SignedJWT.parse(token);
+
+
+        // kiểm tra token hết hạn hay chưa
+        Date expirationTime = (isRefresh)
+                ? new Date(signedJWT
+                .getJWTClaimsSet()
+                .getIssueTime()
+                .toInstant()
+                .plus(3600, ChronoUnit.SECONDS).toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        // kiểm tra chữ ký signature
+        var verified = signedJWT.verify(verifier);
+        //token chỉ được công nhận khi vừa đúng chữ ký, vừa còn hạn.
+        if (!(verified && expirationTime.after(new Date()))) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
+        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID())) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
+        return signedJWT;
     }
 }
