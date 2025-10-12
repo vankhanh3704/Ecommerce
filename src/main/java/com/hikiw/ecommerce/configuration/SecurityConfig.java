@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -39,6 +41,7 @@ public class SecurityConfig {
                         oauth2 -> oauth2
                                 .jwt(jwtConfigurer -> jwtConfigurer
                                         .decoder(customerJwtDecoder)
+                                                .jwtAuthenticationConverter(jwtConverter())
                                         )
                                 //xử lý ngoại lệ khi người dùng chưa xác thực (unauthenticated) mà cố truy cập tài nguyên cần bảo vệ.
                                 .authenticationEntryPoint(
@@ -49,7 +52,15 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();
     }
-
+    // Custom SCOPE_ thành ROLE_
+    @Bean
+    JwtAuthenticationConverter jwtConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return converter;
+    }
 
     @Bean
     PasswordEncoder passwordEncoder(){
