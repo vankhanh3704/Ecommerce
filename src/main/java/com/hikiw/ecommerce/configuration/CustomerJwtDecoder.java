@@ -6,6 +6,7 @@ import com.hikiw.ecommerce.Service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -27,6 +28,7 @@ public class CustomerJwtDecoder implements JwtDecoder {
     @Value("MAOAaDeZDPe7abJfyyYmg6G4TQXTdQHNrGRFTdOr1whp6zdheS/COfx2GlDSMbXH")
     protected String SIGNER_KEY;
 
+    @Autowired
     AuthenticationService authenticationService;
 
     private NimbusJwtDecoder nimbusJwtDecoder = null;

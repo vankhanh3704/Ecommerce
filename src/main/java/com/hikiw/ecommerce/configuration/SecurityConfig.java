@@ -42,8 +42,8 @@ public class SecurityConfig {
                                         )
                                 //xử lý ngoại lệ khi người dùng chưa xác thực (unauthenticated) mà cố truy cập tài nguyên cần bảo vệ.
                                 .authenticationEntryPoint(
-                                        new JwtAuthenticationEntryPoint() // file cấu hình xong
-                                        )
+                                        // file cấu hình xong
+                                        new JwtAuthenticationEntryPoint() )
                 );
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
