@@ -63,7 +63,7 @@ public class UserService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         return userMapper.toUserResponse(userEntity);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers(){
         return userRepository.findAll()
                 .stream()
