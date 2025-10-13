@@ -2,6 +2,7 @@ package com.hikiw.ecommerce.Controller;
 
 import com.hikiw.ecommerce.Model.Request.AuthenticationRequest;
 import com.hikiw.ecommerce.Model.Request.IntrospectRequest;
+import com.hikiw.ecommerce.Model.Request.LogoutRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.AuthenticationResponse;
 import com.hikiw.ecommerce.Model.Response.IntrospectResponse;
@@ -37,5 +38,11 @@ public class AuthenticationController {
         return ApiResponse.<IntrospectResponse>builder()
                 .result(authenticationService.introspectResponse(request))
                 .build();
+    }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest logoutRequest){
+        authenticationService.logout(logoutRequest);
+        return ApiResponse.<Void>builder().build();
     }
 }

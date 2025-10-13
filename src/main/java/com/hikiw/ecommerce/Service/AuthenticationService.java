@@ -1,11 +1,13 @@
 package com.hikiw.ecommerce.Service;
 
 
+import com.hikiw.ecommerce.Entity.InvalidatedToken;
 import com.hikiw.ecommerce.Entity.UserEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Model.Request.AuthenticationRequest;
 import com.hikiw.ecommerce.Model.Request.IntrospectRequest;
+import com.hikiw.ecommerce.Model.Request.LogoutRequest;
 import com.hikiw.ecommerce.Model.Response.AuthenticationResponse;
 import com.hikiw.ecommerce.Model.Response.IntrospectResponse;
 import com.hikiw.ecommerce.Repository.InvalidatedTokenRepository;
@@ -147,5 +149,28 @@ public class AuthenticationService {
             });
         }
         return stringJoiner.toString();
+    }
+
+
+    // function logout
+    public void logout(LogoutRequest logoutRequest){
+        try {
+            // lấy token đang đăng nhập ( token còn hạn)
+            var signToken = verifyToken(logoutRequest.getToken(), false);
+
+            String jti = signToken.getJWTClaimsSet().getJWTID(); // lấy username
+            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime(); // lấy thời gian hết hạn của token ra
+
+
+            // set lại cái invalidatedToken : là 1 bảng lưu các token hết hạn ( những token này sẽ không dùng được nx)
+            InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                    .id(jti)
+                    .expiryTime(expiryTime)
+                    .build();
+
+            invalidatedTokenRepository.save(invalidatedToken);
+        } catch (JOSEException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
