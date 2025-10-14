@@ -2,6 +2,7 @@ package com.hikiw.ecommerce.Scheduler;
 
 
 import com.hikiw.ecommerce.Repository.InvalidatedTokenRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +24,7 @@ public class TokenCleanupScheduler {
 //    @Scheduled(cron = "0 0 0 * * ?")
 
     @Scheduled(fixedRate = 5 * 60 * 1000) // dọn sau 5 phút
+    @Transactional
     public void cleanExpiredTokens() {
         Integer deleted = invalidatedTokenRepository.deleteByExpiryTimeBefore(new Date());
         System.out.println("Đã xoá " + deleted + " token hết hạn.");
