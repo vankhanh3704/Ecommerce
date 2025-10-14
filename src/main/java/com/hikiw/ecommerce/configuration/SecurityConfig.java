@@ -34,7 +34,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated()
                 );
-
 //         đoạn này là phải authenticated ( login) ms request đc vào system
         httpSecurity
                 .oauth2ResourceServer(
@@ -48,7 +47,6 @@ public class SecurityConfig {
                                         // file cấu hình xong
                                         new JwtAuthenticationEntryPoint() )
                 );
-
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();
     }

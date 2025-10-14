@@ -36,7 +36,7 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse createUser(UserCreationRequest request){
         if(userRepository.existsByUsername(request.getUsername())){
             throw new AppException(ErrorCode.USER_EXISTED);
@@ -56,7 +56,7 @@ public class UserService {
         return userMapper.toUserResponse(userEntity);
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUserById(Long id){
         UserEntity userEntity = userRepository
                 .findById(id)
@@ -70,11 +70,11 @@ public class UserService {
                 .map(userMapper::toUserResponse)
                 .toList();
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse updateUser(Long userId,UserUpdateRequest request){
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not exists"));
         userMapper.toUpdateUser(userEntity, request);

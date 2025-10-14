@@ -42,9 +42,14 @@ import java.util.UUID;
 @Slf4j
 public class AuthenticationService {
     @NonFinal
-    @Value("MAOAaDeZDPe7abJfyyYmg6G4TQXTdQHNrGRFTdOr1whp6zdheS/COfx2GlDSMbXH")
+    @Value("${jwt.signerKey}") // đọc 1 biến từ file yaml
     protected String SIGNER_KEY;
-
+    @NonFinal
+    @Value("${jwt.valid-duration}")
+    protected Long VALID_DURATION;
+    @NonFinal
+    @Value("${jwt.refreshable-duration}")
+    protected Long REFRESHABLE_DURATION;
 
     UserRepository userRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
@@ -96,7 +101,7 @@ public class AuthenticationService {
                 .getJWTClaimsSet()
                 .getIssueTime()
                 .toInstant()
-                .plus(3600, ChronoUnit.SECONDS).toEpochMilli())
+                .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS).toEpochMilli())
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         // kiểm tra chữ ký signature
@@ -174,7 +179,7 @@ public class AuthenticationService {
                 .subject(user.getUsername()) // chủ thể (subject) của token, tức là username của người đăng nhập.
                 .issuer("hiki.com")
                 .issueTime(new Date())
-                .expirationTime(new Date(Instant.now().plus(3600, ChronoUnit.SECONDS).toEpochMilli()))
+                .expirationTime(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
                 .build();
