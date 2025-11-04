@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryCreateRequest {
 
-
     String categoryName;
     Long parentId; // parentId sẽ là NULL nếu đây là danh mục cấp gốc
 }

@@ -11,7 +11,8 @@ public enum ErrorCode {
     USER_NOT_EXISTED(1001, "User not exists.", HttpStatus.NOT_FOUND),
     USER_EXISTED(1002, "User existed.", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1003, "Unauthenticated.", HttpStatus.UNAUTHORIZED),
-    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized Error.", HttpStatus.INTERNAL_SERVER_ERROR) // dùng để trả về lỗi không xác định được
+    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized Error.", HttpStatus.INTERNAL_SERVER_ERROR), // dùng để trả về lỗi không xác định được
+    CATEGORY_NOT_EXISTED(1004, "Category not exists.", HttpStatus.NOT_FOUND)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

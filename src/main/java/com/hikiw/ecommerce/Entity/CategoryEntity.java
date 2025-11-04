@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @Entity
 @Builder
 @Data
@@ -18,4 +20,18 @@ public class CategoryEntity {
     Long categoryId;
     String categoryName;
 
+
+    // --- Mối quan hệ với Closure Table (Nên dùng @ToString.Exclude) ---
+
+    // 1. Category này là TỔ TIÊN của những mối quan hệ nào
+    @OneToMany(mappedBy = "ancestor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude // Quan trọng: Ngăn chặn StackOverflowError
+    @EqualsAndHashCode.Exclude
+    Set<CategoryClosureEntity> ancestorRelations;
+
+    // 2. Category này là HẬU DUỆ của những mối quan hệ nào
+    @OneToMany(mappedBy = "descendant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude // Quan trọng: Ngăn chặn StackOverflowError
+    @EqualsAndHashCode.Exclude
+    Set<CategoryClosureEntity> descendantRelations;
 }
