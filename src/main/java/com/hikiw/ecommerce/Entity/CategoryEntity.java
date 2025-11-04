@@ -1,20 +1,23 @@
 package com.hikiw.ecommerce.Entity;
 
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-
 @Entity
+@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
-public class InvalidatedToken {
+public class CategoryEntity {
     @Id
-    String id;
-    Date expiryTime;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long categoryId;
+    String categoryName;
+
 }
