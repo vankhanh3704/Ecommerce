@@ -13,4 +13,8 @@ public interface CategoryClosureRepository extends JpaRepository<CategoryClosure
     List<CategoryClosureEntity> findAllByDescendant_CategoryIdAndDepth(Long categoryId, Integer depth);
     List<CategoryClosureEntity> findAllByAncestor_CategoryId(Long ancestorId);
     List<CategoryClosureEntity>findAllByAncestor_CategoryIdAndDepth(Long categoryId, Integer depth);
+
+    // delete
+    void deleteAllByAncestor_CategoryId(Long categoryId);
+    void deleteAllByDescendant_CategoryId(Long categoryId);
 }

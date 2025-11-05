@@ -31,4 +31,12 @@ public class CategoryController {
                 .build();
     }
 
+    @DeleteMapping("/{id}")
+    public ApiResponse<String> deleteCategory(@PathVariable Long id){
+        categoryService.deleteCategory(id);
+        return ApiResponse.<String>builder().result("Delete category successful").build();
+    }
+
+
 }
+

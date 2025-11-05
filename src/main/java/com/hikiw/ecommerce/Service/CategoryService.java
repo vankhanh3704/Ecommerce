@@ -124,4 +124,22 @@ public class CategoryService {
         return response;
     }
 
+
+
+    // xoá danh mục
+    @Transactional
+    public void deleteCategory(Long id){
+        if(!categoryRepository.existsById(id)){
+            throw new AppException(ErrorCode.CATEGORY_NOT_EXISTED);
+        }
+        // 2. [QUAN TRỌNG] Kiểm tra ràng buộc dữ liệu (Ví dụ: Sản phẩm đang sử dụng)
+        // if (productRepository.existsByCategory_Id(categoryId)) {
+        //     throw new AppException(ErrorCode.CATEGORY_HAS_PRODUCT);
+        // }
+
+        // Xóa tất cả các mối quan hệ liên quan trong Closure Table
+        categoryClosureRepository.deleteAllByAncestor_CategoryId(id);
+        categoryClosureRepository.deleteAllByDescendant_CategoryId(id);
+        categoryRepository.deleteById(id);
+    }
 }
