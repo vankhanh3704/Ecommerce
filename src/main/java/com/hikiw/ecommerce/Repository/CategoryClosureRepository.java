@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface CategoryClosureRepository extends JpaRepository<CategoryClosureEntity, CategoryClosureId> {
     List<CategoryClosureEntity> findAllByDescendant_CategoryId(Long descendantId);
+    List<CategoryClosureEntity> findAllByDescendant_CategoryIdAndDepth(Long categoryId, Integer depth);
     List<CategoryClosureEntity> findAllByAncestor_CategoryId(Long ancestorId);
+    List<CategoryClosureEntity>findAllByAncestor_CategoryIdAndDepth(Long categoryId, Integer depth);
 }

@@ -7,10 +7,7 @@ import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import com.hikiw.ecommerce.Service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -27,6 +24,11 @@ public class CategoryController {
                 .build();
     }
 
-
+    @GetMapping("/{id}")
+    public ApiResponse<CategoryResponse> getCategory(@PathVariable Long id){
+        return ApiResponse.<CategoryResponse>builder()
+                .result(categoryService.getCategoryDetails(id))
+                .build();
+    }
 
 }

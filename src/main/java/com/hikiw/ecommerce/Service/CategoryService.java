@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,14 +77,10 @@ public class CategoryService {
         }
         // 1. Dùng Mapper để chuyển Entity mới thành Response DTO
         CategoryResponse response = categoryMapper.toCategoryResponse(currentCategory);
-
-
         if (parentId != null) {
-
             // 2. Tìm CategoryEntity cha chỉ để lấy tên
             CategoryEntity parentEntity = categoryRepository.findById(parentId)
                     .orElse(null); // Sử dụng orElse(null) nếu bạn đã kiểm tra lỗi trước đó
-
             // 3. SET thông tin cha trực tiếp vào Response DTO
             if (parentEntity != null) {
                 // Cần đảm bảo rằng bạn đã set cả parentId và parentName,
@@ -93,8 +90,38 @@ public class CategoryService {
                 response.setParentName(parentEntity.getCategoryName());
             }
         }
-
         return response;
-
     }
+
+    public CategoryResponse getCategoryDetails(Long categoryId){
+        CategoryEntity currentCategory = categoryRepository
+                .findById(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
+
+        CategoryResponse response = categoryMapper.toCategoryResponse(currentCategory);
+        // Xử lý Parent : Tìm và gán tên cha nếu có
+        List<CategoryClosureEntity> parentRelation = categoryClosureRepository
+                .findAllByDescendant_CategoryIdAndDepth(categoryId, 1)
+                .stream().filter(rel -> !rel.getAncestor().equals(currentCategory)) // lọc các thằng (ancestor) tổ tiên mà khác với danh mục hiện tại
+                .collect(Collectors.toList());
+
+        if(!parentRelation.isEmpty()){
+            CategoryEntity parentEntity = parentRelation.getFirst().getAncestor();
+            response.setParentId(parentEntity.getCategoryId());
+            response.setParentName(parentEntity.getCategoryName());
+        }
+
+        // Xử lý Children: Tìm các con trực tiếp ( depth = 1)
+        List<CategoryClosureEntity> childrenRelation = categoryClosureRepository
+                .findAllByAncestor_CategoryIdAndDepth(categoryId, 1);
+
+        List<CategoryResponse> childrenResponses = childrenRelation.stream()
+                .filter(rel -> rel.getDepth() > 0)
+                .map(CategoryClosureEntity::getDescendant)
+                .map(categoryMapper::toCategoryResponse)
+                .collect(Collectors.toList());
+        response.setChildren(childrenResponses);
+        return response;
+    }
+
 }
