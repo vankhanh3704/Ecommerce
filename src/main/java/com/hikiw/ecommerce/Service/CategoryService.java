@@ -142,4 +142,45 @@ public class CategoryService {
         categoryClosureRepository.deleteAllByDescendant_CategoryId(id);
         categoryRepository.deleteById(id);
     }
+
+
+    @Transactional // BẮT BUỘC phải có @Transactional
+    public void moveCategory(Long categoryId, Long newParentId) {
+
+        // 1. Kiểm tra tồn tại và xác thực cơ bản
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new AppException(ErrorCode.CATEGORY_NOT_EXISTED);
+        }
+        if (newParentId != null && !categoryRepository.existsById(newParentId)) {
+            throw new AppException(ErrorCode.PARENT_CATEGORY_NOT_EXISTED); // Tự định nghĩa lỗi này
+        }
+        if (newParentId != null && categoryId.equals(newParentId)) {
+            throw new AppException(ErrorCode.INVALID_MOVE_TO_SELF); // Tự định nghĩa lỗi này
+        }
+
+        // 2. NGĂN CHẶN LẶP VÒNG (Không được di chuyển vào chính cây con của nó)
+        if (newParentId != null) {
+            List<CategoryClosureEntity> movingDescendants = categoryClosureRepository.findAllByAncestor_CategoryId(categoryId);
+            boolean isCircularMove = movingDescendants.stream()
+                    .anyMatch(rel -> rel.getDescendant().getCategoryId().equals(newParentId));
+
+            if (isCircularMove) {
+                throw new AppException(ErrorCode.CANNOT_MOVE_TO_CHILD);
+            }
+        }
+
+        // --- BƯỚC TỐI ƯU HÓA CLOSURE TABLE BẰNG SQL ---
+
+        // 3. XÓA các mối quan hệ CŨ (Xóa toàn bộ đường dẫn từ tổ tiên cũ đến cây con đang di chuyển)
+        categoryClosureRepository.deleteOldPaths(categoryId);
+
+        // 4. CHÈN các mối quan hệ MỚI
+        if (newParentId != null) {
+            // Trường hợp 1: Di chuyển vào một danh mục cha mới (newParentId)
+            categoryClosureRepository.insertNewPaths(categoryId, newParentId);
+        } else {
+            // Trường hợp 2: Di chuyển thành danh mục gốc (parent = null)
+            // KHÔNG làm gì thêm, vì chỉ cần mối quan hệ tự liên kết (depth=0) đã được giữ lại
+        }
+    }
 }

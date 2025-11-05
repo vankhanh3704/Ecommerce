@@ -2,6 +2,7 @@ package com.hikiw.ecommerce.Controller;
 
 
 import com.hikiw.ecommerce.Model.Request.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Request.MoveCategoryRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import com.hikiw.ecommerce.Service.CategoryService;
@@ -37,6 +38,11 @@ public class CategoryController {
         return ApiResponse.<String>builder().result("Delete category successful").build();
     }
 
+    @PutMapping("/{categoryId}/move")
+    public ApiResponse<String> moveCategory(@PathVariable Long categoryId, @RequestBody MoveCategoryRequest request){
+        categoryService.moveCategory(categoryId, request.getNewParentId());
+        return ApiResponse.<String>builder().result("Move category successful").build();
+    }
 
 }
 

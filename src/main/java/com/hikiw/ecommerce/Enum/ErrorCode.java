@@ -12,7 +12,10 @@ public enum ErrorCode {
     USER_EXISTED(1002, "User existed.", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1003, "Unauthenticated.", HttpStatus.UNAUTHORIZED),
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized Error.", HttpStatus.INTERNAL_SERVER_ERROR), // dùng để trả về lỗi không xác định được
-    CATEGORY_NOT_EXISTED(1004, "Category not exists.", HttpStatus.NOT_FOUND)
+    CATEGORY_NOT_EXISTED(1004, "Category not exists.", HttpStatus.NOT_FOUND),
+    PARENT_CATEGORY_NOT_EXISTED(1005, "Parent category not existed", HttpStatus.NOT_FOUND),
+    INVALID_MOVE_TO_SELF(1006,"Invalid move to self",HttpStatus.BAD_REQUEST),
+    CANNOT_MOVE_TO_CHILD(1007, "Can't move to chill", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
