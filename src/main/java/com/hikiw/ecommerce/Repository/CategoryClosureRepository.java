@@ -57,4 +57,10 @@ public interface CategoryClosureRepository extends JpaRepository<CategoryClosure
                   AND T2.ancestor_id = :categoryId
             """)
     void insertNewPaths(@Param("categoryId") Long categoryId, @Param("newParentId") Long newParentId);
+
+
+    // Tìm ID của TẤT CẢ danh mục là hậu duệ (descendant) của một danh mục khác (ancestor)
+    // và loại bỏ mối quan hệ tự liên kết (depth = 0)
+    @Query("SELECT DISTINCT cc.descendant.categoryId FROM CategoryClosureEntity cc WHERE cc.depth > 0")
+    List<Long> findAllNonRootIds();
 }

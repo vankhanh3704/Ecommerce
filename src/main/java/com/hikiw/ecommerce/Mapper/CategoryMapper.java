@@ -2,6 +2,7 @@ package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.CategoryEntity;
 import com.hikiw.ecommerce.Model.Request.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,4 +30,11 @@ public interface CategoryMapper {
             @Mapping(target = "children", ignore = true)
     })
     CategoryResponse toCategoryResponse(CategoryEntity entity);
+
+    @Mappings({
+            @Mapping(source = "categoryId", target = "categoryId"), // Dùng tên trường thực tế
+            @Mapping(source = "categoryName", target = "categoryName"),
+            @Mapping(target = "parentId", ignore = true),   // Bỏ qua: Sẽ được set trong Service
+    })
+    CategoryBreadCrumbsResponse toCategoryBreadCrumbsResponse(CategoryEntity entity);
 }

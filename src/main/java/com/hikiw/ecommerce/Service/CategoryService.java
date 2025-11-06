@@ -6,6 +6,7 @@ import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.CategoryMapper;
 import com.hikiw.ecommerce.Model.Request.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import com.hikiw.ecommerce.Repository.CategoryClosureRepository;
 import com.hikiw.ecommerce.Repository.CategoryRepository;
@@ -17,6 +18,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -183,4 +185,41 @@ public class CategoryService {
             // KHÔNG làm gì thêm, vì chỉ cần mối quan hệ tự liên kết (depth=0) đã được giữ lại
         }
     }
+
+
+    @Transactional // Đây là thao tác chỉ đọc
+    public List<CategoryResponse> getRootCategories() {
+
+        // 1. Tìm TẤT CẢ Category ID là con của một danh mục nào đó (Depth = 1)
+        List<Long> allChildIds = categoryClosureRepository.findAllNonRootIds();
+
+        // 2. Lấy những Category có ID KHÔNG nằm trong danh sách con (Tức là danh mục gốc)
+        // Lưu ý: findAllChildIds có thể trả về chính nó (depth=0), ta chỉ cần lấy những thằng
+        // không phải là hậu duệ của ai khác ngoài chính nó.
+        List<CategoryEntity> rootEntities = categoryRepository.findByCategoryIdNotIn(allChildIds);
+
+        // 3. Chuyển đổi sang Response DTO và trả về
+        return rootEntities.stream()
+                .map(categoryMapper::toCategoryResponse)
+                .collect(Collectors.toList());
+    }
+
+    // hàm xử lý lấy ra breadcrumbs của danh mục
+    public List<CategoryBreadCrumbsResponse> getCategoryBreadcrumbs(Long categoryId) {
+
+        // 1. Lấy tất cả các dòng quan hệ Tổ tiên/Hậu duệ (bao gồm cả chính nó, depth=0)
+        List<CategoryClosureEntity> closureRels =
+                categoryClosureRepository.findAllByDescendant_CategoryId(categoryId);
+
+        return closureRels.stream()
+                // 2. Map sang đối tượng CategoryEntity Tổ tiên
+                .map(CategoryClosureEntity::getAncestor)
+                // 3. Chuyển đổi thành Response DTO
+                .map(categoryMapper::toCategoryBreadCrumbsResponse)
+                // 4. (Tùy chọn) Sắp xếp theo depth để có thứ tự từ Gốc -> Hiện tại
+                .sorted(Comparator.comparing(c -> c.getParentId() == null ? 0 : 1)) // Sắp xếp phức tạp hơn
+                .collect(Collectors.toList());
+    }
+
+
 }
