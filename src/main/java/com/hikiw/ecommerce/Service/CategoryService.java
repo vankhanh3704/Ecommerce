@@ -187,7 +187,7 @@ public class CategoryService {
     }
 
 
-    @Transactional // Đây là thao tác chỉ đọc
+    @Transactional
     public List<CategoryResponse> getRootCategories() {
 
         // 1. Tìm TẤT CẢ Category ID là con của một danh mục nào đó (Depth = 1)
@@ -222,4 +222,22 @@ public class CategoryService {
     }
 
 
+    @Transactional
+    public List<CategoryResponse> getChildrenCategories(Long parentId){
+        if(!categoryRepository.existsById(parentId)){
+            throw new AppException(ErrorCode.CATEGORY_NOT_EXISTED);
+        }
+
+        // 2. Dùng Closure Table tìm các mối quan hệ con trực tiếp (Depth = 1)
+        List<CategoryClosureEntity> childrenRelations = categoryClosureRepository.findAllByAncestor_CategoryIdAndDepth(parentId, 1);
+
+        return childrenRelations.stream()
+                .map(CategoryClosureEntity::getDescendant) // lấy catogory của con
+                .map(categoryMapper::toCategoryResponse)
+                .peek(
+                        // Tối ưu: Gắn ID cha cho Response của con (giúp frontend dễ xử lý)
+                        categoryResponse -> categoryResponse.setParentId(parentId)
+                )
+                .collect(Collectors.toList());
+    }
 }

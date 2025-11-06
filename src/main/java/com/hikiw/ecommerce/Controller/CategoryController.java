@@ -59,5 +59,12 @@ public class CategoryController {
         List<CategoryResponse> roots = categoryService.getRootCategories();
         return ApiResponse.<List<CategoryResponse>> builder().result(roots).build();
     }
+
+    @GetMapping("/{parentId}/children")
+    public ApiResponse<List<CategoryResponse>> getChildrenCategories(@PathVariable Long parentId){
+        return ApiResponse.<List<CategoryResponse>>builder()
+                .result(categoryService.getChildrenCategories(parentId))
+                .build();
+    }
 }
 
