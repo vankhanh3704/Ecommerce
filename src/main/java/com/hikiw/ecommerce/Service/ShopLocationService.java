@@ -1,0 +1,57 @@
+package com.hikiw.ecommerce.Service;
+
+import com.hikiw.ecommerce.Entity.ShopEntity;
+import com.hikiw.ecommerce.Enum.ErrorCode;
+import com.hikiw.ecommerce.Exception.AppException;
+import com.hikiw.ecommerce.Mapper.ShopLocationMapper;
+import com.hikiw.ecommerce.Model.Request.ShopLocationCreationRequest;
+import com.hikiw.ecommerce.Model.Response.ShopLocationResponse;
+import com.hikiw.ecommerce.Repository.ShopLocationRepository;
+import com.hikiw.ecommerce.Repository.ShopRepository;
+import jakarta.transaction.Transactional;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class ShopLocationService {
+    //create , read, update, delete shop locations
+
+    ShopLocationRepository shopLocationRepository;
+    ShopRepository shopRepository;
+    ShopLocationMapper shopLocationMapper;
+
+
+    @Transactional
+    public ShopLocationResponse createShopLocation(ShopLocationCreationRequest request) {
+
+        // Kiểm tra đã tồn tại location tương tự cho shop chưa
+        // Nếu có thì ném lỗi
+        ShopEntity shop = shopRepository.findById(request.getShopId())
+                .orElseThrow( () -> new AppException(ErrorCode.SHOP_NOT_EXISTED));
+
+        if(Boolean.TRUE.equals(request.getIsDefaultPickup())){
+            shopLocationRepository.findByShop_ShopIdAndIsDefaultPickupTrue(request.getShopId())
+                    .ifPresent( existingLocation -> {
+                        throw new AppException(ErrorCode.DEFAULT_PICKUP_LOCATION_ALREADY_EXISTS);
+                    });
+        }
+        if(Boolean.TRUE.equals(request.getIsDefaultReturn())){
+            // Tương tự cho isDefaultReturn nếu cần
+            shopLocationRepository.findByShop_ShopIdAndIsDefaultReturnTrue(request.getShopId())
+                    .ifPresent( existingLocation -> {
+                        throw new AppException(ErrorCode.DEFAULT_PICKUP_LOCATION_ALREADY_EXISTS);
+                    });
+        }
+        var shopLocationEntity = shopLocationMapper.toEntity(request);
+        shopLocationEntity.setShop(shop);
+        var savedEntity = shopLocationRepository.save(shopLocationEntity);
+
+        return shopLocationMapper.toResponse(savedEntity);
+    }
+}

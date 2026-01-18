@@ -34,4 +34,8 @@ public class CategoryEntity {
     @ToString.Exclude // Quan trọng: Ngăn chặn StackOverflowError
     @EqualsAndHashCode.Exclude
     Set<CategoryClosureEntity> descendantRelations;
+
+
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    Set<ProductEntity> products;
 }

@@ -15,7 +15,9 @@ public enum ErrorCode {
     CATEGORY_NOT_EXISTED(1004, "Category not exists.", HttpStatus.NOT_FOUND),
     PARENT_CATEGORY_NOT_EXISTED(1005, "Parent category not existed", HttpStatus.NOT_FOUND),
     INVALID_MOVE_TO_SELF(1006,"Invalid move to self",HttpStatus.BAD_REQUEST),
-    CANNOT_MOVE_TO_CHILD(1007, "Can't move to chill", HttpStatus.BAD_REQUEST)
+    CANNOT_MOVE_TO_CHILD(1007, "Can't move to chill", HttpStatus.BAD_REQUEST),
+    SHOP_NOT_EXISTED(1008, "Shop not existed", HttpStatus.NOT_FOUND),
+    DEFAULT_PICKUP_LOCATION_ALREADY_EXISTS(1009, "Default pickup location already exists for this shop", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

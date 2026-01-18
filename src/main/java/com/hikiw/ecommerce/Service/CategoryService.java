@@ -46,6 +46,7 @@ public class CategoryService {
 
         currentCategory = categoryRepository.save(currentCategory);
 
+
         Long currentId = currentCategory.getCategoryId();
         Long parentId = request.getParentId();
 

@@ -26,4 +26,8 @@ public class UserEntity {
 
     @ManyToMany
     Set<RoleEntity> roles;
+
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    ShopEntity shop;
+
 }
