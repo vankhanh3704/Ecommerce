@@ -24,6 +24,10 @@ public class UserEntity {
     String username;
     String password;
 
+//    String fullName;
+//    String email;
+//    String phoneNumber;
+
     @ManyToMany
     Set<RoleEntity> roles;
 

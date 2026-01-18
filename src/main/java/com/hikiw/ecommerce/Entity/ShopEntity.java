@@ -46,7 +46,7 @@ public class ShopEntity {
     @Column(name = "total_orders")
     Integer totalOrders = 0;
 
-
+    String address;
 
     // giả định 1 user chỉ có 1 shop
     @OneToOne(fetch = FetchType.LAZY)
