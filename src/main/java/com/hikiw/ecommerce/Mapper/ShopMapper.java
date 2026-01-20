@@ -2,9 +2,11 @@ package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.ShopEntity;
 import com.hikiw.ecommerce.Model.Request.ShopCreateRequest;
+import com.hikiw.ecommerce.Model.Request.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ShopResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ShopMapper {
@@ -26,4 +28,6 @@ public interface ShopMapper {
     @Mapping(source = "owner.id", target = "ownerUserId")
     @Mapping(source = "owner.username", target = "ownerName")
     ShopResponse toResponse(ShopEntity request);
+
+    void toUpdateShop(@MappingTarget ShopEntity shop, ShopUpdateRequest request);
 }

@@ -2,16 +2,16 @@ package com.hikiw.ecommerce.Controller;
 
 
 import com.hikiw.ecommerce.Model.Request.ShopCreateRequest;
+import com.hikiw.ecommerce.Model.Request.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ShopResponse;
 import com.hikiw.ecommerce.Service.ShopService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +25,35 @@ public class ShopController {
     ApiResponse<ShopResponse> createShop(@RequestBody ShopCreateRequest request){
         return ApiResponse.<ShopResponse>builder()
                 .result(shopService.createShop(request))
+                .build();
+    }
+
+    @GetMapping("/{id}")
+    ApiResponse<ShopResponse> getShopById(@PathVariable Long id){
+        return ApiResponse.<ShopResponse>builder()
+                .result(shopService.getShopById(id))
+                .build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    ApiResponse<String> deleteShop(@PathVariable Long id) {
+        shopService.deleteShop(id);
+        return ApiResponse.<String>builder()
+                .result("Shop deleted successfully")
+                .build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    ApiResponse<List<ShopResponse>> getAllShops(){
+        return ApiResponse.<List<ShopResponse>>builder()
+                .result(shopService.getAllShops())
+                .build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    ApiResponse<ShopResponse> updateShop(@PathVariable Long id, @RequestBody ShopUpdateRequest request){
+        return ApiResponse.<ShopResponse>builder()
+                .result(shopService.updateShop(id, request))
                 .build();
     }
 }
