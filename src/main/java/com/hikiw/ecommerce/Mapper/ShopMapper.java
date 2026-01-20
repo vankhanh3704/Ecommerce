@@ -14,6 +14,11 @@ public interface ShopMapper {
     @Mapping(target = "shopId", ignore = true)
     @Mapping(target = "owner", ignore = true) // Set manually in service
     @Mapping(target = "products", ignore = true)     // collection
+    @Mapping(target = "rating", constant = "0.0")
+    @Mapping(target = "totalProducts", constant = "0")
+    @Mapping(target = "totalOrders", constant = "0")
+    @Mapping(target = "isVerified", constant = "false")
+    @Mapping(target = "isActive", constant = "true")
     @Mapping(target = "shopLocations", ignore = true)
     ShopEntity toEntity(ShopCreateRequest request);
 
