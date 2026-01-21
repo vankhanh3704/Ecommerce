@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ShopRepository extends JpaRepository<ShopEntity, Long> {
 
     Optional<Object> findByShopName(String name);
+    Optional<ShopEntity> findByOwner_Id(Long ownerId);
 }

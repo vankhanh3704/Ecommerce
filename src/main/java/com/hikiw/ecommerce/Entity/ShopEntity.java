@@ -4,6 +4,7 @@ package com.hikiw.ecommerce.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -55,7 +56,7 @@ public class ShopEntity {
 
     // list of shop locations
     @OneToMany(mappedBy = "shop",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    Set<ShopLocationEntity> shopLocations;
+    List<ShopLocationEntity> shopLocations;
 
     // list of products
     @OneToMany(mappedBy = "shop",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

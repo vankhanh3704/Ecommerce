@@ -4,6 +4,7 @@ package com.hikiw.ecommerce.Controller;
 import com.hikiw.ecommerce.Model.Request.ShopCreateRequest;
 import com.hikiw.ecommerce.Model.Request.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
+import com.hikiw.ecommerce.Model.Response.ShopDetailResponse;
 import com.hikiw.ecommerce.Model.Response.ShopResponse;
 import com.hikiw.ecommerce.Service.ShopService;
 import lombok.AccessLevel;
@@ -54,6 +55,13 @@ public class ShopController {
     ApiResponse<ShopResponse> updateShop(@PathVariable Long id, @RequestBody ShopUpdateRequest request){
         return ApiResponse.<ShopResponse>builder()
                 .result(shopService.updateShop(id, request))
+                .build();
+    }
+
+    @RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.GET)
+    ApiResponse<ShopDetailResponse> getShopsByOwnerId(@PathVariable Long ownerId) {
+        return ApiResponse.<ShopDetailResponse>builder()
+                .result(shopService.getShopByOwnerId(ownerId))
                 .build();
     }
 }
