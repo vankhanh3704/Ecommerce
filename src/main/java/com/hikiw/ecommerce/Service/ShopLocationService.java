@@ -1,24 +1,29 @@
 package com.hikiw.ecommerce.Service;
 
 import com.hikiw.ecommerce.Entity.ShopEntity;
+import com.hikiw.ecommerce.Entity.ShopLocationEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.ShopLocationMapper;
 import com.hikiw.ecommerce.Model.Request.ShopLocationCreationRequest;
+import com.hikiw.ecommerce.Model.Request.ShopLocationUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ShopLocationResponse;
 import com.hikiw.ecommerce.Repository.ShopLocationRepository;
 import com.hikiw.ecommerce.Repository.ShopRepository;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Transactional(readOnly = true)
 public class ShopLocationService {
     //create , read, update, delete shop locations
 
@@ -54,4 +59,35 @@ public class ShopLocationService {
 
         return shopLocationMapper.toResponse(savedEntity);
     }
+
+    @Transactional
+    public ShopLocationResponse getShopLocationById(Long id){
+        return shopLocationRepository.findById(id)
+                .map(shopLocationMapper::toResponse)
+                .orElseThrow(() -> new AppException(ErrorCode.SHOP_LOCATION_NOT_EXISTED));
+    }
+
+    @Transactional
+    public ShopLocationResponse updateShopLocation(Long id, ShopLocationUpdateRequest request){
+        ShopLocationEntity shopLocation = shopLocationRepository.findById(id).orElseThrow( () -> new AppException(ErrorCode.SHOP_LOCATION_NOT_EXISTED));
+
+        shopLocationMapper.updateShopLocationFromRequest(shopLocation, request);
+        ShopLocationEntity updatedEntity = shopLocationRepository.save(shopLocation);
+        return shopLocationMapper.toResponse(updatedEntity);
+
+    }
+
+    @Transactional
+    public void deleteShopLocationById(Long id){
+        shopLocationRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<ShopLocationResponse> getAllShopLocations(){
+        return shopLocationRepository.findAll()
+                .stream()
+                .map(shopLocationMapper::toResponse)
+                .toList();
+    }
+
 }

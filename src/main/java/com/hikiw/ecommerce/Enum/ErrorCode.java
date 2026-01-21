@@ -18,8 +18,8 @@ public enum ErrorCode {
     CANNOT_MOVE_TO_CHILD(1007, "Can't move to chill", HttpStatus.BAD_REQUEST),
     SHOP_NOT_EXISTED(1008, "Shop not existed", HttpStatus.NOT_FOUND),
     DEFAULT_PICKUP_LOCATION_ALREADY_EXISTS(1009, "Default pickup location already exists for this shop", HttpStatus.BAD_REQUEST),
-    SHOP_EXISTED(1010, "Shop existed", HttpStatus.BAD_REQUEST)
-
+    SHOP_EXISTED(1010, "Shop existed", HttpStatus.BAD_REQUEST),
+    SHOP_LOCATION_NOT_EXISTED(1011, "Shop location not existed", HttpStatus.NOT_FOUND)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
