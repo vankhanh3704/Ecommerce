@@ -51,7 +51,10 @@ public class ShopService {
 
     @Transactional
     public void deleteShop(Long id){
-        shopRepository.deleteById(id);
+        ShopEntity shop = shopRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.SHOP_NOT_EXISTED));
+        shop.setIsActive(false);
+        shopRepository.save(shop);
     }
 
     @Transactional

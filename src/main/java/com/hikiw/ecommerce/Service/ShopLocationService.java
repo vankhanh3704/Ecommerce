@@ -79,7 +79,10 @@ public class ShopLocationService {
 
     @Transactional
     public void deleteShopLocationById(Long id){
-        shopLocationRepository.deleteById(id);
+        ShopLocationEntity shopLocation = shopLocationRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.SHOP_LOCATION_NOT_EXISTED));
+        shopLocation.setIsActive(false);
+        shopLocationRepository.save(shopLocation);
     }
 
     @Transactional
@@ -89,5 +92,6 @@ public class ShopLocationService {
                 .map(shopLocationMapper::toResponse)
                 .toList();
     }
+
 
 }

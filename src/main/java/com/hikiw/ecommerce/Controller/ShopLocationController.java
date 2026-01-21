@@ -42,9 +42,11 @@ public class ShopLocationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ApiResponse<Void> deleteShopLocation(@PathVariable Long id){
+    public ApiResponse<String> deleteShopLocation(@PathVariable Long id){
         shopLocationService.deleteShopLocationById(id);
-        return ApiResponse.<Void>builder().build();
+        return ApiResponse.<String>builder()
+                .result("Success")
+                .build();
     }
 
     @RequestMapping(method = RequestMethod.GET)
