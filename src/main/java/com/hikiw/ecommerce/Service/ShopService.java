@@ -89,7 +89,5 @@ public class ShopService {
     public ShopDetailResponse getShopByOwnerId(Long ownerId){
         ShopEntity shop = shopRepository.findByOwner_Id(ownerId).orElseThrow(() -> new AppException(ErrorCode.SHOP_NOT_EXISTED));
         return shopMapper.toDetailResponse(shop);
-
-
     }
 }

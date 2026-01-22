@@ -35,5 +35,5 @@ public class ProductEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_location_id")
     private ShopLocationEntity shopLocation;
-
+    Long soldCount = 0L;
 }
