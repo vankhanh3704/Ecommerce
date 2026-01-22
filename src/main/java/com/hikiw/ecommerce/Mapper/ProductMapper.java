@@ -2,8 +2,8 @@ package com.hikiw.ecommerce.Mapper;
 
 
 import com.hikiw.ecommerce.Entity.ProductEntity;
-import com.hikiw.ecommerce.Model.Request.ProductCreateRequest;
-import com.hikiw.ecommerce.Model.Request.ProductUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
 import org.mapstruct.*;
 

@@ -1,6 +1,6 @@
 package com.hikiw.ecommerce.Controller;
 
-import com.hikiw.ecommerce.Model.Request.RoleRequest;
+import com.hikiw.ecommerce.Model.Request.role.RoleRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.RoleResponse;
 import com.hikiw.ecommerce.Service.RoleService;

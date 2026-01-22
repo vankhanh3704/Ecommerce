@@ -1,5 +1,4 @@
-package com.hikiw.ecommerce.Model.Request;
-
+package com.hikiw.ecommerce.Model.Request.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +9,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class MoveCategoryRequest {
-    Long newParentId;
+public class RefreshToken {
+    String token;
 }

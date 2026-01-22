@@ -1,16 +1,14 @@
 package com.hikiw.ecommerce.Service;
 
 import com.hikiw.ecommerce.Entity.ShopEntity;
-import com.hikiw.ecommerce.Entity.ShopLocationEntity;
 import com.hikiw.ecommerce.Entity.UserEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.ShopLocationMapper;
 import com.hikiw.ecommerce.Mapper.ShopMapper;
-import com.hikiw.ecommerce.Model.Request.ShopCreateRequest;
-import com.hikiw.ecommerce.Model.Request.ShopUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.ShopCreateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ShopDetailResponse;
-import com.hikiw.ecommerce.Model.Response.ShopLocationResponse;
 import com.hikiw.ecommerce.Model.Response.ShopResponse;
 import com.hikiw.ecommerce.Repository.ShopLocationRepository;
 import com.hikiw.ecommerce.Repository.ShopRepository;
@@ -22,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

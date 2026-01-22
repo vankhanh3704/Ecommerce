@@ -1,4 +1,5 @@
-package com.hikiw.ecommerce.Model.Request;
+package com.hikiw.ecommerce.Model.Request.category;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +10,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class ShopUpdateRequest {
-    String shopName;
-    String description;
-    String phoneNumber;
-    String email;
-    String address;
-    Boolean isActive;
-
+public class MoveCategoryRequest {
+    Long newParentId;
 }

@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.configuration;
 
 
-import com.hikiw.ecommerce.Model.Request.IntrospectRequest;
+import com.hikiw.ecommerce.Model.Request.auth.IntrospectRequest;
 import com.hikiw.ecommerce.Service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;

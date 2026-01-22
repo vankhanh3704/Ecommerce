@@ -1,13 +1,12 @@
 package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.CategoryEntity;
-import com.hikiw.ecommerce.Model.Request.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Request.category.CategoryCreateRequest;
 import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {

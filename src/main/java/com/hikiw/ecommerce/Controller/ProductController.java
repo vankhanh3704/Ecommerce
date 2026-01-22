@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Controller;
 
-import com.hikiw.ecommerce.Model.Request.ProductCreateRequest;
-import com.hikiw.ecommerce.Model.Request.ProductUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
 import com.hikiw.ecommerce.Service.ProductService;

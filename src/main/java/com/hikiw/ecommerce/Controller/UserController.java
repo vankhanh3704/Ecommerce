@@ -1,16 +1,13 @@
 package com.hikiw.ecommerce.Controller;
 
 
-import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
-import com.hikiw.ecommerce.Model.Request.UserUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.user.UserCreationRequest;
+import com.hikiw.ecommerce.Model.Request.user.UserUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.UserResponse;
 import com.hikiw.ecommerce.Service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

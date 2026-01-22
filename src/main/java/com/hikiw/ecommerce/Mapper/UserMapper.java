@@ -1,8 +1,8 @@
 package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.UserEntity;
-import com.hikiw.ecommerce.Model.Request.UserCreationRequest;
-import com.hikiw.ecommerce.Model.Request.UserUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.user.UserCreationRequest;
+import com.hikiw.ecommerce.Model.Request.user.UserUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.UserResponse;
 import org.mapstruct.*;
 

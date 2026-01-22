@@ -1,4 +1,4 @@
-package com.hikiw.ecommerce.Model.Request;
+package com.hikiw.ecommerce.Model.Request.shop;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,12 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class RefreshToken {
-    String token;
+public class ShopUpdateRequest {
+    String shopName;
+    String description;
+    String phoneNumber;
+    String email;
+    String address;
+    Boolean isActive;
+
 }

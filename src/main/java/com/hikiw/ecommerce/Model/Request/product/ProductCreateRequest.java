@@ -1,7 +1,6 @@
-package com.hikiw.ecommerce.Model.Request;
+package com.hikiw.ecommerce.Model.Request.product;
 
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

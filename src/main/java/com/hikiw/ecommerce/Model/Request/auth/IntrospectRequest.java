@@ -1,4 +1,4 @@
-package com.hikiw.ecommerce.Model.Request;
+package com.hikiw.ecommerce.Model.Request.auth;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

@@ -1,9 +1,9 @@
 package com.hikiw.ecommerce.Controller;
 
-import com.hikiw.ecommerce.Model.Request.AuthenticationRequest;
-import com.hikiw.ecommerce.Model.Request.IntrospectRequest;
-import com.hikiw.ecommerce.Model.Request.LogoutRequest;
-import com.hikiw.ecommerce.Model.Request.RefreshToken;
+import com.hikiw.ecommerce.Model.Request.auth.AuthenticationRequest;
+import com.hikiw.ecommerce.Model.Request.auth.IntrospectRequest;
+import com.hikiw.ecommerce.Model.Request.auth.LogoutRequest;
+import com.hikiw.ecommerce.Model.Request.auth.RefreshToken;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.AuthenticationResponse;
 import com.hikiw.ecommerce.Model.Response.IntrospectResponse;

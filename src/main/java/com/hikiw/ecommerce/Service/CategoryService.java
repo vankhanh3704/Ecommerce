@@ -5,7 +5,7 @@ import com.hikiw.ecommerce.Entity.CategoryEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.CategoryMapper;
-import com.hikiw.ecommerce.Model.Request.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Request.category.CategoryCreateRequest;
 import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import com.hikiw.ecommerce.Repository.CategoryClosureRepository;

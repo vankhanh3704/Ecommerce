@@ -1,8 +1,8 @@
 package com.hikiw.ecommerce.Controller;
 
 
-import com.hikiw.ecommerce.Model.Request.CategoryCreateRequest;
-import com.hikiw.ecommerce.Model.Request.MoveCategoryRequest;
+import com.hikiw.ecommerce.Model.Request.category.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Request.category.MoveCategoryRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;

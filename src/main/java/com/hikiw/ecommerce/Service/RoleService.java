@@ -2,7 +2,7 @@ package com.hikiw.ecommerce.Service;
 
 import com.hikiw.ecommerce.Entity.RoleEntity;
 import com.hikiw.ecommerce.Mapper.RoleMapper;
-import com.hikiw.ecommerce.Model.Request.RoleRequest;
+import com.hikiw.ecommerce.Model.Request.role.RoleRequest;
 import com.hikiw.ecommerce.Model.Response.RoleResponse;
 import com.hikiw.ecommerce.Repository.RoleRepository;
 import lombok.AccessLevel;

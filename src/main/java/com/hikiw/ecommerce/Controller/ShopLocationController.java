@@ -1,8 +1,8 @@
 package com.hikiw.ecommerce.Controller;
 
 
-import com.hikiw.ecommerce.Model.Request.ShopLocationCreationRequest;
-import com.hikiw.ecommerce.Model.Request.ShopLocationUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.location.ShopLocationCreationRequest;
+import com.hikiw.ecommerce.Model.Request.shop.location.ShopLocationUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ShopLocationResponse;
 import com.hikiw.ecommerce.Service.ShopLocationService;

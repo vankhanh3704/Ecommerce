@@ -1,5 +1,4 @@
-package com.hikiw.ecommerce.Model.Request;
-
+package com.hikiw.ecommerce.Model.Request.shop.location;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class ShopLocationCreationRequest {
-
-    Long shopId;
+public class ShopLocationUpdateRequest {
 
     String contactName;
 
@@ -33,6 +30,8 @@ public class ShopLocationCreationRequest {
     Boolean isDefaultPickup;
 
     Boolean isDefaultReturn;
+
+    Boolean isActive;
 
     String locationName;
 

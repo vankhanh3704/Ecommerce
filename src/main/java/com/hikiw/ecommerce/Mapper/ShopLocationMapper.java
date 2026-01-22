@@ -1,9 +1,8 @@
 package com.hikiw.ecommerce.Mapper;
 
-import com.hikiw.ecommerce.Entity.ShopEntity;
 import com.hikiw.ecommerce.Entity.ShopLocationEntity;
-import com.hikiw.ecommerce.Model.Request.ShopLocationCreationRequest;
-import com.hikiw.ecommerce.Model.Request.ShopLocationUpdateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.location.ShopLocationCreationRequest;
+import com.hikiw.ecommerce.Model.Request.shop.location.ShopLocationUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ShopLocationResponse;
 import org.mapstruct.*;
 
