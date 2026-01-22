@@ -36,4 +36,5 @@ public class ProductEntity {
     @JoinColumn(name = "shop_location_id")
     private ShopLocationEntity shopLocation;
     Long soldCount = 0L;
+    Boolean isActive = true;
 }

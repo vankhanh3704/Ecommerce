@@ -3,9 +3,9 @@ package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.ProductEntity;
 import com.hikiw.ecommerce.Model.Request.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
@@ -24,4 +24,7 @@ public interface ProductMapper {
     @Mapping(target = "shopLocationId", source = "shopLocation.shopLocationId")
     @Mapping(target = "shopLocationName", source = "shopLocation.locationName")
     ProductResponse toProductResponse(ProductEntity entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void toProductUpdate(@MappingTarget ProductEntity entity, ProductUpdateRequest request);
 }

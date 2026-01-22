@@ -5,6 +5,7 @@ import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.ProductMapper;
 import com.hikiw.ecommerce.Model.Request.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
 import com.hikiw.ecommerce.Repository.CategoryRepository;
 import com.hikiw.ecommerce.Repository.ProductRepository;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +54,51 @@ public class ProductService {
         product.setShopLocation(shopLocation);
         var savedProduct = productRepository.save(product);
         return productMapper.toProductResponse(savedProduct);
+    }
 
+    @Transactional
+    public ProductResponse getProductById(Long productId){
+        var product = productRepository.findById(productId)
+                .orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+        return productMapper.toProductResponse(product);
+    }
+
+    @Transactional
+    public void deleteProductById(Long productId){
+        var product = productRepository.findById(productId)
+                .orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+        product.setIsActive(false);
+        productRepository.save(product);
+    }
+
+    @Transactional
+    public void activateProduct(Long productId){
+        var product = productRepository.findById(productId)
+                .orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+        product.setIsActive(true);
+        productRepository.save(product);
+    }
+
+    @Transactional
+    public ProductResponse updateProduct(Long productId, ProductUpdateRequest request){
+        var product = productRepository
+                .findById(productId)
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+
+        var category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
+        var shopLocation = shopLocationRepository.findById(request.getShopLocationId()).orElseThrow(() -> new AppException(ErrorCode.SHOP_LOCATION_NOT_EXISTED));
+        productMapper.toProductUpdate(product, request);
+        product.setCategory(category);
+        product.setShopLocation(shopLocation);
+        var updatedProduct = productRepository.save(product);
+        return productMapper.toProductResponse(updatedProduct);
+    }
+
+    @Transactional
+    public List<ProductResponse> getAllProducts(){
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::toProductResponse)
+                .toList();
     }
 }

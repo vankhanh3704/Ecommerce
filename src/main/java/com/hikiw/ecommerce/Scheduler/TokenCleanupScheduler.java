@@ -23,7 +23,7 @@ public class TokenCleanupScheduler {
     // Chạy mỗi ngày lúc 00:00 (nửa đêm)
 //    @Scheduled(cron = "0 0 0 * * ?")
 
-    @Scheduled(fixedRate = 5 * 60 * 1000) // dọn sau 5 phút
+    @Scheduled(fixedRate = 60 * 60 * 1000) // dọn sau 60 phút
     @Transactional
     public void cleanExpiredTokens() {
         Integer deleted = invalidatedTokenRepository.deleteByExpiryTimeBefore(new Date());
