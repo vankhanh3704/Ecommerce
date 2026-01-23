@@ -12,5 +12,6 @@ public interface VariantMapper {
 
     VariantEntity toVariantEntity(VariantCreationRequest request);
 
+    @Mapping(target = "totalValues", expression = "java(entity.getVariantValues() == null ? 0 : entity.getVariantValues().size())")
     VariantResponse toVariantResponse(VariantEntity entity);
 }

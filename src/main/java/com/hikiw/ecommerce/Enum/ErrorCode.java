@@ -20,7 +20,8 @@ public enum ErrorCode {
     DEFAULT_PICKUP_LOCATION_ALREADY_EXISTS(1009, "Default pickup location already exists for this shop", HttpStatus.BAD_REQUEST),
     SHOP_EXISTED(1010, "Shop existed", HttpStatus.BAD_REQUEST),
     SHOP_LOCATION_NOT_EXISTED(1011, "Shop location not existed", HttpStatus.NOT_FOUND),
-    PRODUCT_NOT_EXISTED(1012, "Product not existed", HttpStatus.NOT_FOUND)
+    PRODUCT_NOT_EXISTED(1012, "Product not existed", HttpStatus.NOT_FOUND),
+    VARIANT_EXISTED(1013, "Variant existed", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

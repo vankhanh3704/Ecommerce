@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VariantRepository extends JpaRepository<VariantEntity, Long> {
+    boolean existsByVariantName(String variantName);
 }

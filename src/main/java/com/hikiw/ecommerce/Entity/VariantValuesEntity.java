@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,5 +33,5 @@ public class VariantValuesEntity {
     VariantEntity variant;
 
     @OneToMany(mappedBy = "variantValue", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<ProductVariantMappingEntity> productVariantMappings;
+    List<ProductVariantMappingEntity> productVariantMappings = new ArrayList<>();
 }
