@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ShopCreateRequest {
+public class ShopCreationRequest {
     @NotBlank(message = "Shop Name is required")
     String shopName;
     @NotNull(message = "Owner User ID cannot be null")

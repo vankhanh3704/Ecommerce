@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Controller;
 
 
-import com.hikiw.ecommerce.Model.Request.category.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Request.category.CategoryCreationRequest;
 import com.hikiw.ecommerce.Model.Request.category.MoveCategoryRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
@@ -22,7 +22,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @PostMapping
-    public ApiResponse<CategoryResponse> createCategory(@RequestBody CategoryCreateRequest request){
+    public ApiResponse<CategoryResponse> createCategory(@RequestBody CategoryCreationRequest request){
         return ApiResponse.<CategoryResponse>builder()
                 .result(categoryService.createCategory(request))
                 .build();

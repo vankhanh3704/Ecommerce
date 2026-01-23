@@ -2,7 +2,7 @@ package com.hikiw.ecommerce.Mapper;
 
 
 import com.hikiw.ecommerce.Entity.ProductEntity;
-import com.hikiw.ecommerce.Model.Request.product.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductCreationRequest;
 import com.hikiw.ecommerce.Model.Request.product.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
 import org.mapstruct.*;
@@ -15,7 +15,7 @@ public interface ProductMapper {
     @Mapping(target = "shop", ignore = true) // Set manually in service
     @Mapping(target = "category", ignore = true) // Set manually in service
     @Mapping(target = "shopLocation", ignore = true) // Set manually in service
-    ProductEntity toProductEntity(ProductCreateRequest request);
+    ProductEntity toProductEntity(ProductCreationRequest request);
 
     @Mapping(target = "shopId", source = "shop.shopId")
     @Mapping(target = "shopName", source = "shop.shopName")

@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.CategoryEntity;
-import com.hikiw.ecommerce.Model.Request.category.CategoryCreateRequest;
+import com.hikiw.ecommerce.Model.Request.category.CategoryCreationRequest;
 import com.hikiw.ecommerce.Model.Response.CategoryBreadCrumbsResponse;
 import com.hikiw.ecommerce.Model.Response.CategoryResponse;
 import org.mapstruct.Mapper;
@@ -16,7 +16,7 @@ public interface CategoryMapper {
     @Mapping(target = "categoryId", ignore = true)
     @Mapping(target = "ancestorRelations", ignore = true)
     @Mapping(target = "descendantRelations", ignore = true)
-    CategoryEntity toCategoryEntity(CategoryCreateRequest request);
+    CategoryEntity toCategoryEntity(CategoryCreationRequest request);
 
 
     // 2. Entity -> Response DTO

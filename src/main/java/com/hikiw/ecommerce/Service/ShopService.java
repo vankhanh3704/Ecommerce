@@ -6,7 +6,7 @@ import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.ShopLocationMapper;
 import com.hikiw.ecommerce.Mapper.ShopMapper;
-import com.hikiw.ecommerce.Model.Request.shop.ShopCreateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.ShopCreationRequest;
 import com.hikiw.ecommerce.Model.Request.shop.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ShopDetailResponse;
 import com.hikiw.ecommerce.Model.Response.ShopResponse;
@@ -43,7 +43,7 @@ public class ShopService {
                 .orElseThrow(() -> new AppException(ErrorCode.SHOP_NOT_EXISTED));
     }
     @Transactional
-    public ShopResponse createShop(ShopCreateRequest request){
+    public ShopResponse createShop(ShopCreationRequest request){
         UserEntity user = userRepository.findById(request.getOwnerUserId())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         if(shopRepository.findByShopName((request.getShopName())).isPresent()){

@@ -4,7 +4,7 @@ package com.hikiw.ecommerce.Service;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.ProductMapper;
-import com.hikiw.ecommerce.Model.Request.product.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductCreationRequest;
 import com.hikiw.ecommerce.Model.Request.product.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
 import com.hikiw.ecommerce.Repository.CategoryRepository;
@@ -33,7 +33,7 @@ public class ProductService {
 
 
     @Transactional
-    public ProductResponse createProduct(ProductCreateRequest request){
+    public ProductResponse createProduct(ProductCreationRequest request){
         if(productRepository.existsByProductName(request.getProductName())){
             throw new AppException(ErrorCode.PRODUCT_NOT_EXISTED);
         }

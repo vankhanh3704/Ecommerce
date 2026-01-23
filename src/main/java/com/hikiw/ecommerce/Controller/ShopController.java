@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Controller;
 
 
-import com.hikiw.ecommerce.Model.Request.shop.ShopCreateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.ShopCreationRequest;
 import com.hikiw.ecommerce.Model.Request.shop.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ShopDetailResponse;
@@ -23,7 +23,7 @@ public class ShopController {
 
 
     @PostMapping
-    ApiResponse<ShopResponse> createShop(@RequestBody ShopCreateRequest request){
+    ApiResponse<ShopResponse> createShop(@RequestBody ShopCreationRequest request){
         return ApiResponse.<ShopResponse>builder()
                 .result(shopService.createShop(request))
                 .build();

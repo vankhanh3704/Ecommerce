@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.ShopEntity;
-import com.hikiw.ecommerce.Model.Request.shop.ShopCreateRequest;
+import com.hikiw.ecommerce.Model.Request.shop.ShopCreationRequest;
 import com.hikiw.ecommerce.Model.Request.shop.ShopUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ShopDetailResponse;
 import com.hikiw.ecommerce.Model.Response.ShopResponse;
@@ -21,7 +21,7 @@ public interface ShopMapper {
     @Mapping(target = "isVerified", constant = "false")
     @Mapping(target = "isActive", constant = "true")
     @Mapping(target = "shopLocations", ignore = true)
-    ShopEntity toEntity(ShopCreateRequest request);
+    ShopEntity toEntity(ShopCreationRequest request);
 
     // entity -> response
     @Mapping(source = "owner.id", target = "ownerUserId")

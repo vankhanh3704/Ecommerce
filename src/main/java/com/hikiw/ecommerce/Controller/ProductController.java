@@ -1,6 +1,6 @@
 package com.hikiw.ecommerce.Controller;
 
-import com.hikiw.ecommerce.Model.Request.product.ProductCreateRequest;
+import com.hikiw.ecommerce.Model.Request.product.ProductCreationRequest;
 import com.hikiw.ecommerce.Model.Request.product.ProductUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ProductResponse;
@@ -20,7 +20,7 @@ public class ProductController {
     ProductService productService;
 
     @RequestMapping(method = RequestMethod.POST)
-    ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreateRequest request){
+    ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreationRequest request){
         return ApiResponse.<ProductResponse>builder()
                 .result(productService.createProduct(request))
                 .build();
