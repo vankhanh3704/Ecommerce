@@ -21,7 +21,9 @@ public enum ErrorCode {
     SHOP_EXISTED(1010, "Shop existed", HttpStatus.BAD_REQUEST),
     SHOP_LOCATION_NOT_EXISTED(1011, "Shop location not existed", HttpStatus.NOT_FOUND),
     PRODUCT_NOT_EXISTED(1012, "Product not existed", HttpStatus.NOT_FOUND),
-    VARIANT_EXISTED(1013, "Variant existed", HttpStatus.BAD_REQUEST)
+    VARIANT_EXISTED(1013, "Variant existed", HttpStatus.BAD_REQUEST),
+    VARIANT_NOT_EXISTED(1014, "Variant not existed", HttpStatus.NOT_FOUND),
+    VARIANT_HAS_VALUES(1015, "Variant has values, can't delete", HttpStatus.BAD_REQUEST),
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
