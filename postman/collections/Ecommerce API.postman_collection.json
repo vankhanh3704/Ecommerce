@@ -1,0 +1,969 @@
+{
+	"info": {
+		"_postman_id": "ecommerce-api-collection",
+		"name": "Ecommerce API",
+		"description": "API collection for the Ecommerce Spring Boot application. This collection includes endpoints for authentication, users, roles, shops, shop locations, categories, products, variants, and variant values.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"description": "Authentication endpoints for login, token introspection, logout, and token refresh",
+			"item": [
+				{
+					"name": "Authenticate (Get Token)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"\",\n    \"password\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/token",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "token"]
+						},
+						"description": "Authenticate user and obtain access token"
+					}
+				},
+				{
+					"name": "Introspect Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/introspect",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "introspect"]
+						},
+						"description": "Validate and introspect a token"
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "logout"]
+						},
+						"description": "Logout and invalidate the token"
+					}
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/refresh",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "refresh"]
+						},
+						"description": "Refresh an expired access token"
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"description": "User management endpoints for CRUD operations",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"\",\n    \"password\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						},
+						"description": "Create a new user"
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						},
+						"description": "Retrieve all users"
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:userId",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":userId"],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1",
+									"description": "User ID"
+								}
+							]
+						},
+						"description": "Retrieve a user by their ID"
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"\",\n    \"password\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:userId",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":userId"],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1",
+									"description": "User ID"
+								}
+							]
+						},
+						"description": "Update an existing user"
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:userId",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":userId"],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1",
+									"description": "User ID"
+								}
+							]
+						},
+						"description": "Delete a user by their ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"description": "Role management endpoints",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"\",\n    \"description\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/roles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "roles"]
+						},
+						"description": "Create a new role"
+					}
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/roles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "roles"]
+						},
+						"description": "Retrieve all roles"
+					}
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/roles/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "roles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Role ID (String)"
+								}
+							]
+						},
+						"description": "Delete a role by its ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Shops",
+			"description": "Shop management endpoints",
+			"item": [
+				{
+					"name": "Create Shop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shopName\": \"\",\n    \"ownerUserId\": 1,\n    \"description\": \"\",\n    \"phoneNumber\": \"\",\n    \"email\": \"\",\n    \"address\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shops",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shops"]
+						},
+						"description": "Create a new shop"
+					}
+				},
+				{
+					"name": "Get All Shops",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shops",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shops"]
+						},
+						"description": "Retrieve all shops"
+					}
+				},
+				{
+					"name": "Get Shop by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shops/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shops", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Shop ID"
+								}
+							]
+						},
+						"description": "Retrieve a shop by its ID"
+					}
+				},
+				{
+					"name": "Get Shop by Owner ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shops/owner/:ownerId",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shops", "owner", ":ownerId"],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "1",
+									"description": "Owner User ID"
+								}
+							]
+						},
+						"description": "Retrieve shop details by owner user ID"
+					}
+				},
+				{
+					"name": "Update Shop",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shopName\": \"\",\n    \"description\": \"\",\n    \"phoneNumber\": \"\",\n    \"email\": \"\",\n    \"address\": \"\",\n    \"isActive\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shops/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shops", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Shop ID"
+								}
+							]
+						},
+						"description": "Update an existing shop"
+					}
+				},
+				{
+					"name": "Delete Shop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shops/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shops", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Shop ID"
+								}
+							]
+						},
+						"description": "Delete a shop by its ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Shop Locations",
+			"description": "Shop location management endpoints",
+			"item": [
+				{
+					"name": "Create Shop Location",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shopId\": 1,\n    \"contactName\": \"\",\n    \"phoneNumber\": \"\",\n    \"street\": \"\",\n    \"ward\": \"\",\n    \"district\": \"\",\n    \"city\": \"\",\n    \"country\": \"\",\n    \"postalCode\": \"\",\n    \"isDefaultPickup\": false,\n    \"isDefaultReturn\": false,\n    \"locationName\": \"\",\n    \"note\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shop-locations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shop-locations"]
+						},
+						"description": "Create a new shop location"
+					}
+				},
+				{
+					"name": "Get All Shop Locations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shop-locations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shop-locations"]
+						},
+						"description": "Retrieve all shop locations"
+					}
+				},
+				{
+					"name": "Get Shop Location by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shop-locations/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shop-locations", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Shop Location ID"
+								}
+							]
+						},
+						"description": "Retrieve a shop location by its ID"
+					}
+				},
+				{
+					"name": "Update Shop Location",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contactName\": \"\",\n    \"phoneNumber\": \"\",\n    \"street\": \"\",\n    \"ward\": \"\",\n    \"district\": \"\",\n    \"city\": \"\",\n    \"country\": \"\",\n    \"postalCode\": \"\",\n    \"isDefaultPickup\": false,\n    \"isDefaultReturn\": false,\n    \"isActive\": true,\n    \"locationName\": \"\",\n    \"note\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shop-locations/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shop-locations", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Shop Location ID"
+								}
+							]
+						},
+						"description": "Update an existing shop location"
+					}
+				},
+				{
+					"name": "Delete Shop Location",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/shop-locations/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "shop-locations", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Shop Location ID"
+								}
+							]
+						},
+						"description": "Delete a shop location by its ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"description": "Category management endpoints with hierarchical structure support",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryName\": \"\",\n    \"parentId\": null\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories"]
+						},
+						"description": "Create a new category. Set parentId to null for root categories."
+					}
+				},
+				{
+					"name": "Get Category by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Retrieve category details by ID"
+					}
+				},
+				{
+					"name": "Get Root Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/root",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "root"]
+						},
+						"description": "Retrieve all root-level categories"
+					}
+				},
+				{
+					"name": "Get Children Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/:parentId/children",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", ":parentId", "children"],
+							"variable": [
+								{
+									"key": "parentId",
+									"value": "1",
+									"description": "Parent Category ID"
+								}
+							]
+						},
+						"description": "Retrieve all child categories of a parent category"
+					}
+				},
+				{
+					"name": "Get Category Breadcrumbs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/:id/breadcrumbs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", ":id", "breadcrumbs"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Retrieve breadcrumb trail for a category"
+					}
+				},
+				{
+					"name": "Move Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newParentId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/:categoryId/move",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", ":categoryId", "move"],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "1",
+									"description": "Category ID to move"
+								}
+							]
+						},
+						"description": "Move a category to a new parent"
+					}
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Delete a category by its ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"description": "Product management endpoints",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productName\": \"\",\n    \"description\": \"\",\n    \"basePrice\": 0.0,\n    \"shopId\": 1,\n    \"categoryId\": 1,\n    \"shopLocationId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products"]
+						},
+						"description": "Create a new product"
+					}
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products"]
+						},
+						"description": "Retrieve all products"
+					}
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Product ID"
+								}
+							]
+						},
+						"description": "Retrieve a product by its ID"
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": 1,\n    \"shopLocationId\": 1,\n    \"productName\": \"\",\n    \"description\": \"\",\n    \"basePrice\": 0.0,\n    \"isActive\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Product ID"
+								}
+							]
+						},
+						"description": "Update an existing product"
+					}
+				},
+				{
+					"name": "Activate Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/:id/activate",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", ":id", "activate"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Product ID"
+								}
+							]
+						},
+						"description": "Activate a product"
+					}
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/products/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Product ID"
+								}
+							]
+						},
+						"description": "Delete a product by its ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Variants",
+			"description": "Product variant management endpoints (e.g., Size, Color)",
+			"item": [
+				{
+					"name": "Create Variant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"variantName\": \"\",\n    \"displayOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/variants",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variants"]
+						},
+						"description": "Create a new variant type (e.g., Size, Color)"
+					}
+				},
+				{
+					"name": "Get All Variants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/variants",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variants"]
+						},
+						"description": "Retrieve all variant types"
+					}
+				},
+				{
+					"name": "Get Variant by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/variants/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variants", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Variant ID"
+								}
+							]
+						},
+						"description": "Retrieve variant details by ID"
+					}
+				},
+				{
+					"name": "Update Variant",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"variantName\": \"\",\n    \"displayOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/variants/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variants", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Variant ID"
+								}
+							]
+						},
+						"description": "Update an existing variant"
+					}
+				},
+				{
+					"name": "Delete Variant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/variants/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variants", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Variant ID"
+								}
+							]
+						},
+						"description": "Delete a variant by its ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Variant Values",
+			"description": "Variant value management endpoints (e.g., Small, Medium, Large for Size variant)",
+			"item": [
+				{
+					"name": "Create Variant Value",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"variantId\": 1,\n    \"valueName\": \"\",\n    \"displayOrder\": 0,\n    \"isActive\": true,\n    \"imageUrl\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/variant-values",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variant-values"]
+						},
+						"description": "Create a new variant value (e.g., 'Red' for Color variant)"
+					}
+				},
+				{
+					"name": "Update Variant Value",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"valueName\": \"\",\n    \"displayOrder\": 0,\n    \"isActive\": true,\n    \"imageUrl\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/variant-values/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "variant-values", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Variant Value ID"
+								}
+							]
+						},
+						"description": "Update an existing variant value"
+					}
+				}
+			]
+		}
+	]
+}
