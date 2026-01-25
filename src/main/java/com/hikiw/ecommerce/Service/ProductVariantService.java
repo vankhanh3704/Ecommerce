@@ -13,4 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class ProductVariantService {
     ProductVariantRepository productVariantRepository;
+
 }

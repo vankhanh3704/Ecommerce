@@ -26,7 +26,7 @@ public class ProductVariantEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
-    ProductEntity productEntity; // sản phẩm gốc
+    ProductEntity product; // sản phẩm gốc
 
     @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL, orphanRemoval = true)
     List<ProductVariantMappingEntity> variantMappings = new ArrayList<>(); // các biến thể của sản phẩm
@@ -38,4 +38,29 @@ public class ProductVariantEntity {
     Integer soldCount = 0; // số lượng đã bán của biến thể
     String imageUrl;
     Boolean isActive = true;
+
+
+
+    // ========== HELPER METHODS ==========
+    public Boolean getInStock() {
+        return stock != null && stock > 0; // Còn hàng nếu số lượng tồn kho lớn hơn 0
+    }
+
+
+    // Phương thức để lấy thông tin biến thể dưới dạng chuỗi
+    public String getVariantInfo() {
+        return variantMappings.stream()
+                .map(mapping -> mapping.getVariantValue().getValueName())
+                .reduce( (info1, info2) -> info1 + "-" + info2) // VD: "Đỏ - M" hoặc "Titan Đen - 128GB"
+                .orElse("");
+    }
+
+    // Phương thức để tính toán tỷ lệ phần trăm giảm giá
+    public Double getDiscountPercentage() {
+        if(oldPrice != null && oldPrice > 0 && price != null){
+            return ((oldPrice - price) / oldPrice) * 100;
+        } else {
+            return 0.0;
+        }
+    }
 }
