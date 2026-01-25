@@ -25,7 +25,9 @@ public enum ErrorCode {
     VARIANT_NOT_EXISTED(1014, "Variant not existed", HttpStatus.NOT_FOUND),
     VARIANT_HAS_VALUES(1015, "Variant has values, can't delete", HttpStatus.BAD_REQUEST),
     VARIANT_VALUE_EXISTED(1016, "Variant value existed", HttpStatus.BAD_REQUEST),
-    VARIANT_VALUE_NOT_EXISTED(1017, "Variant value not existed", HttpStatus.NOT_FOUND)
+    VARIANT_VALUE_NOT_EXISTED(1017, "Variant value not existed", HttpStatus.NOT_FOUND),
+    PRODUCT_VARIANT_NOT_EXISTED(1018, "Product variant not existed", HttpStatus.NOT_FOUND),
+    PRODUCT_VARIANT_MAPPING_EXISTED(1019, "Product variant mapping existed", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

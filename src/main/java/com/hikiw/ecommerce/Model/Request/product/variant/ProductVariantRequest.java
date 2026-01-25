@@ -1,6 +1,5 @@
 package com.hikiw.ecommerce.Model.Request.product.variant;
 
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,12 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductVariantMappingCreationRequest {
-    Long productVariantId;
-    Long variantValueId;
+public class ProductVariantRequest {
+    Long productId;
+    String sku;
+    Double price;
+    Double oldPrice;
+    Integer stock;
+    String imageUrl;
+    Boolean isActive;
 }

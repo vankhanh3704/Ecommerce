@@ -17,25 +17,25 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-@Table(name = "product_variants")
+@Table(name = "product_variant")
 public class ProductVariantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_variant_id")
-    Long productVariantId;
+    Long productVariantId; // sản phẩm biến thể
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
-    ProductEntity productEntity;
+    ProductEntity productEntity; // sản phẩm gốc
 
     @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<ProductVariantMappingEntity> variantMappings = new ArrayList<>();
+    List<ProductVariantMappingEntity> variantMappings = new ArrayList<>(); // các biến thể của sản phẩm
 
-    String sku;
-    Double price;
-    Double oldPrice;
-    Integer stock = 0;
-    Integer soldCount = 0;
+    String sku; // mã SKU
+    Double price; // Giá bán hiện tại (QUAN TRỌNG: Mỗi variant có giá riêng)
+    Double oldPrice; // Giá cũ (để hiển thị khuyến mãi)
+    Integer stock = 0; // số lượng tồn kho của biến thể
+    Integer soldCount = 0; // số lượng đã bán của biến thể
     String imageUrl;
     Boolean isActive = true;
 }

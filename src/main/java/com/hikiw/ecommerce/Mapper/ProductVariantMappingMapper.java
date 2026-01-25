@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.ProductVariantMappingEntity;
-import com.hikiw.ecommerce.Model.Request.product.variant.ProductVariantMappingCreationRequest;
+import com.hikiw.ecommerce.Model.Request.product.variant.mapping.ProductVariantMappingCreationRequest;
 import com.hikiw.ecommerce.Model.Response.ProductVariantMappingResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

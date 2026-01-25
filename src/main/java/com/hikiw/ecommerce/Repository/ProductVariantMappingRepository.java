@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductVariantMappingRepository extends JpaRepository<ProductVariantMappingEntity, Long> {
+    boolean existsByProductVariant_ProductVariantIdAndVariantValue_VariantValueId(Long productVariantId, Long variantValueId);
 }

@@ -1,4 +1,4 @@
-package com.hikiw.ecommerce.Model.Request.product.variant;
+package com.hikiw.ecommerce.Model.Request.product.variant.mapping;
 
 
 import lombok.AccessLevel;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductVariantMappingBatchRequest {
-    Long productVariantId;
+public class FindProductVariantByValuesRequest {
+    Long productId;
     List<Long> variantValueIds;
 }
