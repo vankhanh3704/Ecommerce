@@ -29,6 +29,7 @@ public class ProductVariantEntity {
     ProductEntity product; // sản phẩm gốc
 
     @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     List<ProductVariantMappingEntity> variantMappings = new ArrayList<>(); // các biến thể của sản phẩm
 
     String sku; // mã SKU
@@ -48,10 +49,10 @@ public class ProductVariantEntity {
 
 
     // Phương thức để lấy thông tin biến thể dưới dạng chuỗi
-    public String getVariantInfo() {
+    public String getVariantInfoString() {
         return variantMappings.stream()
                 .map(mapping -> mapping.getVariantValue().getValueName())
-                .reduce( (info1, info2) -> info1 + "-" + info2) // VD: "Đỏ - M" hoặc "Titan Đen - 128GB"
+                .reduce((a, b) -> a + " - " + b)
                 .orElse("");
     }
 

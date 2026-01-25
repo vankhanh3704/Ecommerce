@@ -19,6 +19,5 @@ public class ProductVariantCreationRequest {
     Double oldPrice;
     Integer stock;
     String imageUrl;
-    Boolean isActive;
     List<Long> variantValueIds; // VD: [1, 4] = Đỏ + M
 }

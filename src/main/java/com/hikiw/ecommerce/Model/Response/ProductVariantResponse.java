@@ -17,7 +17,7 @@ public class ProductVariantResponse {
     Long productVariantId;
     String sku;
     Long productId;
-    Long productName;
+    String productName;
     Double price;
     Integer stock;
     Double oldPrice;
@@ -26,9 +26,4 @@ public class ProductVariantResponse {
     Boolean inStock; // Trạng thái còn hàng hay hết hàng
     String variantInfo; // Thông tin biến thể dưới dạng chuỗi, ví dụ: "Màu: Đỏ, Kích cỡ: M"
     Double discountPercentage; // Tỷ lệ phần trăm giảm giá
-    private List<ProductVariantMappingEntity> variantMappings = new ArrayList<>();
-
-
-
-
 }

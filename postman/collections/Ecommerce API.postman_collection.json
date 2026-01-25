@@ -902,6 +902,50 @@
       "name": "Products",
       "item": [
         {
+          "name": "Variant",
+          "item": [
+            {
+              "name": "Create Product Variant",
+              "id": "38a9842b-c922-4dfa-bc30-c35f06decf77",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzY5MzQxNzc4LCJpYXQiOjE3NjkzMzgxNzgsImp0aSI6IjQ2ZGI3M2MxLTYzMjUtNDc4ZS1iMmY4LWUzZWFjY2NkNTg1MSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.M5ldxmZdoGU__v83B-AmdFRkvTLsAAsxPbL5zLmjATyLP_CynNIxebR0jmZ7ZxBCOdLa0a8pJySA58ij1aIO4w",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"productId\" : \"1\",\n    \"sku\":\"SKU-RED-M-001\",\n    \"price\":\"299000\",\n    \"oldPrice\":\"349000\",\n    \"stock\":\"50\",\n    \"imageUrl\":\"\",\n    \"variantValueIds\" : [1, 4]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/product-variant",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-variant"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "92f920aa-9fd1-42b5-8129-bd7fc045bb6d"
+        },
+        {
           "name": "Create Product",
           "id": "0acb613d-132e-4dd1-a503-f4bda135eb41",
           "request": {

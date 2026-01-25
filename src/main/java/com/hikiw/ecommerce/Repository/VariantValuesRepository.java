@@ -15,4 +15,6 @@ public interface VariantValuesRepository extends JpaRepository<VariantValuesEnti
 
     @Query("Select vv from VariantValuesEntity vv where vv.variant.variantId = :variantId ORDER BY vv.displayOrder ASC, vv.valueName ASC")
     List<VariantValuesEntity> findByVariantIdOrderedByDisplayOrder(@Param("variantId") Long variantId);
+
+    List<VariantValuesEntity> findByVariantValueIdIn(List<Long> variantValueIds);
 }

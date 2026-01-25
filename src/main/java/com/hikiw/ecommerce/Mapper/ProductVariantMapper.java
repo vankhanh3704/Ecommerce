@@ -13,10 +13,13 @@ public interface ProductVariantMapper {
     @Mapping(target = "productName", source = "product.productName")
     @Mapping(target = "inStock", expression = "java(entity.getInStock())")
     @Mapping(target = "discountPercentage", expression = "java(entity.getDiscountPercentage())")
-    @Mapping(target = "variantInfo", expression = "java(entity.getVariantInfo())")
+    @Mapping(target = "variantInfo", expression = "java(entity.getVariantInfoString())")
     ProductVariantResponse toResponse(ProductVariantEntity entity);
 
-
+    @Mapping(target = "productVariantId", ignore = true)
+    @Mapping(target = "variantMappings", ignore = true)
+    @Mapping(target = "isActive", constant = "true")
+    @Mapping(target = "soldCount", constant = "0")
     ProductVariantEntity toEntity(ProductVariantCreationRequest request);
 
 }

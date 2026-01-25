@@ -32,7 +32,8 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 );
 //         đoạn này là phải authenticated ( login) ms request đc vào system
         httpSecurity
