@@ -1,6 +1,5 @@
 package com.hikiw.ecommerce.Model.Response;
 
-import com.hikiw.ecommerce.Entity.ShopLocationEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

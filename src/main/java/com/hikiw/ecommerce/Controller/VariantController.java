@@ -8,7 +8,6 @@ import com.hikiw.ecommerce.Model.Response.VariantDetailResponse;
 import com.hikiw.ecommerce.Model.Response.VariantResponse;
 import com.hikiw.ecommerce.Service.VariantService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;

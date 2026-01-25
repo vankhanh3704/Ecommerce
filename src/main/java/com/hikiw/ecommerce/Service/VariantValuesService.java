@@ -7,7 +7,6 @@ import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.VariantValuesMapper;
 import com.hikiw.ecommerce.Model.Request.variant.values.VariantValuesCreationRequest;
 import com.hikiw.ecommerce.Model.Request.variant.values.VariantValuesUpdateRequest;
-import com.hikiw.ecommerce.Model.Response.VariantDetailResponse;
 import com.hikiw.ecommerce.Model.Response.VariantValuesDetailResponse;
 import com.hikiw.ecommerce.Model.Response.VariantValuesResponse;
 import com.hikiw.ecommerce.Repository.VariantRepository;

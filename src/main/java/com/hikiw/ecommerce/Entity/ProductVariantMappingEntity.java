@@ -25,4 +25,7 @@ public class ProductVariantMappingEntity {
     @JoinColumn(name = "variant_value_id", nullable = false)
     VariantValuesEntity variantValue;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_variant_id", nullable = false)
+    ProductVariant productVariant;
 }

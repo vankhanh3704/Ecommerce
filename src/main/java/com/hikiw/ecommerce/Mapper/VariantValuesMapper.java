@@ -1,10 +1,8 @@
 package com.hikiw.ecommerce.Mapper;
 
-import com.hikiw.ecommerce.Entity.VariantEntity;
 import com.hikiw.ecommerce.Entity.VariantValuesEntity;
 import com.hikiw.ecommerce.Model.Request.variant.values.VariantValuesCreationRequest;
 import com.hikiw.ecommerce.Model.Request.variant.values.VariantValuesUpdateRequest;
-import com.hikiw.ecommerce.Model.Response.VariantDetailResponse;
 import com.hikiw.ecommerce.Model.Response.VariantValuesDetailResponse;
 import com.hikiw.ecommerce.Model.Response.VariantValuesResponse;
 import org.mapstruct.BeanMapping;

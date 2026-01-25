@@ -1,6 +1,5 @@
 package com.hikiw.ecommerce.Controller;
 
-import com.hikiw.ecommerce.Model.Request.variant.VariantCreationRequest;
 import com.hikiw.ecommerce.Model.Request.variant.values.VariantValuesCreationRequest;
 import com.hikiw.ecommerce.Model.Request.variant.values.VariantValuesUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
