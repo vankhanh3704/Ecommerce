@@ -38,4 +38,6 @@ public interface ProductVariantMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = org.mapstruct.NullValuePropertyMappingStrategy.IGNORE)
     void updateProductVariant(@MappingTarget ProductVariantEntity entity, ProductVariantUpdateRequest request);
+
+
 }

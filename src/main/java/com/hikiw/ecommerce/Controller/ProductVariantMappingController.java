@@ -1,6 +1,7 @@
 package com.hikiw.ecommerce.Controller;
 
 
+import com.hikiw.ecommerce.Model.Request.product.variant.mapping.ProductVariantMappingBatchRequest;
 import com.hikiw.ecommerce.Model.Request.product.variant.mapping.ProductVariantMappingCreationRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ProductVariantMappingResponse;
@@ -9,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +39,14 @@ public class ProductVariantMappingController {
         productVariantMappingService.deleteMappingById(id);
         return ApiResponse.<Void>builder()
                 .message("Successfully deleted")
+                .build();
+    }
+
+    @PostMapping("/batch")
+    public ApiResponse<List<ProductVariantMappingResponse>> createMappingsBatch(@RequestBody ProductVariantMappingBatchRequest requests){
+        return ApiResponse.<List<ProductVariantMappingResponse>>builder()
+                .result(productVariantMappingService.createMappingsBatch(requests))
+                .message("Successfully created product mapping batch")
                 .build();
     }
 }

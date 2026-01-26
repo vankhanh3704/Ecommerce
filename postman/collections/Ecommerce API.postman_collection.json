@@ -975,8 +975,37 @@
                   "response": []
                 },
                 {
-                  "name": "Get All",
+                  "name": "Create Batch",
                   "id": "c8f30c3a-ec47-4a2e-bd81-80e66c359eda",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"productVariantId\" : 7,\n    \"variantValueIds\" : [2, 1]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-variant-mapping/batch",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-variant-mapping",
+                        "batch"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get Mappings By Product Variant",
+                  "id": "8434ff9e-7431-4305-a12a-1c883e8064a5",
                   "request": {
                     "method": "GET",
                     "header": [],
