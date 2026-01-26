@@ -9,13 +9,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class VariantValuesResponse {
+public class VariantValuesInfo {
     Long variantValueId;
     Long variantId;
     String variantName;
     String valueName;
-    Integer displayOrder;
-    Boolean isActive;
     String imageUrl;
-
 }
