@@ -49,11 +49,20 @@ public class ProductVariantMappingService {
         return productVariantMappingMapper.toResponse(savedMapping);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ProductVariantMappingResponse getMappingById(Long id){
         var mappingEntity = productVariantMappingRepository
                 .findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_VARIANT_MAPPING_EXISTED));
         return productVariantMappingMapper.toResponse(mappingEntity);
     }
+
+    @Transactional
+    public void deleteMappingById(Long id){
+        var mappingEntity = productVariantMappingRepository
+                .findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_VARIANT_MAPPING_NOT_EXISTED));
+        productVariantMappingRepository.delete(mappingEntity);
+    }
+
 }

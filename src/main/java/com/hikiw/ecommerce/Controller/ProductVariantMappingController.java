@@ -30,4 +30,12 @@ public class ProductVariantMappingController {
                 .result(productVariantMappingService.getMappingById(id))
                 .build();
     }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deleteMapping(@PathVariable Long id){
+        productVariantMappingService.deleteMappingById(id);
+        return ApiResponse.<Void>builder()
+                .message("Successfully deleted")
+                .build();
+    }
 }

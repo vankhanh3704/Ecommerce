@@ -934,6 +934,57 @@
                     }
                   },
                   "response": []
+                },
+                {
+                  "name": "Get Product Variant Mapping by Id",
+                  "id": "a5d8147f-e499-4424-a683-fb614a0580af",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete by Id",
+                  "id": "52b3f7cc-3253-4108-a6f5-4c7f6882d395",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-variant-mapping/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-variant-mapping",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "12",
+                          "uuid": "70198c94-32dc-4420-ac89-02ae4f8607c3"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get All",
+                  "id": "c8f30c3a-ec47-4a2e-bd81-80e66c359eda",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
                 }
               ],
               "id": "f61b92a6-1b7b-43db-b687-4d7626f3254b"
