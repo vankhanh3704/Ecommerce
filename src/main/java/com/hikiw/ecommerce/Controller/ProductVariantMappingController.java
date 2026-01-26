@@ -8,9 +8,7 @@ import com.hikiw.ecommerce.Service.ProductVariantMappingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +18,16 @@ public class ProductVariantMappingController {
     ProductVariantMappingService productVariantMappingService;
 
     @PostMapping
-    public ApiResponse<ProductVariantMappingResponse> createMapping(ProductVariantMappingCreationRequest request){
+    public ApiResponse<ProductVariantMappingResponse> createMapping(@RequestBody ProductVariantMappingCreationRequest request){
         return ApiResponse.<ProductVariantMappingResponse>builder()
                 .result(productVariantMappingService.createMapping(request))
+                .build();
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<ProductVariantMappingResponse> getMapping(@PathVariable Long id){
+        return ApiResponse.<ProductVariantMappingResponse>builder()
+                .result(productVariantMappingService.getMappingById(id))
                 .build();
     }
 }

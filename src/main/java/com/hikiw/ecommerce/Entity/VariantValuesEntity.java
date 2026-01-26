@@ -1,24 +1,22 @@
 package com.hikiw.ecommerce.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+// Giá trị của biến thể (ví dụ: nhỏ, vừa, lớn cho kích thước; đỏ, xanh cho màu sắc)
 @Entity
 @Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Table(name = "variant_values")
-
-// Giá trị của biến thể (ví dụ: nhỏ, vừa, lớn cho kích thước; đỏ, xanh cho màu sắc)
+@Getter
+@Setter
 public class VariantValuesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

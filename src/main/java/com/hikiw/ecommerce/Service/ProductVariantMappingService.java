@@ -2,6 +2,7 @@ package com.hikiw.ecommerce.Service;
 
 
 import com.hikiw.ecommerce.Entity.ProductVariantEntity;
+import com.hikiw.ecommerce.Entity.VariantValuesEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Exception.AppException;
 import com.hikiw.ecommerce.Mapper.ProductVariantMappingMapper;
@@ -28,12 +29,13 @@ public class ProductVariantMappingService {
 
 
     @Transactional
-    public ProductVariantMappingResponse createMapping(ProductVariantMappingCreationRequest request) {
+    public ProductVariantMappingResponse createMapping(@org.jetbrains.annotations.NotNull ProductVariantMappingCreationRequest request) {
         ProductVariantEntity productVariant = productVariantRepository
                 .findById(request.getProductVariantId())
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_VARIANT_NOT_EXISTED));
 
-        var variantValue = variantValuesRepository.findById(request.getVariantValueId())
+        VariantValuesEntity variantValue = variantValuesRepository
+                .findById(request.getVariantValueId())
                 .orElseThrow(() -> new AppException(ErrorCode.VARIANT_VALUE_NOT_EXISTED));
 
         if(productVariantMappingRepository.existsByProductVariant_ProductVariantIdAndVariantValue_VariantValueId( productVariant.getProductVariantId(),
@@ -45,5 +47,13 @@ public class ProductVariantMappingService {
         mappingEntity.setVariantValue(variantValue);
         var savedMapping = productVariantMappingRepository.save(mappingEntity);
         return productVariantMappingMapper.toResponse(savedMapping);
+    }
+
+    @Transactional
+    public ProductVariantMappingResponse getMappingById(Long id){
+        var mappingEntity = productVariantMappingRepository
+                .findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_VARIANT_MAPPING_EXISTED));
+        return productVariantMappingMapper.toResponse(mappingEntity);
     }
 }

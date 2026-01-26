@@ -12,7 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
+@Setter
+@Getter
 public class InvalidatedToken {
     @Id
     String id;

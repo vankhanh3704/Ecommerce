@@ -905,6 +905,40 @@
           "name": "Variant",
           "item": [
             {
+              "name": "Mapping",
+              "item": [
+                {
+                  "name": "Create Product Variant Mapping",
+                  "id": "e49f3c20-ac45-4729-ae6e-1d6ec83508c9",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"productVariantId\" : 11,\n    \"variantValueId\" : 2\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-variant-mapping",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-variant-mapping"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "id": "f61b92a6-1b7b-43db-b687-4d7626f3254b"
+            },
+            {
               "name": "Create Product Variant",
               "id": "38a9842b-c922-4dfa-bc30-c35f06decf77",
               "request": {
@@ -1021,8 +1055,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "11",
-                      "uuid": "ec49b4c9-2ef6-486c-9ec9-b0d929f38ec5"
+                      "value": "11"
                     }
                   ]
                 }

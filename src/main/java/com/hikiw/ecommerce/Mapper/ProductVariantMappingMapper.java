@@ -13,6 +13,11 @@ public interface ProductVariantMappingMapper {
 
     @Mapping(target = "productVariantId", source = "productVariant.productVariantId")
     @Mapping(target = "productVariantSku", source = "productVariant.sku")
+    @Mapping(target = "variantValueId", source = "variantValue.variantValueId")
+    @Mapping(target = "variantName", source = "variantValue.variant.variantName")
+    @Mapping(target = "valueName", source = "variantValue.valueName")
+    @Mapping(target = "valueImageUrl", source = "variantValue.imageUrl")
+    @Mapping(target = "fullInfo", expression = "java(entity.getFullInfo())")
     ProductVariantMappingResponse toResponse(ProductVariantMappingEntity entity);
 
 

@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Entity
 @Builder
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

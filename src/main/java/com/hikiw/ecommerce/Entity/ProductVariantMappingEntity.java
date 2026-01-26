@@ -2,15 +2,13 @@ package com.hikiw.ecommerce.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @Builder
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
@@ -28,4 +26,12 @@ public class ProductVariantMappingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_variant_id", nullable = false)
     ProductVariantEntity productVariant;
+
+
+    public String getFullInfo(){
+        if(variantValue != null && variantValue.getValueName() != null){
+            return variantValue.getVariant().getVariantName() + " " + variantValue.getValueName();
+        }
+        return null;
+    }
 }
