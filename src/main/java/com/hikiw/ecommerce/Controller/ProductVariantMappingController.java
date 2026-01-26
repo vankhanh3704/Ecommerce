@@ -49,4 +49,11 @@ public class ProductVariantMappingController {
                 .message("Successfully created product mapping batch")
                 .build();
     }
+
+    @GetMapping("/product-variant/{productVariantId}")
+    public ApiResponse<List<ProductVariantMappingResponse>> getMappingsByProductVariantId(@PathVariable Long productVariantId){
+        return ApiResponse.<List<ProductVariantMappingResponse>>builder()
+                .result(productVariantMappingService.getMappingsByProductVariantId(productVariantId))
+                .build();
+    }
 }

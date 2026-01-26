@@ -87,6 +87,7 @@ public class ProductVariantMappingService {
                     .findById(variantValueId)
                     .orElseThrow(() -> new AppException(ErrorCode.VARIANT_VALUE_NOT_EXISTED));
 
+            // Check for existing mapping to avoid duplicates
             if(productVariantMappingRepository.existsByProductVariant_ProductVariantIdAndVariantValue_VariantValueId( productVariant.getProductVariantId(),
                     variantValue.getVariantValueId())) {
                 log.warn("Mapping already exists for variant value ID: {}, skipping", variantValueId);
@@ -100,5 +101,13 @@ public class ProductVariantMappingService {
             mappings.add(productVariantMappingRepository.save(mappingEntity));
         }
         return productVariantMappingMapper.toResponseList(mappings);
+    }
+
+    @Transactional
+    public List<ProductVariantMappingResponse> getMappingsByProductVariantId(Long productVariantId) {
+        List<ProductVariantMappingEntity> mappingEntities = productVariantMappingRepository
+                .findByProductVariant_ProductVariantId(productVariantId);
+
+        return productVariantMappingMapper.toResponseList(mappingEntities);
     }
 }

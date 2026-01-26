@@ -5,6 +5,7 @@ import com.hikiw.ecommerce.Model.Request.product.variant.ProductVariantCreationR
 import com.hikiw.ecommerce.Model.Request.product.variant.ProductVariantUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ApiResponse;
 import com.hikiw.ecommerce.Model.Response.ProductVariantDetailResponse;
+import com.hikiw.ecommerce.Model.Response.ProductVariantMappingResponse;
 import com.hikiw.ecommerce.Model.Response.ProductVariantResponse;
 import com.hikiw.ecommerce.Service.ProductVariantService;
 import lombok.AccessLevel;
@@ -60,4 +61,7 @@ public class ProductVariantController {
                 .message("Product variant updated successfully")
                 .build();
     }
+
+
+
 }
