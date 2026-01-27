@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Model.Request.product.attribute;
 
 
-import com.hikiw.ecommerce.Enum.Datatype;
+import com.hikiw.ecommerce.Enum.DataType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 public class AttributeKeyCreationRequest {
     String keyName;
     String displayName;
-    Datatype datatype;
+    DataType dataType;
     Boolean isRequired;
     String description;
     Integer displayOrder;

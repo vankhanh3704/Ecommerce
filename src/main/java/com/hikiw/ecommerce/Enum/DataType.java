@@ -1,5 +1,5 @@
 package com.hikiw.ecommerce.Enum;
 
-public enum Datatype {
+public enum DataType {
     TEXT, NUMBER, DATE, BOOLEAN
 }

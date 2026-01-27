@@ -1,11 +1,10 @@
 package com.hikiw.ecommerce.Entity;
 
 
-import com.hikiw.ecommerce.Enum.Datatype;
+import com.hikiw.ecommerce.Enum.DataType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.autoconfigure.jackson.JacksonProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class AttributeKeyEntity {
     Boolean isRequired; // Thuộc tính bắt buộc hay không
 
     @Enumerated(EnumType.STRING)
-    Datatype dataType = Datatype.TEXT; // Kiểu dữ liệu của thuộc tính
+    DataType dataType = DataType.TEXT; // Kiểu dữ liệu của thuộc tính
     String description; // Mô tả về thuộc tính
     Integer displayOrder = 0; // Thứ tự hiển thị
 

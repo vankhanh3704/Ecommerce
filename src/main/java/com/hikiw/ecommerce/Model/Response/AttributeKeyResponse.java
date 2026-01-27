@@ -1,7 +1,7 @@
 package com.hikiw.ecommerce.Model.Response;
 
 
-import com.hikiw.ecommerce.Enum.Datatype;
+import com.hikiw.ecommerce.Enum.DataType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +16,7 @@ public class AttributeKeyResponse {
     String displayName;
     Boolean isActive;
     Boolean isRequired;
-    Datatype datatype;
+    DataType dataType;
     String description;
     Integer displayOrder;
 }
