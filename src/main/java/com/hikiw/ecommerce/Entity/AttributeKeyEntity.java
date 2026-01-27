@@ -22,6 +22,7 @@ public class AttributeKeyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long attributeKeyId;
+    Boolean isActive = true; // Thuộc tính có hoạt động hay không
 
     String keyName; // e.g., Color, Size
     String displayName; // e.g., Màu sắc, Kích thước
@@ -29,7 +30,7 @@ public class AttributeKeyEntity {
 
     @Enumerated(EnumType.STRING)
     Datatype dataType = Datatype.TEXT; // Kiểu dữ liệu của thuộc tính
-
+    String description; // Mô tả về thuộc tính
     Integer displayOrder = 0; // Thứ tự hiển thị
 
     @OneToMany(mappedBy = "attributeKey", cascade = CascadeType.ALL, orphanRemoval = true)
