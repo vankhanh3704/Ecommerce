@@ -966,8 +966,7 @@
                       "variable": [
                         {
                           "key": "id",
-                          "value": "12",
-                          "uuid": "70198c94-32dc-4420-ac89-02ae4f8607c3"
+                          "value": "12"
                         }
                       ]
                     }
@@ -1144,6 +1143,146 @@
             }
           ],
           "id": "92f920aa-9fd1-42b5-8129-bd7fc045bb6d"
+        },
+        {
+          "name": "Attribute",
+          "item": [
+            {
+              "name": "Create Attribute Key",
+              "id": "e35abf5f-f1e2-46dd-84f0-fe99156c6331",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyName\": \"size\",\n  \"displayName\": \"Kích thước\",\n  \"dataType\": \"NUMBER\",\n  \"isRequired\": true,\n  \"description\": \"Thuộc tính mô tả kích thước của sản phẩm\",\n  \"displayOrder\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/attribute-key",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "attribute-key"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Attribute Key",
+              "id": "c3de5d2c-c553-4938-af85-733f8e5c872a",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyName\": \"size\",\n  \"displayName\": \"Kích thước update\",\n  \"dataType\": \"NUMBER\",\n  \"isRequired\": true,\n  \"isActive\" : true,\n  \"description\": \"Thuộc tính mô tả kích thước của sản phẩm\",\n  \"displayOrder\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/attribute-key/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "attribute-key",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1",
+                      "uuid": "2d8ad7a9-b85a-476b-b6f4-d9908fec0fee"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Attribute Key",
+              "id": "86ecff21-ae6f-4f31-abd2-807d250ce1ec",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/attribute-key/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "attribute-key",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1",
+                      "uuid": "476fc11d-abdd-4846-ae86-583c6930ef2f"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All",
+              "id": "e590a55a-aa5d-44f3-b1d4-bd5a6baf4036",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/attribute-key",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "attribute-key"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All active",
+              "id": "370a993a-6a2d-4220-8657-fa7a4f0237d0",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get by Id",
+              "id": "4d223f7a-d8d6-4018-b09c-1e3cc0811247",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "b89b4c04-5454-4cc4-ae72-b1078c4b6bad"
         },
         {
           "name": "Create Product",

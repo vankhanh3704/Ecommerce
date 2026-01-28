@@ -29,7 +29,10 @@ public enum ErrorCode {
     PRODUCT_VARIANT_NOT_EXISTED(1018, "Product variant not existed", HttpStatus.NOT_FOUND),
     PRODUCT_VARIANT_MAPPING_EXISTED(1019, "Product variant mapping existed", HttpStatus.BAD_REQUEST),
     PRODUCT_VARIANT_SKU_EXISTED(1020, "Product variant SKU existed", HttpStatus.BAD_REQUEST),
-    PRODUCT_VARIANT_MAPPING_NOT_EXISTED(1021, "Product variant mapping not existed", HttpStatus.NOT_FOUND)
+    PRODUCT_VARIANT_MAPPING_NOT_EXISTED(1021, "Product variant mapping not existed", HttpStatus.NOT_FOUND),
+    ATTRIBUTE_KEY_EXISTED(1022, "Attribute key existed", HttpStatus.BAD_REQUEST),
+    ATTRIBUTE_KEY_NOT_EXISTED(1023, "Attribute key not existed", HttpStatus.NOT_FOUND),
+    ATTRIBUTE_KEY_IN_USE_CANNOT_DELETE(1024, "Attribute key is in use and cannot be deleted", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
