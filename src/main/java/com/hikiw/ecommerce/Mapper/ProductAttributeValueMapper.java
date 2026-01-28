@@ -3,9 +3,11 @@ package com.hikiw.ecommerce.Mapper;
 
 import com.hikiw.ecommerce.Entity.ProductAttributeValueEntity;
 import com.hikiw.ecommerce.Model.Request.product.attribute.ProductAttributeValueCreationRequest;
+import com.hikiw.ecommerce.Model.Request.product.attribute.ProductAttributeValueUpdateRequest;
 import com.hikiw.ecommerce.Model.Response.ProductAttributeValueResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProductAttributeValueMapper {
@@ -22,4 +24,9 @@ public interface ProductAttributeValueMapper {
     @Mapping(target = "displayName", source = "attributeKey.displayName")
     ProductAttributeValueResponse toResponse(ProductAttributeValueEntity entity);
 
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void toUpdate(@MappingTarget ProductAttributeValueEntity entity, ProductAttributeValueUpdateRequest request);
+
+    List<ProductAttributeValueResponse> toResponseList(List<ProductAttributeValueEntity> entity);
 }

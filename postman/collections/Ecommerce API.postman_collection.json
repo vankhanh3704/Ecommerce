@@ -1148,32 +1148,182 @@
           "name": "Attribute",
           "item": [
             {
-              "name": "Create Attribute Key",
-              "id": "e35abf5f-f1e2-46dd-84f0-fe99156c6331",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"keyName\": \"size\",\n  \"displayName\": \"Kích thước\",\n  \"dataType\": \"NUMBER\",\n  \"isRequired\": true,\n  \"description\": \"Thuộc tính mô tả kích thước của sản phẩm\",\n  \"displayOrder\": 1\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+              "name": "Value",
+              "item": [
+                {
+                  "name": "Add Attribute value to Product",
+                  "id": "f1a405f9-a0d9-4749-96cc-c62891d6626d",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"attributeKeyId\" : \"2\",\n    \"productId\" : \"1\",\n    \"valueText\" : \"Test \"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-attribute-value",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-attribute-value"
+                      ]
                     }
-                  }
+                  },
+                  "response": []
                 },
-                "url": {
-                  "raw": "{{baseUrl}}/api/attribute-key",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "attribute-key"
-                  ]
+                {
+                  "name": "Update attribute value",
+                  "id": "e35abf5f-f1e2-46dd-84f0-fe99156c6331",
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"valueText\" : \"Test update\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-attribute-value/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-attribute-value",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "uuid": "39825e00-ca70-4fe4-aed4-c0b4e5084668"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get by id",
+                  "id": "439bd668-4dd1-46cc-8498-1354049b2841",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Get All by product",
+                  "id": "094b9530-e54e-4381-90b5-2b214b746f60",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete by id",
+                  "id": "d03ccadf-e2a9-4ce1-ae00-815c44b6e4a4",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-attribute-value/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-attribute-value",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "uuid": "d8686f55-2d3d-41cb-92cc-d93d785dfee0"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete by product id",
+                  "id": "5096daf3-4ee2-412a-9004-4cc7fb3d2aa6",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-attribute-value/product/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-attribute-value",
+                        "product",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "uuid": "3c5658a9-81cf-43f0-8b6e-b390080aa674"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "add batch",
+                  "id": "565b5795-23e3-441a-bafa-a21d95f2ae57",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"productId\": 1,\n  \"attributes\": [\n    {\n      \"attributeKeyId\": 2,\n      \"valueText\": \"Màu đỏ\"\n    }\n    // ,\n    // {\n    //   \"attributeKeyId\": 11,\n    //   \"valueText\": \"128GB\"\n    // },\n    // {\n    //   \"attributeKeyId\": 12,\n    //   \"valueText\": \"Nhôm nguyên khối\"\n    // }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/product-attribute-value/batch",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "product-attribute-value",
+                        "batch"
+                      ]
+                    }
+                  },
+                  "response": []
                 }
-              },
-              "response": []
+              ],
+              "id": "2fd025b5-8942-4937-8084-0f5e838a6b02"
             },
             {
               "name": "Update Attribute Key",

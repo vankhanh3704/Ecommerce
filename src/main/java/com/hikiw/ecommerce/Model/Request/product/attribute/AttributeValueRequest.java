@@ -1,6 +1,5 @@
 package com.hikiw.ecommerce.Model.Request.product.attribute;
 
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductAttributeValueCreationRequest {
+public class AttributeValueRequest {
     Long attributeKeyId;
-    Long productId;
-    String valueText; // For text-based attributes
+    String valueText;
 }
