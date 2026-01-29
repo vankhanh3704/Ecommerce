@@ -4,6 +4,7 @@ package com.hikiw.ecommerce.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
+import com.hikiw.ecommerce.Model.Response.CloudinaryUploadResult;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,29 +33,43 @@ public class CloudinaryService {
      * upload lên cloud
      * Trả về URL HTTPS của ảnh đã tối ưu
      */
-    public String uploadImage(MultipartFile file) throws IOException {
+    public CloudinaryUploadResult uploadImage(MultipartFile file, String folder) throws IOException {
         log.info("Uploading image to Cloudinary: {}", file.getOriginalFilename());
 
         // Validate file
         validateImageFile(file);
 
+        // Generate unique public_id
+        String publicId = UUID.randomUUID().toString();
 
         // Upload to Cloudinary
-        Map uploadResult = cloudinary.uploader()
-                .upload(file.getBytes(), ObjectUtils.asMap(
-                        "folder", "ecommerce/products", // Thư mục Cloudinary : không cần public_id để nó tự sinh
-                        "resource_type", "image", // chỉ rõ là ảnh
-                        "transformation", ObjectUtils.asMap( // Optimize ảnh ngay khi upload
-                                "quality", "auto",
-                                "fetch_format", "auto"
-                        )
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                ObjectUtils.asMap(
+                        "public_id", publicId,
+                        "folder", folder,
+                        "resource_type", "image",
+                        "quality", "auto:good",
+                        "fetch_format", "auto"
                 ));
 
-        // Get secure URL
-        String imageUrl = (String) uploadResult.get("secure_url"); //secure_url = HTTPS
+        // Extract result
+        String imageUrl = (String) uploadResult.get("secure_url");
+        String actualPublicId = (String) uploadResult.get("public_id");
+        Integer width = (Integer) uploadResult.get("width");
+        Integer height = (Integer) uploadResult.get("height");
+        Long bytes = ((Number) uploadResult.get("bytes")).longValue();
 
-        log.info("Image uploaded successfully: {}", imageUrl);
-        return imageUrl;
+        // Get secure URL
+        return CloudinaryUploadResult.builder()
+                .publicId(actualPublicId)
+                .url(imageUrl)
+                .secureUrl(imageUrl)
+                .width(width)
+                .height(height)
+                .format((String) uploadResult.get("format"))
+                .resourceType((String) uploadResult.get("resource_type"))
+                .bytes(bytes)
+                .build();
     }
 
 
@@ -154,25 +169,36 @@ public class CloudinaryService {
      * Get optimized image URL
      * Tự động resize và optimize
      */
-    private Transformation<?> productThumbnail(int size) {
+    private Transformation<?> productThumbnail(int width, int height, String crop) {
         return new Transformation<>()
-                .width(size)
-                .height(size)
-                .crop("fill")
+                .width(width)
+                .height(height)
+                .crop(crop)
                 .quality("auto")
                 .fetchFormat("auto");
     }
 
-    public String getOptimizedUrl(String imageUrl, int width, int height) {
-        String publicId = extractPublicIdFromUrl(imageUrl);
-        if (publicId == null) {
-            return imageUrl;
+    public String getOptimizedUrl(String publicId, int width, int height, String crop) {
+        if (publicId == null || publicId.isEmpty()) {
+            return null;
         }
 
         return cloudinary.url()
                 .secure(true)
-                .transformation(productThumbnail(300))
+                .transformation(productThumbnail(width,height,crop))
                 .generate(publicId);
+
+    }
+
+    public String getThumbnailUrl(String publicId) {
+        return getOptimizedUrl(publicId, 200, 200, "fill");
+    }
+
+    /**
+     * Get medium URL (800x600)
+     */
+    public String getMediumUrl(String publicId) {
+        return getOptimizedUrl(publicId, 800, 600, "fill");
     }
 
 }

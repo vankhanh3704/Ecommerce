@@ -1,18 +1,16 @@
 package com.hikiw.ecommerce.Model.Response.image;
 
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class ImageUploadResponse {
-    Integer imageId;
+    Long imageId;
     String imageUrl;
     String cloudinaryPublicId;
     String fileName;

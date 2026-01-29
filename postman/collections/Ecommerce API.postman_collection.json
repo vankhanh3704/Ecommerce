@@ -1435,6 +1435,24 @@
           "id": "b89b4c04-5454-4cc4-ae72-b1078c4b6bad"
         },
         {
+          "name": "Image",
+          "item": [
+            {
+              "name": "New Request",
+              "id": "dcf0ca8c-01c6-4d6a-90de-a266d6c2c032",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "583619ae-49d9-45b7-a4c0-c2b7f19bd791"
+        },
+        {
           "name": "Create Product",
           "id": "0acb613d-132e-4dd1-a503-f4bda135eb41",
           "request": {

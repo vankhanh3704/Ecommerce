@@ -24,9 +24,9 @@ jwt:
   refreshable-duration: 36000
 
 cloudinary:
-  cloud-name: Root
+  cloud-name: dxjsjfevb
   api-key: 718915332696724
-  api-secret: 718915332696724
+  api-secret: khXJ7CTZENe0voB1KRiR2VBr_6E
 
 app:
   upload:
