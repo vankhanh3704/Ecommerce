@@ -22,3 +22,13 @@ jwt:
   signerKey: "MAOAaDeZDPe7abJfyyYmg6G4TQXTdQHNrGRFTdOr1whp6zdheS/COfx2GlDSMbXH"
   valid-duration: 3600
   refreshable-duration: 36000
+
+cloudinary:
+  cloud-name: Root
+  api-key: 718915332696724
+  api-secret: 718915332696724
+
+app:
+  upload:
+    max-file-size : 5MB
+    allowed-extensions : jpg,jpeg,png,gif,webp
