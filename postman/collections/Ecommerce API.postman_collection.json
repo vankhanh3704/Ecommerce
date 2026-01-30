@@ -1438,13 +1438,64 @@
           "name": "Image",
           "item": [
             {
-              "name": "New Request",
+              "name": "Upload ảnh lên cloud",
               "id": "dcf0ca8c-01c6-4d6a-90de-a266d6c2c032",
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {}
+              },
               "request": {
-                "method": "GET",
-                "header": [],
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data",
+                    "type": "text",
+                    "uuid": "77fd5dfc-d74d-460c-aed0-0751f3063ed9",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "productId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "89758150-24a1-4656-ad3e-f4d7727f77ef"
+                    },
+                    {
+                      "key": "imageFile",
+                      "type": "file",
+                      "uuid": "3a225bf9-97d5-4142-9331-d0a0bd2b9dde",
+                      "contentType": "",
+                      "src": [
+                        "/Users/hoangkhanhvan/Documents/Document/Music & Video/508258218_1254486169405409_9045108845471863270_n.jpg"
+                      ]
+                    },
+                    {
+                      "key": "isPrimary",
+                      "value": "True",
+                      "type": "text",
+                      "uuid": "f7e0414f-bad6-4d00-8313-af7ccf8575f8"
+                    },
+                    {
+                      "key": "altText",
+                      "value": "Product main image",
+                      "type": "text",
+                      "uuid": "89f9e29a-6f67-4762-8308-bf7c06401208"
+                    }
+                  ]
+                },
                 "url": {
-                  "raw": ""
+                  "raw": "{{baseUrl}}/api/product-image/upload",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-image",
+                    "upload"
+                  ]
                 }
               },
               "response": []

@@ -1,18 +1,16 @@
 package com.hikiw.ecommerce.configuration;
 
 
-import com.hikiw.ecommerce.Entity.RoleEntity;
-import com.hikiw.ecommerce.Entity.UserEntity;
-import com.hikiw.ecommerce.Enum.Role;
-import com.hikiw.ecommerce.Repository.RoleRepository;
-import com.hikiw.ecommerce.Repository.UserRepository;
-import com.hikiw.ecommerce.constant.PredefinedRole;
+import com.hikiw.ecommerce.module.role.entity.RoleEntity;
+import com.hikiw.ecommerce.module.user.entity.UserEntity;
+import com.hikiw.ecommerce.module.role.repository.RoleRepository;
+import com.hikiw.ecommerce.module.user.repository.UserRepository;
+import com.hikiw.ecommerce.common.constant.PredefinedRole;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

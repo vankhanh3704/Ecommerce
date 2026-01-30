@@ -1,0 +1,16 @@
+package com.hikiw.ecommerce.module.variant.dto;
+
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class VariantResponse {
+    Long variantId;
+    String variantName;
+    Integer displayOrder;
+    Integer totalValues;
+}

@@ -2,7 +2,7 @@ package com.hikiw.ecommerce.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hikiw.ecommerce.Enum.ErrorCode;
-import com.hikiw.ecommerce.Model.Response.ApiResponse;
+import com.hikiw.ecommerce.common.Response.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

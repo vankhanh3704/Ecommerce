@@ -1,16 +1,14 @@
 package com.hikiw.ecommerce.Scheduler;
 
 
-import com.hikiw.ecommerce.Repository.InvalidatedTokenRepository;
+import com.hikiw.ecommerce.module.authenticate.repository.InvalidatedTokenRepository;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
