@@ -1,6 +1,7 @@
 package com.hikiw.ecommerce.module.product_variant.entity;
 
 
+import com.hikiw.ecommerce.module.cart.entity.CartItemEntity;
 import com.hikiw.ecommerce.module.product.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +31,7 @@ public class ProductVariantEntity {
     @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     List<ProductVariantMappingEntity> variantMappings = new ArrayList<>(); // các biến thể của sản phẩm
+
 
     String sku; // mã SKU
     Double price; // Giá bán hiện tại (QUAN TRỌNG: Mỗi variant có giá riêng)

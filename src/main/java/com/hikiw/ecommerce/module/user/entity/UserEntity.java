@@ -1,5 +1,6 @@
 package com.hikiw.ecommerce.module.user.entity;
 
+import com.hikiw.ecommerce.module.cart.entity.CartEntity;
 import com.hikiw.ecommerce.module.role.entity.RoleEntity;
 import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
 import jakarta.persistence.*;
@@ -33,5 +34,8 @@ public class UserEntity {
 
     @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     ShopEntity shop;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    CartEntity cart;
 
 }
