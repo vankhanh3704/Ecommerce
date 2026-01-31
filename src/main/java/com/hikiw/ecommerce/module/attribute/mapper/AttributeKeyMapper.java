@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface AttributeKeyMapper {
+public interface AttributeKeyMapper{
 
     AttributeKeyEntity toEntity(AttributeKeyCreationRequest request);
 

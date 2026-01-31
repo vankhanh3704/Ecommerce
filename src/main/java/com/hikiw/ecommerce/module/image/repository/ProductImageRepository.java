@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImageEntity, Long> {
 
@@ -16,5 +18,8 @@ public interface ProductImageRepository extends JpaRepository<ProductImageEntity
     void unsetAllPrimaryImages(@Param("productId") Long productId);
 
     long countByProduct_ProductId(Long productId);
+
+    List<ProductImageEntity> findByProduct_ProductIdOrderByDisplayOrderAsc(Long productProductId);
+    void deleteByProduct_ProductId(Long productId);
 
 }

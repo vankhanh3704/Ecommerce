@@ -2,9 +2,9 @@ package com.hikiw.ecommerce.module.image.mapper;
 
 
 import com.hikiw.ecommerce.module.image.dto.ProductImageResponse;
+import com.hikiw.ecommerce.module.image.dto.ProductImageUpdateRequest;
 import com.hikiw.ecommerce.module.image.entity.ProductImageEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -17,5 +17,9 @@ public interface ProductImageMapper {
     ProductImageResponse toResponse(ProductImageEntity entity);
 
     List<ProductImageResponse> toResponseList(List<ProductImageEntity> entities);
+
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void toUpdate(@MappingTarget ProductImageEntity entity, ProductImageUpdateRequest request);
 
 }

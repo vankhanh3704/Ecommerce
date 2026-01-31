@@ -1206,8 +1206,7 @@
                       "variable": [
                         {
                           "key": "id",
-                          "value": "1",
-                          "uuid": "39825e00-ca70-4fe4-aed4-c0b4e5084668"
+                          "value": "1"
                         }
                       ]
                     }
@@ -1257,8 +1256,7 @@
                       "variable": [
                         {
                           "key": "id",
-                          "value": "1",
-                          "uuid": "d8686f55-2d3d-41cb-92cc-d93d785dfee0"
+                          "value": "1"
                         }
                       ]
                     }
@@ -1285,8 +1283,7 @@
                       "variable": [
                         {
                           "key": "id",
-                          "value": "1",
-                          "uuid": "3c5658a9-81cf-43f0-8b6e-b390080aa674"
+                          "value": "1"
                         }
                       ]
                     }
@@ -1353,8 +1350,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "1",
-                      "uuid": "2d8ad7a9-b85a-476b-b6f4-d9908fec0fee"
+                      "value": "1"
                     }
                   ]
                 }
@@ -1380,8 +1376,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "1",
-                      "uuid": "476fc11d-abdd-4846-ae86-583c6930ef2f"
+                      "value": "1"
                     }
                   ]
                 }
@@ -1496,6 +1491,152 @@
                     "product-image",
                     "upload"
                   ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload Multi image",
+              "id": "7b79dc73-dcef-4906-a107-770fc6c21d40",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "productId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "350c4147-3e63-4a84-b3f2-92ef6ca54a83"
+                    },
+                    {
+                      "key": "imageFiles",
+                      "type": "file",
+                      "uuid": "be1d9c34-35b7-4c09-9637-0da6d8f63e10",
+                      "src": [
+                        "/Users/hoangkhanhvan/Downloads/ao-hoodie-ni-bong-9.jpg"
+                      ]
+                    },
+                    {
+                      "key": "imageFiles",
+                      "type": "file",
+                      "uuid": "2b9c099a-1906-4b38-a4cb-0c3d3d3f8929",
+                      "src": [
+                        "/Users/hoangkhanhvan/Documents/Document/Music & Video/9f6cb5e77028c602c88dbb457a916a70.jpg"
+                      ]
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/product-image/upload/multiple",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-image",
+                    "upload",
+                    "multiple"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "set primary image to product",
+              "id": "91a9e1dc-ae63-46be-a33d-ef586a5994b5",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/product-image/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-image",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update product image",
+              "id": "11bd7da7-8700-4fc9-9c1f-76cfcdb69fdf",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"isPrimary\" : true,\n    \"displayOrder\" : 2,\n    \"altText\" :\"ảnh đẹp vãi cả nho\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/product-image/update/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-image",
+                    "update",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Product Images by Product ID",
+              "id": "91676edf-4b56-4e81-8390-bbdfbc748d76",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Image by ID",
+              "id": "eda985b5-0983-4a91-a07f-31422928d17a",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete by ID",
+              "id": "5d1d6600-dc7c-4e93-8167-504b5f604a60",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
                 }
               },
               "response": []

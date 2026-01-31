@@ -34,6 +34,8 @@ public enum ErrorCode {
     ATTRIBUTE_KEY_NOT_EXISTED(1023, "Attribute key not existed", HttpStatus.NOT_FOUND),
     ATTRIBUTE_KEY_IN_USE_CANNOT_DELETE(1024, "Attribute key is in use and cannot be deleted", HttpStatus.BAD_REQUEST),
     PRODUCT_ATTRIBUTE_VALUES_NOT_EXISTED(1025, "Product attribute values not existed", HttpStatus.NOT_FOUND),
+    UPLOAD_PRODUCT_IMAGE_FAILED(1026, "Upload product image failed.", HttpStatus.BAD_REQUEST),
+    PRODUCT_IMAGE_NOT_EXITED(1027, "Product image not existed", HttpStatus.NOT_FOUND),
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
