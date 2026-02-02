@@ -1,5 +1,6 @@
 package com.hikiw.ecommerce.module.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hikiw.ecommerce.module.cart.entity.CartEntity;
 import com.hikiw.ecommerce.module.role.entity.RoleEntity;
 import com.hikiw.ecommerce.module.shop.entity.ShopEntity;

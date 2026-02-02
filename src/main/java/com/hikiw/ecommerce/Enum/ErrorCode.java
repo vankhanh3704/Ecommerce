@@ -36,6 +36,7 @@ public enum ErrorCode {
     PRODUCT_ATTRIBUTE_VALUES_NOT_EXISTED(1025, "Product attribute values not existed", HttpStatus.NOT_FOUND),
     UPLOAD_PRODUCT_IMAGE_FAILED(1026, "Upload product image failed.", HttpStatus.BAD_REQUEST),
     PRODUCT_IMAGE_NOT_EXITED(1027, "Product image not existed", HttpStatus.NOT_FOUND),
+    UNAUTHORIZED(1028, "Unauthorized.", HttpStatus.UNAUTHORIZED),
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

@@ -1624,7 +1624,22 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": ""
+                  "raw": "{{baseUrl}}/api/product-image/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-image",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1",
+                      "uuid": "a86c170e-a8b8-4029-852d-24c08a5ca8d9"
+                    }
+                  ]
                 }
               },
               "response": []
@@ -1633,10 +1648,25 @@
               "name": "Delete by ID",
               "id": "5d1d6600-dc7c-4e93-8167-504b5f604a60",
               "request": {
-                "method": "GET",
+                "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": ""
+                  "raw": "{{baseUrl}}/api/product-image/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "product-image",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1",
+                      "uuid": "7f14eb20-5bab-41f6-9900-f0b43af782f5"
+                    }
+                  ]
                 }
               },
               "response": []
@@ -2064,6 +2094,36 @@
       ],
       "id": "86582de2-1fb9-4e4c-a4d6-6dd861fd627d",
       "description": "Variant value management endpoints (e.g., Small, Medium, Large for Size variant)"
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get or create cart",
+          "id": "f696fc68-5574-40c3-9a95-94796924d38d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add product to cart",
+          "id": "256f3799-e4e4-402e-9fbb-fd25bc3deb50",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a24e7386-8cf2-443b-8b60-fa55ea888b4e"
     }
   ],
   "variable": [
