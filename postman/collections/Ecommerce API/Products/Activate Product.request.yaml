@@ -1,0 +1,9 @@
+$kind: http-request
+description: Activate a product
+url: "{{baseUrl}}/api/products/:id/activate"
+method: POST
+pathVariables:
+  - key: id
+    value: "1"
+    description: Product ID
+order: 8000

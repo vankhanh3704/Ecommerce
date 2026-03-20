@@ -1,0 +1,13 @@
+$kind: http-request
+description: Refresh an expired access token
+url: "{{baseUrl}}/auth/refresh"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "token": ""
+    }
+order: 4000

@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retrieve all products
+url: "{{baseUrl}}/api/products"
+method: GET
+order: 5000

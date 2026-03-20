@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-image/upload/multiple"
+method: POST
+body:
+  type: formdata
+  content:
+    - type: text
+      key: productId
+      value: "1"
+    - type: file
+      key: imageFiles
+      src:
+        - /Users/hoangkhanhvan/Downloads/ao-hoodie-ni-bong-9.jpg
+    - type: file
+      key: imageFiles
+      src:
+        - /Users/hoangkhanhvan/Documents/Document/Music &
+          Video/9f6cb5e77028c602c88dbb457a916a70.jpg
+order: 2000

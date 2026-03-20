@@ -32,13 +32,15 @@ public class CartEntity {
     List<CartItemEntity> items = new ArrayList<>();
 
 
+    // help method
+
     public Long getTotalItems(){
         return items.stream()
                 .mapToLong(CartItemEntity::getQuantity)
                 .sum();
     }
 
-    public Double getTotalPrice(){
+    public Double getTotalPrice() {
         return items.stream()
                 .mapToDouble(item -> item.getProductVariant().getPrice() * item.getQuantity())
                 .sum();

@@ -1,0 +1,9 @@
+$kind: http-request
+description: Retrieve all child categories of a parent category
+url: "{{baseUrl}}/api/categories/:parentId/children"
+method: GET
+pathVariables:
+  - key: parentId
+    value: "1"
+    description: Parent Category ID
+order: 4000

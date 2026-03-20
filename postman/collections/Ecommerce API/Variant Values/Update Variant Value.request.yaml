@@ -1,0 +1,20 @@
+$kind: http-request
+description: Update an existing variant value
+url: "{{baseUrl}}/api/variant-values/:id"
+method: PUT
+headers:
+  Content-Type: application/json
+pathVariables:
+  - key: id
+    value: "1"
+    description: Variant Value ID
+body:
+  type: text
+  content: |-
+    {
+        "valueName": "",
+        "displayOrder": 0,
+        "isActive": true,
+        "imageUrl": ""
+    }
+order: 2000

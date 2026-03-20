@@ -1,0 +1,14 @@
+$kind: http-request
+description: Create a new variant type (e.g., Size, Color)
+url: "{{baseUrl}}/api/variants"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "variantName": "",
+        "displayOrder": 0
+    }
+order: 1000

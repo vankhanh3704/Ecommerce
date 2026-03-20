@@ -16,7 +16,9 @@ public class CartResponse {
     Long cartId;
     Long userId;
     Long totalItems;
-    Double totalPrice;
+    Double totalAmount;
     List<CartItemResponse> items;
+
+
 
 }

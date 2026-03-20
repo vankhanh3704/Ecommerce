@@ -1,0 +1,14 @@
+$kind: http-request
+description: Create a new category. Set parentId to null for root categories.
+url: "{{baseUrl}}/api/categories"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "categoryName": "",
+        "parentId": null
+    }
+order: 1000

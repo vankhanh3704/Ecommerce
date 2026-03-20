@@ -1,0 +1,3 @@
+$kind: collection
+description: Product variant management endpoints (e.g., Size, Color)
+order: 8000

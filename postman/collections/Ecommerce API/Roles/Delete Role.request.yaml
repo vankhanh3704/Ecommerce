@@ -1,0 +1,9 @@
+$kind: http-request
+description: Delete a role by its ID
+url: "{{baseUrl}}/api/roles/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: ""
+    description: Role ID (String)
+order: 3000

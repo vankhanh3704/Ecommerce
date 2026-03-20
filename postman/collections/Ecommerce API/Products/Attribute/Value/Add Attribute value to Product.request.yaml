@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-attribute-value"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "attributeKeyId" : "2",
+        "productId" : "1",
+        "valueText" : "Test "
+    }
+order: 1000

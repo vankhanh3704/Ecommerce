@@ -1,0 +1,5 @@
+$kind: http-request
+name: Remove cart item
+url: ""
+method: GET
+order: 4000

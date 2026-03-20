@@ -1,0 +1,18 @@
+$kind: http-request
+description: Update an existing user
+url: "{{baseUrl}}/api/users/:userId"
+method: PUT
+headers:
+  Content-Type: application/json
+pathVariables:
+  - key: userId
+    value: "1"
+    description: User ID
+body:
+  type: text
+  content: |-
+    {
+        "username": "",
+        "password": ""
+    }
+order: 4000

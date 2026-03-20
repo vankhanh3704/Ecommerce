@@ -65,4 +65,17 @@ public class ProductVariantEntity {
             return 0.0;
         }
     }
+
+    //
+    public boolean isInStock() {
+        return stock != null && stock > 0;
+    }
+
+
+    public boolean canOrder(Integer quantity){
+        if(quantity == null || quantity <= 0){
+            return false;
+        }
+        return stock >= quantity && isInStock();
+    }
 }

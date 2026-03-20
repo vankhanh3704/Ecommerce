@@ -23,13 +23,15 @@ public class CartItemResponse {
 
     // variant info
     List<VariantInfo> variantValues;
+
     Double price;
     Double oldPrice;
-    Integer quantity;
-    Integer totalPrice;
+    Double discountPercentage;
 
-    // stock info
-    Integer availableStock;
+    // Quantity & stock
+    Integer quantity;
+    Double subtotal;
+    Integer stockAvailable;
     Boolean inStock;
 
 

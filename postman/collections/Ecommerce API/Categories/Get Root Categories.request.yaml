@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retrieve all root-level categories
+url: "{{baseUrl}}/api/categories/root"
+method: GET
+order: 3000

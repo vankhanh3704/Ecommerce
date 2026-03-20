@@ -1,0 +1,18 @@
+$kind: http-request
+description: Create a new product
+url: "{{baseUrl}}/api/products"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "productName": "",
+        "description": "",
+        "basePrice": 0.0,
+        "shopId": 1,
+        "categoryId": 1,
+        "shopLocationId": 1
+    }
+order: 4000

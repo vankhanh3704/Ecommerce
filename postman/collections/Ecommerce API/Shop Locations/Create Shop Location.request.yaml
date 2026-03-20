@@ -1,0 +1,25 @@
+$kind: http-request
+description: Create a new shop location
+url: "{{baseUrl}}/api/shop-locations"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "shopId": 1,
+        "contactName": "",
+        "phoneNumber": "",
+        "street": "",
+        "ward": "",
+        "district": "",
+        "city": "",
+        "country": "",
+        "postalCode": "",
+        "isDefaultPickup": false,
+        "isDefaultReturn": false,
+        "locationName": "",
+        "note": ""
+    }
+order: 1000

@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-image/upload"
+method: POST
+headers:
+  - key: Content-Type
+    value: multipart/form-data
+    disabled: true
+body:
+  type: formdata
+  content:
+    - type: text
+      key: productId
+      value: "1"
+    - type: file
+      key: imageFile
+      src:
+        - /Users/hoangkhanhvan/Documents/Document/Music &
+          Video/508258218_1254486169405409_9045108845471863270_n.jpg
+    - type: text
+      key: isPrimary
+      value: "True"
+    - type: text
+      key: altText
+      value: Product main image
+settings:
+  disabledSystemHeaders: []
+order: 1000

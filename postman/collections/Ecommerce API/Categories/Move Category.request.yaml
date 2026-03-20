@@ -1,0 +1,17 @@
+$kind: http-request
+description: Move a category to a new parent
+url: "{{baseUrl}}/api/categories/:categoryId/move"
+method: PUT
+headers:
+  Content-Type: application/json
+pathVariables:
+  - key: categoryId
+    value: "1"
+    description: Category ID to move
+body:
+  type: text
+  content: |-
+    {
+        "newParentId": 1
+    }
+order: 6000

@@ -1,0 +1,9 @@
+$kind: http-request
+description: Delete a product by its ID
+url: "{{baseUrl}}/api/products/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: "1"
+    description: Product ID
+order: 9000

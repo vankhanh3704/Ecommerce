@@ -1,0 +1,4 @@
+$kind: collection
+description: Authentication endpoints for login, token introspection, logout,
+  and token refresh
+order: 1000

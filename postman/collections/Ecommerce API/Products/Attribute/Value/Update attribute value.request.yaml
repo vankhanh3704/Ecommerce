@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-attribute-value/:id"
+method: PUT
+pathVariables:
+  id: "1"
+body:
+  type: json
+  content: |-
+    {
+        "valueText" : "Test update"
+    }
+order: 2000

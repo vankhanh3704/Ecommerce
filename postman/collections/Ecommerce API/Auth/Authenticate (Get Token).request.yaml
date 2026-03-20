@@ -1,0 +1,14 @@
+$kind: http-request
+description: Authenticate user and obtain access token
+url: "{{baseUrl}}/auth/token"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "username": "admin",
+        "password": "admin"
+    }
+order: 1000

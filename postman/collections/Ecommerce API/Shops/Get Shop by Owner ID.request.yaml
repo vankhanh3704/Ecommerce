@@ -1,0 +1,9 @@
+$kind: http-request
+description: Retrieve shop details by owner user ID
+url: "{{baseUrl}}/api/shops/owner/:ownerId"
+method: GET
+pathVariables:
+  - key: ownerId
+    value: "1"
+    description: Owner User ID
+order: 4000

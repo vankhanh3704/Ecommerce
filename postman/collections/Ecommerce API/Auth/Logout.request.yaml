@@ -1,0 +1,13 @@
+$kind: http-request
+description: Logout and invalidate the token
+url: "{{baseUrl}}/auth/logout"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "token": ""
+    }
+order: 3000

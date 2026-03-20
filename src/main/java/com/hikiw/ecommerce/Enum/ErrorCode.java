@@ -37,6 +37,9 @@ public enum ErrorCode {
     UPLOAD_PRODUCT_IMAGE_FAILED(1026, "Upload product image failed.", HttpStatus.BAD_REQUEST),
     PRODUCT_IMAGE_NOT_EXITED(1027, "Product image not existed", HttpStatus.NOT_FOUND),
     UNAUTHORIZED(1028, "Unauthorized.", HttpStatus.UNAUTHORIZED),
+    CART_ITEM_NOT_EXISTED(1029, "Cart item not existed", HttpStatus.NOT_FOUND),
+    INSUFFICIENT_STOCK(1030, "Insufficient stock for the requested quantity", HttpStatus.BAD_REQUEST)
+    ,CART_NOT_EXISTED(1031, "Cart not existed", HttpStatus.NOT_FOUND)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

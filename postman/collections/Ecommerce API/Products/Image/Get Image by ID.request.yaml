@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-image/:id"
+method: GET
+pathVariables:
+  id: "1"
+order: 6000

@@ -1,0 +1,3 @@
+$kind: collection
+description: User management endpoints for CRUD operations
+order: 2000

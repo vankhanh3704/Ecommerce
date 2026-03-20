@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-attribute-value/batch"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "productId": 1,
+      "attributes": [
+        {
+          "attributeKeyId": 2,
+          "valueText": "Màu đỏ"
+        }
+        // ,
+        // {
+        //   "attributeKeyId": 11,
+        //   "valueText": "128GB"
+        // },
+        // {
+        //   "attributeKeyId": 12,
+        //   "valueText": "Nhôm nguyên khối"
+        // }
+      ]
+    }
+order: 7000

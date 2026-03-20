@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retrieve all variant types
+url: "{{baseUrl}}/api/variants"
+method: GET
+order: 2000

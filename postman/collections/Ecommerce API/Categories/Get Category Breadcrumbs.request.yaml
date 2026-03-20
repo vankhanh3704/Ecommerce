@@ -1,0 +1,9 @@
+$kind: http-request
+description: Retrieve breadcrumb trail for a category
+url: "{{baseUrl}}/api/categories/:id/breadcrumbs"
+method: GET
+pathVariables:
+  - key: id
+    value: "1"
+    description: Category ID
+order: 5000

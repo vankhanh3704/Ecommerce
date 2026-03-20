@@ -1,0 +1,9 @@
+$kind: http-request
+description: Delete a variant by its ID
+url: "{{baseUrl}}/api/variants/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: "1"
+    description: Variant ID
+order: 5000

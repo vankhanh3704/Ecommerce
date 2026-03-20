@@ -1,0 +1,4 @@
+$kind: collection
+description: Variant value management endpoints (e.g., Small, Medium, Large for
+  Size variant)
+order: 9000

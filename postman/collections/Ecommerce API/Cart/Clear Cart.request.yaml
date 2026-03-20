@@ -1,0 +1,9 @@
+$kind: http-request
+name: Clear Cart
+url: "{{baseUrl}}/api/cart/items"
+method: DELETE
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzczOTcwNTc2LCJpYXQiOjE3NzM5NjY5NzYsImp0aSI6IjJjYTBkZGFkLWU1NTUtNGE1Ny1hZWNjLTRiZmUxYmQ1NDU5OCIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.fRC39bCoWmNc3t-kt473nFlZQNfhtC-qucfdiRvpIguIhKT3vtmg3dCG-bz5BHYRVddHufLegu8_FiUr6pfgGQ
+order: 1984530914216125

@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retrieve all roles
+url: "{{baseUrl}}/api/roles"
+method: GET
+order: 2000

@@ -1,0 +1,18 @@
+$kind: http-request
+description: Create a new shop
+url: "{{baseUrl}}/api/shops"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "shopName": "",
+        "ownerUserId": 1,
+        "description": "",
+        "phoneNumber": "",
+        "email": "",
+        "address": ""
+    }
+order: 1000

@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-variant-mapping/batch"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+       "productVariantId" : 7,
+        "variantValueIds" : [2, 1]
+    }
+order: 4000

@@ -1,0 +1,17 @@
+$kind: http-request
+description: Create a new variant value (e.g., 'Red' for Color variant)
+url: "{{baseUrl}}/api/variant-values"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "variantId": 1,
+        "valueName": "",
+        "displayOrder": 0,
+        "isActive": true,
+        "imageUrl": ""
+    }
+order: 1000

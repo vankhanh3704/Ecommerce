@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-variant-mapping/:id"
+method: DELETE
+pathVariables:
+  id: "12"
+order: 3000

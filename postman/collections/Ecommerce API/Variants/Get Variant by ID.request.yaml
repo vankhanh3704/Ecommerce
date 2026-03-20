@@ -1,0 +1,9 @@
+$kind: http-request
+description: Retrieve variant details by ID
+url: "{{baseUrl}}/api/variants/:id"
+method: GET
+pathVariables:
+  - key: id
+    value: "1"
+    description: Variant ID
+order: 3000

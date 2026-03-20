@@ -1,0 +1,14 @@
+$kind: http-request
+description: Create a new user
+url: "{{baseUrl}}/api/users"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "username": "",
+        "password": ""
+    }
+order: 1000

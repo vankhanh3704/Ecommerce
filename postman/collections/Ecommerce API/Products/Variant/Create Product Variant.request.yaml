@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-variant"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "productId" : "1",
+        "sku":"SKU-RED-M-001",
+        "price":"299000",
+        "oldPrice":"349000",
+        "stock":"50",
+        "imageUrl":"",
+        "variantValueIds" : [1, 4]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzY5MzQxNzc4LCJpYXQiOjE3NjkzMzgxNzgsImp0aSI6IjQ2ZGI3M2MxLTYzMjUtNDc4ZS1iMmY4LWUzZWFjY2NkNTg1MSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.M5ldxmZdoGU__v83B-AmdFRkvTLsAAsxPbL5zLmjATyLP_CynNIxebR0jmZ7ZxBCOdLa0a8pJySA58ij1aIO4w
+order: 2000

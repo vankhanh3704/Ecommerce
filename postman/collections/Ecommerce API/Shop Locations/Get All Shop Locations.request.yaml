@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retrieve all shop locations
+url: "{{baseUrl}}/api/shop-locations"
+method: GET
+order: 2000

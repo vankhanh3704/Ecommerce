@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-image/update/:id"
+method: PUT
+pathVariables:
+  id: "3"
+body:
+  type: json
+  content: |-
+    {
+        "isPrimary" : true,
+        "displayOrder" : 2,
+        "altText" :"ảnh đẹp vãi cả nho"
+    }
+order: 4000

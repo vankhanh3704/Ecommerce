@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class VariantInfo {
     String variantName;
     String valueName;

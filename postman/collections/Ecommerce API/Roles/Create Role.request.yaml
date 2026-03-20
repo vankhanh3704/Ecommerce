@@ -1,0 +1,14 @@
+$kind: http-request
+description: Create a new role
+url: "{{baseUrl}}/api/roles"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+        "name": "",
+        "description": ""
+    }
+order: 1000

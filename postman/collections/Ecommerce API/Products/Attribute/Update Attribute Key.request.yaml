@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/api/attribute-key/:id"
+method: PUT
+pathVariables:
+  id: "1"
+body:
+  type: json
+  content: |-
+    {
+      "keyName": "size",
+      "displayName": "Kích thước update",
+      "dataType": "NUMBER",
+      "isRequired": true,
+      "isActive" : true,
+      "description": "Thuộc tính mô tả kích thước của sản phẩm",
+      "displayOrder": 1
+    }
+order: 2000

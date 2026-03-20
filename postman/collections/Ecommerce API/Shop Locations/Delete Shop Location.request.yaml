@@ -1,0 +1,9 @@
+$kind: http-request
+description: Delete a shop location by its ID
+url: "{{baseUrl}}/api/shop-locations/:id"
+method: DELETE
+pathVariables:
+  - key: id
+    value: "1"
+    description: Shop Location ID
+order: 5000

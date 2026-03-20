@@ -1,0 +1,18 @@
+$kind: http-request
+url: "{{baseUrl}}/api/product-variant/:id"
+method: PUT
+pathVariables:
+  id: "11"
+body:
+  type: json
+  content: |-
+    {
+        "productId" : "1",
+        "sku":"SKU-RED-M-001 update",
+        "price":"2990000",
+        "oldPrice":"3490000",
+        "stock":"100",
+        "imageUrl":"",
+        "variantValueIds" : [1]
+    }
+order: 6000

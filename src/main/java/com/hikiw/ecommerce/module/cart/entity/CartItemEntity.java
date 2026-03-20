@@ -31,4 +31,9 @@ public class CartItemEntity {
     Integer quantity;
 
 
+    // helper method
+    public Double getSubtotal() {
+        return productVariant.getPrice() * quantity;
+    }
+
 }
