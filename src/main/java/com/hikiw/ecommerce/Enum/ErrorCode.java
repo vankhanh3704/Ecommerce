@@ -43,6 +43,9 @@ public enum ErrorCode {
     VOUCHER_CODE_ALREADY_EXISTS(1032, "Voucher code already exists", HttpStatus.BAD_REQUEST),
     VOUCHER_END_DATE_BEFORE_START_DATE(1033, "Voucher end date must be after start date", HttpStatus.BAD_REQUEST),
     VOUCHER_NOT_EXISTED(1034, "Voucher not existed", HttpStatus.NOT_FOUND),
+    VOUCHER_EXPIRED(1035, "Voucher expired", HttpStatus.BAD_REQUEST),
+    VOUCHER_MIN_SPEND_NOT_MET(1036, "Voucher min spend not met", HttpStatus.BAD_REQUEST),
+    VOUCHER_ALREADY_USED(1037, "Voucher already used", HttpStatus.BAD_REQUEST),
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

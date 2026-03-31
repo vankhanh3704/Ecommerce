@@ -2,11 +2,10 @@ package com.hikiw.ecommerce.module.voucher.controller;
 
 
 import com.hikiw.ecommerce.common.Response.ApiResponse;
-import com.hikiw.ecommerce.module.voucher.dto.VoucherCreationRequest;
-import com.hikiw.ecommerce.module.voucher.dto.VoucherResponse;
-import com.hikiw.ecommerce.module.voucher.dto.VoucherUpdateRequest;
+import com.hikiw.ecommerce.module.voucher.dto.*;
 import com.hikiw.ecommerce.module.voucher.service.VoucherService;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -60,6 +59,15 @@ public class VoucherController {
     public ApiResponse<List<VoucherResponse>> getAllVouchers() {
         return ApiResponse.<List<VoucherResponse>>builder()
                 .result(voucherService.getAllVouchers())
+                .build();
+    }
+
+    @PostMapping("/apply")
+    public ApiResponse<ApplyVoucherResponse> applyVoucher(
+            @Valid @RequestBody ApplyVoucherRequest request) {
+        return ApiResponse.<ApplyVoucherResponse>builder()
+                .result(voucherService.applyVoucher(request))
+                .message("Voucher applied successfully")
                 .build();
     }
 }

@@ -70,4 +70,27 @@ public class VoucherEntity extends BaseAuditEntity {
                 && now.isBefore(endDate)
                 && (usageLimit == null || usageLimit > usedCount);
     }
+
+
+    // calculate discount
+    // 3 th :
+    // th1 : đối với trường hợp giảm giá theo % (PERCENTAGE)
+    //Giảm 10% tối đa 50k. Đơn hàng 1 triệu (10% là 100k) thì bạn cũng chỉ được giảm 50k.
+    public Double calculateDiscount(Double orderAmount){
+        // số tiền khách mua nhỏ hơn mức chi tiêu tối thiểu để áp dụng mã
+        if(orderAmount < minSpend){
+            return 0.0;
+        }
+        return switch (discountType){
+            case PERCENTAGE -> {
+                double discount = orderAmount * (discountValue / 100);
+                // maxDiscount ở đây là số tiền giảm giá tối đa
+                // vd : Bạn được giảm 100k(discount), nhưng mã chỉ cho giảm tối đa 50k(maxDiscount) -> Lấy 50k.
+                yield (maxDiscount != null) ? Math.min(discount, maxDiscount) : discount;
+            }
+            case FIXED_AMOUNT -> Math.min(discountValue, orderAmount);
+            case FREE_SHIPPING -> 0.0;  // xử lý riêng ở Order
+        };
+
+    }
 }

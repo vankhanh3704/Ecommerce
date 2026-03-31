@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class
 VoucherResponse {
-    String voucherId;
+    Long voucherId;
     String code;
     DiscountType discountType;
     Double discountValue;

@@ -1,11 +1,10 @@
 package com.hikiw.ecommerce.module.voucher.service;
 
 
+import com.hikiw.ecommerce.Enum.DiscountType;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.common.Exception.AppException;
-import com.hikiw.ecommerce.module.voucher.dto.VoucherCreationRequest;
-import com.hikiw.ecommerce.module.voucher.dto.VoucherResponse;
-import com.hikiw.ecommerce.module.voucher.dto.VoucherUpdateRequest;
+import com.hikiw.ecommerce.module.voucher.dto.*;
 import com.hikiw.ecommerce.module.voucher.entity.VoucherEntity;
 import com.hikiw.ecommerce.module.voucher.mapper.VoucherMapper;
 import com.hikiw.ecommerce.module.voucher.repository.VoucherRepository;
@@ -77,4 +76,40 @@ public class VoucherService {
         return voucherMapper.toResponseList(voucherRepository.findAll());
     }
 
+
+    // APPlY VOUCHER
+    public ApplyVoucherResponse applyVoucher(ApplyVoucherRequest request){
+        VoucherEntity voucher = voucherRepository.findByCode(request.getCode().toUpperCase())
+                .orElseThrow(()-> new AppException(ErrorCode.VOUCHER_NOT_EXISTED));
+
+        // kiểm tra xem voucher còn hiệu lực không,
+        if(!voucher.isValid()){
+            throw new AppException(ErrorCode.VOUCHER_EXPIRED);
+        }
+        // kiểm tra xem user đã dùng voucher hay chưa
+        if(voucherUsageRepository.existsByVoucher_VoucherIdAndUser_Id(voucher.getVoucherId(), request.getUserId() )){
+            throw new AppException(ErrorCode.VOUCHER_ALREADY_USED);
+        }
+        // kiểm tra đơn hàng có đạt mức tối thiểu không
+        if (request.getOrderAmount() < voucher.getMinSpend()) {
+            throw new AppException(ErrorCode.VOUCHER_MIN_SPEND_NOT_MET);
+        }
+
+        // tính số tiền giảm được
+        Double discountAmount = voucher.calculateDiscount(request.getOrderAmount());
+        Double finalAmount = request.getOrderAmount() - discountAmount; // giá sản phẩm sau khi giảm giá
+
+        boolean isFreeShipping = voucher.getDiscountType() == DiscountType.FREE_SHIPPING;
+
+        return ApplyVoucherResponse.builder()
+                .voucherId(voucher.getVoucherId())
+                .code(voucher.getCode())
+                .discountType(voucher.getDiscountType())
+                .discountValue(voucher.getDiscountValue())
+                .orderAmount(request.getOrderAmount())
+                .discountAmount(discountAmount)
+                .finalAmount(finalAmount)
+                .isFreeShipping(isFreeShipping)
+                .build();
+    }
 }
