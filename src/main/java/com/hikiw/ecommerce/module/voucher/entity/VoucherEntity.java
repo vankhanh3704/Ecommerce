@@ -2,10 +2,13 @@ package com.hikiw.ecommerce.module.voucher.entity;
 
 
 import com.hikiw.ecommerce.Enum.DiscountType;
+import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VoucherEntity {
+public class VoucherEntity extends BaseAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long voucherId;
@@ -48,4 +51,23 @@ public class VoucherEntity {
 
     @OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL, orphanRemoval = true)
     List<VoucherUsageEntity> usages = new ArrayList<>();
+
+    @Column(name = "start_date", nullable = false)
+    LocalDateTime startDate;
+
+    @Column(name = "end_date", nullable = false)
+    LocalDateTime endDate;
+
+    @Builder.Default
+    @Column(name = "is_active")
+    Boolean isActive = true;
+
+    // help method
+    public boolean isValid(){
+        LocalDateTime now = LocalDateTime.now();
+        return Boolean.TRUE.equals(isActive)
+                && now.isAfter(startDate)
+                && now.isBefore(endDate)
+                && (usageLimit == null || usageLimit > usedCount);
+    }
 }

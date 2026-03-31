@@ -1,0 +1,22 @@
+$kind: http-request
+name: Create Voucher
+url: "{{baseUrl}}/api/vouchers"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "code": "WINTER2026",
+      "discountType": "PERCENTAGE",
+      "discountValue": 15.0,
+      "minSpend": 200000.0,
+      "maxDiscount": 50000.0,
+      "usageLimit": 100,
+      "startDate": "2026-03-30T08:00:00",
+      "endDate": "2026-08-31T23:59:59"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 1774856601528

@@ -1,4 +1,5 @@
 $kind: http-request
+name: Create Product Variant
 url: "{{baseUrl}}/api/product-variant"
 method: POST
 body:
@@ -16,5 +17,5 @@ body:
 auth:
   type: bearer
   credentials:
-    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzY5MzQxNzc4LCJpYXQiOjE3NjkzMzgxNzgsImp0aSI6IjQ2ZGI3M2MxLTYzMjUtNDc4ZS1iMmY4LWUzZWFjY2NkNTg1MSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.M5ldxmZdoGU__v83B-AmdFRkvTLsAAsxPbL5zLmjATyLP_CynNIxebR0jmZ7ZxBCOdLa0a8pJySA58ij1aIO4w
+    token: ""
 order: 2000

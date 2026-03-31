@@ -1,0 +1,9 @@
+$kind: http-request
+name: Delete Voucher
+url: "{{baseUrl}}/api/vouchers/4"
+method: DELETE
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc0OTMxNzI1LCJpYXQiOjE3NzQ5MjgxMjUsImp0aSI6ImM2ZWRlM2E1LWQ2NWItNDY4OC05NDk1LTVkNGQzZmVhZmIwZSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.QI2KzBOpnCErixWHmiCcviEWoNSeRhATxD5eOCa_DUMBIv_yTuMftNf53eWEn6U9KYRzqrZE-1Z1WsJU-JCyyQ
+order: 3762889273672989

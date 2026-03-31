@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Voucher by ID
+url: "{{baseUrl}}/api/vouchers/1"
+method: GET
+order: 3963037263164792

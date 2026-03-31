@@ -1,0 +1,17 @@
+$kind: collection
+name: Voucher
+description: >-
+  Manage discount vouchers/coupons.
+
+
+  Requests in this folder let admin users:
+
+
+  - Create a new voucher with a code, discount type/value, spend thresholds,
+  usage limits, and validity window.
+      
+  - Update an existing voucher (by id) to adjust limits or dates.
+      
+
+  Uses `{{baseUrl}}` and requires Bearer auth.
+order: 1991666051317759

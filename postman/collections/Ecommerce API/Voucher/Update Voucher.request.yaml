@@ -1,0 +1,19 @@
+$kind: http-request
+name: Update Voucher
+url: "{{baseUrl}}/api/vouchers/1"
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+      "minSpend": 150000.0,
+      "maxDiscount": 30000.0,
+      "usageLimit": 200,
+      "startDate": "2026-05-01T00:00:00",
+      "endDate": "2026-06-01T23:59:59"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 3401554467493724

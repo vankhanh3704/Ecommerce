@@ -39,7 +39,10 @@ public enum ErrorCode {
     UNAUTHORIZED(1028, "Unauthorized.", HttpStatus.UNAUTHORIZED),
     CART_ITEM_NOT_EXISTED(1029, "Cart item not existed", HttpStatus.NOT_FOUND),
     INSUFFICIENT_STOCK(1030, "Insufficient stock for the requested quantity", HttpStatus.BAD_REQUEST)
-    ,CART_NOT_EXISTED(1031, "Cart not existed", HttpStatus.NOT_FOUND)
+    ,CART_NOT_EXISTED(1031, "Cart not existed", HttpStatus.NOT_FOUND),
+    VOUCHER_CODE_ALREADY_EXISTS(1032, "Voucher code already exists", HttpStatus.BAD_REQUEST),
+    VOUCHER_END_DATE_BEFORE_START_DATE(1033, "Voucher end date must be after start date", HttpStatus.BAD_REQUEST),
+    VOUCHER_NOT_EXISTED(1034, "Voucher not existed", HttpStatus.NOT_FOUND),
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

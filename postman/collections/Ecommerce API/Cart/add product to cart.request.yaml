@@ -1,4 +1,5 @@
 $kind: http-request
+name: add product to cart
 url: "{{baseUrl}}/api/cart"
 method: POST
 body:
@@ -11,5 +12,5 @@ body:
 auth:
   type: bearer
   credentials:
-    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzczODg4NTU1LCJpYXQiOjE3NzM4ODQ5NTUsImp0aSI6ImVhYjM2ZWRjLTRmNDUtNGZhZC05YmYyLTc0YzYxNTNiYjZjZSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.LtF9nZJIkJx_apLvwkIyzApARKdVL0pwqO4pQo6-oLFofAMyxnyhsKG3v5ijLruJnERueyzVvDXsV9tbVFeCyw
+    token: ""
 order: 2000

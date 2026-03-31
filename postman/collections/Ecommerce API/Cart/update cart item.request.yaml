@@ -1,4 +1,5 @@
 $kind: http-request
+name: update cart item
 url: "{{baseUrl}}/api/cart/items/1"
 method: PUT
 body:
@@ -10,5 +11,5 @@ body:
 auth:
   type: bearer
   credentials:
-    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzczOTA4NDYyLCJpYXQiOjE3NzM5MDQ4NjIsImp0aSI6ImFmZDUxM2MxLTBmZTMtNDdjYi05YTNmLTRmYzUzNDFjYjkxOSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.zy5DqKiyPQC1wCH9nnYDoFmn0Ea9xfG-LwIyxXSddhCAw4_xULzAQvIYR2CUo3nVK-FXQIZpzDhIChM00Jocyg
+    token: ""
 order: 3000
