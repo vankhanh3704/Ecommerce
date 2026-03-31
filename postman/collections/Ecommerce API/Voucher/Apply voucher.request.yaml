@@ -1,5 +1,17 @@
 $kind: http-request
 name: Apply voucher
-url: ""
-method: GET
+url: "{{baseUrl}}/api/vouchers/apply"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "userId" : 12,
+        "code" : "WINTER2026",
+        "orderAmount": 500000.0
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc0OTYyMjM4LCJpYXQiOjE3NzQ5NTg2MzgsImp0aSI6ImNmZGNkNzU5LWZlYTEtNGJhYi05MjYxLTc4ZTE2ZTQ3ODkzMiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.qCcdARUXxiVh60wB-IqYSrwVRyRVnSrCzXbHyk-RAwiQeESUZBi_IpMVpxHMslOHjVvgSlewezS0UgQpgkmn9w
 order: 4488925447522439

@@ -70,4 +70,11 @@ public class VoucherController {
                 .message("Voucher applied successfully")
                 .build();
     }
+
+    @GetMapping("/valid")
+    public ApiResponse<List<VoucherResponse>> getValidVouchers() {
+        return ApiResponse.<List<VoucherResponse>>builder()
+                .result(voucherService.getAllValidVouchers())
+                .build();
+    }
 }

@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get voucher valid
+url: ""
+method: GET
+order: 4494623755054548
