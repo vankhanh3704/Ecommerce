@@ -63,4 +63,12 @@ public class CartController {
                 .result(cartService.clearCart(userId))
                 .build();
     }
+
+    @PostMapping("/{userId}/validate")
+    public ApiResponse<String> validateCart(@PathVariable Long userId) {
+        cartService.validateCart(userId);
+        return ApiResponse.<String>builder()
+                .result("Cart is valid")
+                .build();
+    }
 }

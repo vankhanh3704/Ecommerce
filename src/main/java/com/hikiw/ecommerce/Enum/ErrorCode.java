@@ -46,6 +46,7 @@ public enum ErrorCode {
     VOUCHER_EXPIRED(1035, "Voucher expired", HttpStatus.BAD_REQUEST),
     VOUCHER_MIN_SPEND_NOT_MET(1036, "Voucher min spend not met", HttpStatus.BAD_REQUEST),
     VOUCHER_ALREADY_USED(1037, "Voucher already used", HttpStatus.BAD_REQUEST),
+    CART_IS_EMPTY(1038, "Cart is empty", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

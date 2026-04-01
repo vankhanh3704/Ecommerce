@@ -182,4 +182,31 @@ public class CartService {
         return response;
     }
 
+    // ========== VALIDATE CART (dùng trước khi tạo Order) ==========
+    public void validateCart(Long userId) {
+        CartEntity cart = getOrCreateCart(userId);
+
+        if (cart.getItems().isEmpty()) {
+            throw new AppException(ErrorCode.CART_IS_EMPTY);
+        }
+
+        for (CartItemEntity item : cart.getItems()) {
+            ProductVariantEntity variant = item.getProductVariant();
+
+            if (!variant.getIsActive()) {
+                throw new AppException(ErrorCode.PRODUCT_NOT_EXISTED);
+            }
+
+            if (variant.getStock() < item.getQuantity()) {
+                throw new AppException(ErrorCode.INSUFFICIENT_STOCK);
+            }
+        }
+
+    }
+
+    private Double calculateShippingFee(Double subtotal) {
+        // Miễn phí ship khi đơn từ 500k
+        return (subtotal != null && subtotal >= 500000) ? 0.0 : 30000.0;
+    }
+
 }
