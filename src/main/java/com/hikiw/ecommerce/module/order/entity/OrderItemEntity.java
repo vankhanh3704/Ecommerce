@@ -11,9 +11,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_item")
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "order_item")
 public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

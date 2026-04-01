@@ -11,6 +11,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -83,4 +86,13 @@ public class OrderEntity extends BaseEntity {
     String note;
 
     // order items
+    // ========== ORDER ITEMS ==========
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    List<OrderItemEntity> orderItems = new ArrayList<>();
+
+    // ========== STATUS HISTORY ==========
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    List<OrderStatusHistoryEntity> statusHistory = new ArrayList<>();
 }
