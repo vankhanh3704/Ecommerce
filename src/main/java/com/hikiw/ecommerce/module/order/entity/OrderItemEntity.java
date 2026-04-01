@@ -1,6 +1,7 @@
 package com.hikiw.ecommerce.module.order.entity;
 
 
+import com.hikiw.ecommerce.common.constant.BaseEntity;
 import com.hikiw.ecommerce.module.product_variant.entity.ProductVariantEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "order_item")
-public class OrderItemEntity {
+public class OrderItemEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
