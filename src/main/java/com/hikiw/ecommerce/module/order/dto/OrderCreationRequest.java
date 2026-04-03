@@ -3,9 +3,12 @@ package com.hikiw.ecommerce.module.order.dto;
 
 import com.hikiw.ecommerce.Enum.PaymentMethod;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,9 +17,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderCreationRequest {
 
-    // để tạo đơn hàng, cần biết user nào đang đặt, nên cần userId. Sau này có thể lấy thông tin user từ token, nhưng tạm thời để đơn giản thì cứ truyền userId vào đây.
-    @NotNull(message = "User ID is required")
-    Long userId;
+    // Không phải toàn bộ giỏ hàng
+    @NotEmpty(message = "Please select at least one item")
+    List<Long> selectedCartItemIds;
 
     @NotBlank(message = "Receiver name is required")
     String receiverName;

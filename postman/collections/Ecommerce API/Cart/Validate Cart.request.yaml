@@ -1,0 +1,5 @@
+$kind: http-request
+name: Validate Cart
+url: ""
+method: GET
+order: 2984694622752958

@@ -16,11 +16,9 @@ public interface OrderMapper {
     @Mapping(target = "userId", source = "user.id")
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "voucher.code", target = "voucherCode")
-    @Mapping(source = "orderItems", target = "orderItems")
     @Mapping(source = "statusHistory", target = "statusHistory")
     OrderResponse toResponse(OrderEntity entity);
 
     List<OrderResponse> toResponseList(List<OrderEntity> entities);
-
     OrderItemResponse toItemResponse(OrderItemEntity entity);
 }

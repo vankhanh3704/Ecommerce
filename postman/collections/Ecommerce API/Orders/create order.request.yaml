@@ -1,0 +1,21 @@
+$kind: http-request
+name: create order
+url: "{{baseUrl}}/api/orders"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "userId": 12,
+      "receiverName": "Nguyễn Văn A",
+      "receiverPhone": "0901234567",
+      "shippingAddress": "123 Đường ABC, Quận 1, TP. Hồ Chí Minh",
+      "paymentMethod": "CARD",
+      "voucherCode": "WINTER2026",
+      "note": "Giao hàng vào giờ hành chính giúp mình"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MTcwODk3LCJpYXQiOjE3NzUxNjcyOTcsImp0aSI6ImE5OGNhM2Q5LTJlMzgtNGQ4NS05NjBmLTEzZmMzOWRhMjEzMCIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.rCidLkzyzlsRlK0ohExlEnx5BRBsvrOsgTXHA7WNy22pnTgDyscy0CnOK0FEYItMXBwvlOVJrOIbxI6jF9_vWQ
+order: 1775167272243

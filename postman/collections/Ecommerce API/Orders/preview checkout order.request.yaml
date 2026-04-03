@@ -1,0 +1,5 @@
+$kind: http-request
+name: preview checkout order
+url: ""
+method: GET
+order: 2841895888959452

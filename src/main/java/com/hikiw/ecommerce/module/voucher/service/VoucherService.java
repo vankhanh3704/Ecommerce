@@ -4,8 +4,11 @@ package com.hikiw.ecommerce.module.voucher.service;
 import com.hikiw.ecommerce.Enum.DiscountType;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.common.Exception.AppException;
+import com.hikiw.ecommerce.module.user.entity.UserEntity;
+import com.hikiw.ecommerce.module.user.repository.UserRepository;
 import com.hikiw.ecommerce.module.voucher.dto.*;
 import com.hikiw.ecommerce.module.voucher.entity.VoucherEntity;
+import com.hikiw.ecommerce.module.voucher.entity.VoucherUsageEntity;
 import com.hikiw.ecommerce.module.voucher.mapper.VoucherMapper;
 import com.hikiw.ecommerce.module.voucher.repository.VoucherRepository;
 import com.hikiw.ecommerce.module.voucher.repository.VoucherUsageRepository;
@@ -29,6 +32,7 @@ public class VoucherService {
     VoucherRepository voucherRepository;
     VoucherUsageRepository voucherUsageRepository;
     VoucherMapper voucherMapper;
+    UserRepository userRepository;
 
     @Transactional
     public VoucherResponse createVoucher(VoucherCreationRequest request){
@@ -118,5 +122,28 @@ public class VoucherService {
         return voucherMapper.toResponseList(
                 voucherRepository.findAllValid(LocalDateTime.now())
         );
+    }
+
+    @Transactional
+    public void confirmVoucherUsage(Long voucherId, Long userId, Long orderId) {
+        VoucherEntity voucher = voucherRepository.findById(voucherId)
+                .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_EXISTED));
+
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        // Lưu lịch sử sử dụng
+        VoucherUsageEntity usage = VoucherUsageEntity.builder()
+                .voucher(voucher)
+                .user(user)
+                .orderId(orderId)
+                .build();
+        voucherUsageRepository.save(usage);
+
+        // Tăng used_count
+        voucher.setUsedCount(voucher.getUsedCount() + 1);
+        voucherRepository.save(voucher);
+
+        log.info("Voucher {} confirmed for order {}", voucher.getCode(), orderId);
     }
 }
