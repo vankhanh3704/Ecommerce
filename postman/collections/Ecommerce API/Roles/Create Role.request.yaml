@@ -1,4 +1,5 @@
 $kind: http-request
+name: Create Role
 description: Create a new role
 url: "{{baseUrl}}/api/roles"
 method: POST
@@ -8,7 +9,11 @@ body:
   type: text
   content: |-
     {
-        "name": "",
-        "description": ""
+        "name": "USER",
+        "description": "người dùng"
     }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjY2Mzk3LCJpYXQiOjE3NzUyNjI3OTcsImp0aSI6ImY4YjVkNmYzLTVlZDQtNDU4Ni1hZTBmLTliNmE5YjRiMjg1MSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.x7ugTVp20da9LHwfcRaoibkSXZnEpipYE_T2Dxp5zx76QJNYl2HHEQzBTD5rmrpxrYcrvDdn2GjvW0j15yAZ2Q
 order: 1000

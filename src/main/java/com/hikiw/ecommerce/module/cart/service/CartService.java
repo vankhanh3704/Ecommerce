@@ -25,7 +25,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Transactional(readOnly = true)
 public class CartService {
 
     CartRepository cartRepository;
@@ -100,7 +99,7 @@ public class CartService {
 
 
     // get cart
-    @Transactional(readOnly = true)
+    @Transactional
     public CartResponse getCart(Long userId){
         CartEntity cart = getOrCreateCart(userId);
         return buildCartResponse(cart.getUser().getId());

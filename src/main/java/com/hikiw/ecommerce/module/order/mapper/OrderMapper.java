@@ -15,10 +15,14 @@ import java.util.List;
 public interface OrderMapper {
     @Mapping(target = "userId", source = "user.id")
     @Mapping(source = "user.username", target = "username")
-    @Mapping(source = "voucher.code", target = "voucherCode")
     @Mapping(source = "statusHistory", target = "statusHistory")
+    @Mapping(source = "shop.shopId", target = "shopId")       // ← thêm
+    @Mapping(source = "shop.shopName", target = "shopName")   // ← thêm
+    @Mapping(target = "shopVoucherCode", source = "voucher.code") // ← Fix target tên mới
     OrderResponse toResponse(OrderEntity entity);
 
+
     List<OrderResponse> toResponseList(List<OrderEntity> entities);
+    @Mapping(target = "productVariantId", source = "productVariant.productVariantId") // ← Fix Variant ID
     OrderItemResponse toItemResponse(OrderItemEntity entity);
 }

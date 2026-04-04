@@ -1,5 +1,10 @@
 $kind: http-request
+name: Get All Variants
 description: Retrieve all variant types
 url: "{{baseUrl}}/api/variants"
 method: GET
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MTY4MDY5LCJpYXQiOjE3NzUxNjQ0NjksImp0aSI6IjRkNDhmNzI2LWMyMGMtNDExMS1iOGJjLTNmNjdhYzc5MTI5NiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.sPXTAqi0XlupW1uHicGfbxj3-gK80EMEhSsX7iarXydZQKqLGF-GVjHRJWBQug0wxt96gJEfkP2llubCKw5dsg
 order: 2000

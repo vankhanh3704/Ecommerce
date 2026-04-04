@@ -1,5 +1,20 @@
 $kind: http-request
 name: preview checkout order
-url: ""
-method: GET
+url: "{{baseUrl}}/api/orders/checkout/preview"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "selectedCartItemIds": [
+            12,
+            13
+            
+        ],
+        "voucherCode": "WINTER2026"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjY0OTUzLCJpYXQiOjE3NzUyNjEzNTMsImp0aSI6ImE2ZmIxYzIwLTY4YjctNGJkZi1iODllLTFjMDkyMjRiNGMzNCIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.2obt9_XaoQOVrHQm8e8Gb2hAyPvUFH3xnjKKm1LB-qyzD0xvkuDXfWkE2QIkH4z62COlsDWC-eJIFUhPcPBFUw
 order: 2841895888959452

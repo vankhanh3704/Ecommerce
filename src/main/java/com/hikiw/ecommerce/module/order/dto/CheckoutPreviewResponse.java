@@ -14,20 +14,14 @@ import java.util.List;
 
 public class CheckoutPreviewResponse {
 
-    // Danh sách item được chọn
-    List<CartItemResponse> selectedItems;
+    // Mỗi shop là 1 nhóm riêng
+    List<ShopOrderPreview> shopOrders;
 
-    // Tiền
-    Double subtotal;
-    Double shippingFee;
-    Double discountAmount;
-    Double totalAmount;
+    // Tổng cộng toàn bộ
+    Double totalSubtotal;
+    Double totalShippingFee;
+    Double totalDiscount;
+    Double grandTotal;
 
-    // Voucher info (nếu có)
-    String voucherCode;
-    String voucherDescription;
-    Boolean isFreeShipping;
-
-    // Cảnh báo nếu có item hết hàng
     List<String> warnings;
 }

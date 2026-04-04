@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +34,14 @@ public class OrderCreationRequest {
     @NotNull(message = "Payment method is required")
     PaymentMethod paymentMethod;
 
-    String voucherCode; // Mã voucher có thể có hoặc không, nên không bắt buộc
+    // Voucher theo từng shop
+    // Key = shopId, Value = voucherCode
+    // VD: { "1": "SHOPAVOUCHER", "2": "SHOPBSALE" }
+    Map<Long, String> shopVoucherCodes;
+
+    // Voucher toàn sàn (platform)
+    String platformVoucherCode;
+
 
     String note; // Ghi chú đơn hàng (nếu có)
 }

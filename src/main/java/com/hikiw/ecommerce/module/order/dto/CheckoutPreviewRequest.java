@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +17,15 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 // bước preview trước khi đặt hàng
 public class CheckoutPreviewRequest {
+    // Danh sách cartItemId được chọn để mua
     @NotEmpty(message = "Please select at least one item")
     List<Long> selectedCartItemIds;
 
-    String voucherCode; // Nullable — preview tính giá khi nhập voucher
+    // Voucher theo từng shop
+    // Key = shopId, Value = voucherCode
+    // VD: { "1": "SHOPAVOUCHER20", "2": "SHOPBSALE10" }
+    Map<Long, String> shopVoucherCodes;
+
+    // Voucher toàn sàn (platform) — optional
+    String platformVoucherCode;
 }

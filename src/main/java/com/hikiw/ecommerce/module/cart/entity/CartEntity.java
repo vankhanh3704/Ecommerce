@@ -29,6 +29,7 @@ public class CartEntity {
     UserEntity user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     List<CartItemEntity> items = new ArrayList<>();
 
 

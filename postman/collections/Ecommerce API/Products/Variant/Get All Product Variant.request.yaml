@@ -1,4 +1,9 @@
 $kind: http-request
+name: Get All Product Variant
 url: "{{baseUrl}}/api/product-variant"
 method: GET
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjIzNzE5LCJpYXQiOjE3NzUyMjAxMTksImp0aSI6IjY3NWRhMjcxLTJjZGUtNDJlMi1hNjQ0LTM1ZTVkN2JlOTM5YiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.zphi9Et5QGMTcfr5ytbXn8zPCiCNVo83ph0F9C2-ZNimKuVdFrZV7qt0xowP9_crulrkk2kqGVV2EDha9dVoNw
 order: 5000

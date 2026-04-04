@@ -1,10 +1,10 @@
 package com.hikiw.ecommerce.module.order.entity;
 
-
 import com.hikiw.ecommerce.Enum.OrderStatus;
 import com.hikiw.ecommerce.Enum.PaymentMethod;
 import com.hikiw.ecommerce.Enum.PaymentStatus;
 import com.hikiw.ecommerce.common.constant.BaseEntity;
+import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.module.voucher.entity.VoucherEntity;
 import jakarta.persistence.*;
@@ -29,15 +29,16 @@ public class OrderEntity extends BaseEntity {
     Long orderId;
 
     @Column(name = "order_name", nullable = false, unique = true, length = 30)
-    String orderCode; // vd : ORD-20260325-0001
+    String orderCode;
 
-    // user : Nhiều đơn hàng có thể thuộc về một người dùng.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     UserEntity user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id", nullable = false)
+    ShopEntity shop;
 
-    // dia chi giao hang (snapshot tại thời điểm đặt)
     @Column(name = "receiver_name", length = 100)
     String receiverName;
 
@@ -47,27 +48,42 @@ public class OrderEntity extends BaseEntity {
     @Column(name = "shipping_address", columnDefinition = "TEXT")
     String shippingAddress;
 
-    // voucher
+    // ========== VOUCHER & DISCOUNT INFO ==========
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id")
-    VoucherEntity voucher;
+    VoucherEntity voucher; // Voucher của Shop
 
-    // money
+    @Column(name = "platform_voucher_code")
+    String platformVoucherCode; // Mã voucher của sàn (nếu có lưu)
+
+    // ========== MONEY SPLIT (SNAPSHOT TÀI CHÍNH) ==========
     @Column(name = "subtotal", nullable = false)
-    Double subtotal;        // Tổng tiền hàng
+    Double subtotal;
+
+    @Builder.Default
+    @Column(name = "original_shipping_fee")
+    Double originalShippingFee = 0.0;
+
+    @Builder.Default
+    @Column(name = "shipping_discount")
+    Double shippingDiscount = 0.0;
 
     @Builder.Default
     @Column(name = "shipping_fee")
-    Double shippingFee = 0.0;
+    Double shippingFee = 0.0; // Phí ship thực thu: original - discount
 
     @Builder.Default
-    @Column(name = "discount_amount")
-    Double discountAmount = 0.0;
+    @Column(name = "shop_discount_amount")
+    Double shopDiscountAmount = 0.0; // Đổi tên từ discountAmount cho rõ nghĩa
+
+    @Builder.Default
+    @Column(name = "platform_discount_amount")
+    Double platformDiscountAmount = 0.0;
 
     @Column(name = "total_amount", nullable = false)
-    Double totalAmount;     // subtotal + shippingFee - discountAmount
+    Double totalAmount; // subtotal + shippingFee - shopDiscount - platformDiscount
 
-    // status (trang thai)
+    // ========== STATUS ==========
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @Column(name = "order_status", nullable = false)
@@ -85,13 +101,11 @@ public class OrderEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     String note;
 
-    // order items
-    // ========== ORDER ITEMS ==========
+    // ========== RELATIONSHIPS ==========
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     List<OrderItemEntity> orderItems = new ArrayList<>();
 
-    // ========== STATUS HISTORY ==========
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     List<OrderStatusHistoryEntity> statusHistory = new ArrayList<>();

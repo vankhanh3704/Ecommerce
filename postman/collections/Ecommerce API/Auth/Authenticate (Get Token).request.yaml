@@ -1,11 +1,12 @@
 $kind: http-request
+name: Authenticate (Get Token)
 description: Authenticate user and obtain access token
 url: "{{baseUrl}}/auth/token"
 method: POST
 headers:
   Content-Type: application/json
 body:
-  type: text
+  type: json
   content: |-
     {
         "username": "admin",

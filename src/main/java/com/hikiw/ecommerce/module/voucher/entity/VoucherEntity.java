@@ -3,6 +3,7 @@ package com.hikiw.ecommerce.module.voucher.entity;
 
 import com.hikiw.ecommerce.Enum.DiscountType;
 import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
+import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -62,6 +63,12 @@ public class VoucherEntity extends BaseAuditEntity {
     @Column(name = "is_active")
     Boolean isActive = true;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id")
+    ShopEntity shop; // // NULL = platform voucher, NOT NULL = shop voucher
+
+
+
     // help method
     public boolean isValid(){
         LocalDateTime now = LocalDateTime.now();
@@ -70,7 +77,6 @@ public class VoucherEntity extends BaseAuditEntity {
                 && now.isBefore(endDate)
                 && (usageLimit == null || usageLimit > usedCount);
     }
-
 
     // calculate discount
     // 3 th :

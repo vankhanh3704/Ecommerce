@@ -3,10 +3,7 @@ package com.hikiw.ecommerce.module.order.controller;
 
 import com.hikiw.ecommerce.common.Response.ApiResponse;
 import com.hikiw.ecommerce.configuration.SecurityUtil;
-import com.hikiw.ecommerce.module.order.dto.CheckoutPreviewRequest;
-import com.hikiw.ecommerce.module.order.dto.CheckoutPreviewResponse;
-import com.hikiw.ecommerce.module.order.dto.OrderCreationRequest;
-import com.hikiw.ecommerce.module.order.dto.OrderResponse;
+import com.hikiw.ecommerce.module.order.dto.*;
 import com.hikiw.ecommerce.module.order.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -16,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -32,6 +31,15 @@ public class OrderController {
             @Valid @RequestBody CheckoutPreviewRequest request) {
         return ApiResponse.<CheckoutPreviewResponse>builder()
                 .result(orderService.previewCheckout(request,securityUtil.getCurrentUserId()))
+                .build();
+    }
+
+    @PostMapping
+    public ApiResponse<CheckoutResponse> createOrder(
+            @Valid @RequestBody OrderCreationRequest request) {
+        return ApiResponse.<CheckoutResponse>builder()
+                .result(orderService.createOrder(request, securityUtil.getCurrentUserId()))
+                .message("Orders created successfully")
                 .build();
     }
 }

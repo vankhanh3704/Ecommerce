@@ -1,25 +1,28 @@
 $kind: http-request
+name: Create Shop Location
 description: Create a new shop location
 url: "{{baseUrl}}/api/shop-locations"
 method: POST
 headers:
   Content-Type: application/json
 body:
-  type: text
+  type: json
   content: |-
     {
-        "shopId": 1,
-        "contactName": "",
-        "phoneNumber": "",
-        "street": "",
-        "ward": "",
-        "district": "",
-        "city": "",
-        "country": "",
-        "postalCode": "",
-        "isDefaultPickup": false,
-        "isDefaultReturn": false,
-        "locationName": "",
-        "note": ""
+      "shopId": 2,
+      "locationName": "Cửa hàng chi nhánh Hà Nội",
+      "contactName": "Trần Thị Bán Hàng",
+      "phoneNumber": "0912345678",
+      "street": "456 Cầu Giấy",
+      "ward": "Phường Quan Hoa",
+      "district": "Quận Cầu Giấy",
+      "city": "Hà Nội",
+      "country": "Việt Nam",
+      "isDefaultPickup": false,
+      "isDefaultReturn": false
     }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjY2Mzk3LCJpYXQiOjE3NzUyNjI3OTcsImp0aSI6ImY4YjVkNmYzLTVlZDQtNDU4Ni1hZTBmLTliNmE5YjRiMjg1MSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.x7ugTVp20da9LHwfcRaoibkSXZnEpipYE_T2Dxp5zx76QJNYl2HHEQzBTD5rmrpxrYcrvDdn2GjvW0j15yAZ2Q
 order: 1000

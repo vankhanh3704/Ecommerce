@@ -4,6 +4,7 @@ package com.hikiw.ecommerce.module.order.service;
 import com.hikiw.ecommerce.Enum.DiscountType;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.Enum.OrderStatus;
+import com.hikiw.ecommerce.Enum.PaymentStatus;
 import com.hikiw.ecommerce.common.Exception.AppException;
 import com.hikiw.ecommerce.module.cart.dto.CartItemResponse;
 import com.hikiw.ecommerce.module.cart.dto.VariantInfo;
@@ -21,6 +22,7 @@ import com.hikiw.ecommerce.module.order.repository.OrderRepository;
 import com.hikiw.ecommerce.module.order.repository.OrderStatusHistoryRepository;
 import com.hikiw.ecommerce.module.product_variant.entity.ProductVariantEntity;
 import com.hikiw.ecommerce.module.product_variant.repository.ProductVariantRepository;
+import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.module.user.repository.UserRepository;
 import com.hikiw.ecommerce.module.voucher.entity.VoucherEntity;
@@ -37,6 +39,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,66 +62,280 @@ public class OrderService {
     // ========== PREVIEW CHECKOUT ==========
     // Gọi khi user bấm "Mua hàng" từ giỏ hàng
     // Trả về thông tin để hiển thị trang checkout
+    // ========== PREVIEW CHECKOUT ==========
     public CheckoutPreviewResponse previewCheckout(CheckoutPreviewRequest request, Long userId) {
 
-        // Lấy các cartItem được chọn và validate ownership
-        List<CartItemEntity> selectedItems = getAndValidateCartItems(request.getSelectedCartItemIds(), userId);
+        List<CartItemEntity> selectedItems = getAndValidateCartItems(
+                request.getSelectedCartItemIds(), userId);
 
+        // Nhóm items theo shop
+        Map<Long, List<CartItemEntity>> itemsByShop = selectedItems.stream()
+                .collect(Collectors.groupingBy(
+                        item -> item.getProductVariant().getProduct().getShop().getShopId()
+                ));
 
-        validateStock(selectedItems);
-
-        Double subtotal = calculateSubtotal(selectedItems);
-        Double shippingFee = calculateShippingFee(subtotal);
-        Double discountAmount = 0.0;
-        String voucherDescription = null;
-        boolean isFreeShipping = false;
+        List<ShopOrderPreview> shopPreviews = new ArrayList<>();
         List<String> warnings = new ArrayList<>();
 
+        double totalSubtotal = 0, totalShipping = 0, totalDiscount = 0;
 
-        // Xử lý voucher nếu có
-        if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
-            VoucherEntity voucher = voucherRepository
-                    .findByCode(request.getVoucherCode().toUpperCase())
-                    .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_EXISTED));
+        for (Map.Entry<Long, List<CartItemEntity>> entry : itemsByShop.entrySet()) {
+            Long shopId = entry.getKey();
+            List<CartItemEntity> shopItems = entry.getValue();
+            ShopEntity shop = shopItems.get(0).getProductVariant().getProduct().getShop();
 
-            if (voucher.isValid()) {
-                if (voucher.getDiscountType() == DiscountType.FREE_SHIPPING) {
-                    shippingFee = 0.0;
-                    isFreeShipping = true;
-                    voucherDescription = "Miễn phí vận chuyển";
+            double subtotal = calculateSubtotal(shopItems);
+            double shippingFee = calculateShippingFee(subtotal);
+            double discountAmount = 0.0;
+            String voucherCode = null;
+            String voucherDescription = null;
+            boolean isFreeShipping = false;
+
+            // Áp dụng voucher của shop này nếu có
+            if (request.getShopVoucherCodes() != null
+                    && request.getShopVoucherCodes().containsKey(shopId)) {
+
+                voucherCode = request.getShopVoucherCodes().get(shopId);
+                VoucherEntity voucher = voucherRepository
+                        .findByCodeAndShop_ShopId(voucherCode.toUpperCase(), shopId)
+                        .orElse(null);
+
+                if (voucher != null && voucher.isValid()) {
+                    if (voucher.getDiscountType() == DiscountType.FREE_SHIPPING) {
+                        shippingFee = 0.0;
+                        isFreeShipping = true;
+                        voucherDescription = "Miễn phí vận chuyển";
+                    } else {
+                        discountAmount = voucher.calculateDiscount(subtotal);
+                        voucherDescription = buildVoucherDescription(voucher);
+                    }
                 } else {
-                    discountAmount = voucher.calculateDiscount(subtotal);
-                    voucherDescription = buildVoucherDescription(voucher);
+                    warnings.add("Voucher '" + voucherCode + "' của shop "
+                            + shop.getShopName() + " không hợp lệ");
+                    voucherCode = null;
                 }
-            } else {
-                warnings.add("Voucher '" + request.getVoucherCode() + "' không còn hiệu lực");
             }
-        }
 
-        // Kiểm tra stock và thêm warning
-        for (CartItemEntity item : selectedItems) {
-            ProductVariantEntity variant = item.getProductVariant();
-            if (variant.getStock() < item.getQuantity()) {
-                warnings.add("Sản phẩm '" + variant.getProduct().getProductName()
-                        + "' chỉ còn " + variant.getStock() + " sản phẩm");
+            // Kiểm tra stock
+            for (CartItemEntity item : shopItems) {
+                if (item.getProductVariant().getStock() < item.getQuantity()) {
+                    warnings.add("Sản phẩm '"
+                            + item.getProductVariant().getProduct().getProductName()
+                            + "' chỉ còn " + item.getProductVariant().getStock() + " sản phẩm");
+                }
             }
-        }
 
-        Double totalAmount = subtotal + shippingFee - discountAmount;
+            double shopTotal = subtotal + shippingFee - discountAmount;
+
+            shopPreviews.add(ShopOrderPreview.builder()
+                    .shopId(shopId)
+                    .shopName(shop.getShopName())
+                    .items(buildCartItemResponses(shopItems))
+                    .subtotal(subtotal)
+                    .shippingFee(shippingFee)
+                    .discountAmount(discountAmount)
+                    .totalAmount(shopTotal)
+                    .voucherCode(voucherCode)
+                    .voucherDescription(voucherDescription)
+                    .isFreeShipping(isFreeShipping)
+                    .build());
+
+            totalSubtotal += subtotal;
+            totalShipping += shippingFee;
+            totalDiscount += discountAmount;
+        }
 
         return CheckoutPreviewResponse.builder()
-                .selectedItems(buildCartItemResponses(selectedItems))
-                .subtotal(subtotal)
-                .shippingFee(shippingFee)
-                .discountAmount(discountAmount)
-                .totalAmount(totalAmount)
-                .voucherCode(request.getVoucherCode())
-                .voucherDescription(voucherDescription)
-                .isFreeShipping(isFreeShipping)
+                .shopOrders(shopPreviews)
+                .totalSubtotal(totalSubtotal)
+                .totalShippingFee(totalShipping)
+                .totalDiscount(totalDiscount)
+                .grandTotal(totalSubtotal + totalShipping - totalDiscount)
                 .warnings(warnings)
                 .build();
     }
 
+    @Transactional
+    public CheckoutResponse createOrder(OrderCreationRequest request, Long userId) {
+        List<CartItemEntity> selectedItems = getAndValidateCartItems(
+                request.getSelectedCartItemIds(), userId);
+
+        validateStock(selectedItems);
+
+        // 1. FIX BUG: Nhóm items theo SHOP ID, KHÔNG PHẢI Product ID
+        Map<Long, List<CartItemEntity>> itemsByShop = selectedItems.stream()
+                .collect(Collectors.groupingBy(
+                        item -> item.getProductVariant().getProduct().getShop().getShopId()));
+
+        List<OrderResponse> createdOrderResponses = new ArrayList<>();
+
+        // 2. TỐI ƯU: Lấy user 1 lần duy nhất bên ngoài vòng lặp
+        UserEntity currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        // --- CÁC BIẾN TÍNH TỔNG CHO PAYMENT SUMMARY ---
+        double summaryTotalItemsSubtotal = 0.0;
+        double summaryTotalOriginalShippingFee = 0.0;
+        double summaryTotalShippingDiscount = 0.0;
+        double summaryTotalShopDiscount = 0.0;
+
+        for (Map.Entry<Long, List<CartItemEntity>> entry : itemsByShop.entrySet()) {
+            Long shopId = entry.getKey();
+            List<CartItemEntity> shopItems = entry.getValue();
+
+            ShopEntity shop = shopItems.getFirst().getProductVariant().getProduct().getShop();
+
+            // Tính tiền hàng và phí ship gốc
+            double subtotal = calculateSubtotal(shopItems);
+            double originalShippingFee = calculateShippingFee(subtotal);
+
+            double shippingFee = originalShippingFee;
+            double shopDiscountAmount = 0.0;
+            double shippingDiscountAmount = 0.0;
+            VoucherEntity voucher = null;
+
+            // Xử lý Voucher của Shop
+            if (request.getShopVoucherCodes() != null && request.getShopVoucherCodes().containsKey(shopId)) {
+                String code = request.getShopVoucherCodes().get(shopId);
+                voucher = voucherRepository.findByCodeAndShop_ShopId(code.toUpperCase(), shopId)
+                        .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_EXISTED));
+
+                if (!voucher.isValid()) throw new AppException(ErrorCode.VOUCHER_EXPIRED);
+
+                if (voucher.getDiscountType() == DiscountType.FREE_SHIPPING) {
+                    shippingDiscountAmount = originalShippingFee; // Miễn phí ship
+                    shippingFee = 0.0;
+                } else {
+                    shopDiscountAmount = voucher.calculateDiscount(subtotal);
+                }
+            }
+
+            // Tính tổng tiền cho sub-order này (tránh số âm)
+            double totalAmount = Math.max(0.0, subtotal + shippingFee - shopDiscountAmount);
+
+            // Cộng dồn vào Summary toàn đơn
+            summaryTotalItemsSubtotal += subtotal;
+            summaryTotalOriginalShippingFee += originalShippingFee;
+            summaryTotalShippingDiscount += shippingDiscountAmount;
+            summaryTotalShopDiscount += shopDiscountAmount;
+
+            // Tạo OrderEntity cho Shop này với các field mới
+            OrderEntity order = OrderEntity.builder()
+                    .user(currentUser)
+                    .shop(shop)
+                    .orderCode(generateOrderCode())
+                    .receiverName(request.getReceiverName())
+                    .receiverPhone(request.getReceiverPhone())
+                    .shippingAddress(request.getShippingAddress())
+                    .voucher(voucher)
+
+                    // --- THÊM CÁC BIẾN TÀI CHÍNH MỚI VÀO ĐÂY ---
+                    .subtotal(subtotal)
+                    .originalShippingFee(originalShippingFee)   // Phí ship gốc
+                    .shippingDiscount(shippingDiscountAmount)   // Tiền giảm ship
+                    .shippingFee(shippingFee)                   // Phí ship cuối
+                    .shopDiscountAmount(shopDiscountAmount)     // Tiền voucher shop giảm
+                    .platformVoucherCode(request.getPlatformVoucherCode()) // Mã sàn
+                    .platformDiscountAmount(0.0)                // Tiền sàn giảm (Tạm để 0)
+                    .totalAmount(totalAmount)
+                    // ------------------------------------------
+
+                    .paymentMethod(request.getPaymentMethod())
+                    .orderStatus(OrderStatus.PENDING)
+                    .paymentStatus(PaymentStatus.UNPAID)
+                    .note(request.getNote())
+                    .build();
+
+            OrderEntity savedOrder = orderRepository.save(order);
+
+            // TỐI ƯU: Lưu OrderItems và Variant bằng Batch (saveAll)
+            List<OrderItemEntity> orderItemsToSave = new ArrayList<>();
+            List<ProductVariantEntity> variantsToUpdate = new ArrayList<>();
+
+            for (CartItemEntity cartItem : shopItems) {
+                ProductVariantEntity variant = cartItem.getProductVariant();
+
+                orderItemsToSave.add(OrderItemEntity.builder()
+                        .order(savedOrder)
+                        .productVariant(variant)
+                        .productName(variant.getProduct().getProductName())
+                        .sku(variant.getSku())
+                        .variantInfo(variant.getVariantInfoString())
+                        .imageUrl(variant.getImageUrl())
+                        .pricePerUnit(variant.getPrice())
+                        .quantity(cartItem.getQuantity())
+                        .totalPrice(variant.getPrice() * cartItem.getQuantity())
+                        .build());
+
+                // Giảm stock, tăng sold count
+                variant.setStock(variant.getStock() - cartItem.getQuantity());
+                variant.setSoldCount(variant.getSoldCount() + cartItem.getQuantity());
+                variantsToUpdate.add(variant);
+            }
+
+            // Thực thi SQL Insert/Update theo lô
+            orderItemRepository.saveAll(orderItemsToSave);
+            productVariantRepository.saveAll(variantsToUpdate);
+
+            saveStatusHistory(savedOrder, OrderStatus.PENDING, "Order created");
+
+            if (voucher != null) {
+                voucherService.confirmVoucherUsage(voucher.getVoucherId(), userId, savedOrder.getOrderId());
+            }
+
+            // 1. Gắn List items vào Entity (để Mapper tự lấy)
+            savedOrder.setOrderItems(orderItemsToSave);
+
+            // 2. Chuyển sang DTO (MapStruct sẽ tự động map tất cả các field tiền bạc)
+            OrderResponse orderResponse = orderMapper.toResponse(savedOrder);
+
+            // 3. Fake History vào DTO (vì lúc save history nó chưa nạp lại vào RAM)
+            OrderStatusHistoryResponse historyDto = OrderStatusHistoryResponse.builder()
+                    .status(OrderStatus.PENDING)
+                    .note("Order created")
+                    .createdDate(LocalDateTime.now())
+                    .build();
+            orderResponse.setStatusHistory(List.of(historyDto));
+
+            // 4. Đẩy vào mảng để chờ trả về
+            createdOrderResponses.add(orderResponse);
+        }
+
+        // Xóa các item đã mua khỏi giỏ hàng
+        cartItemRepository.deleteAllById(request.getSelectedCartItemIds());
+
+        // --- XỬ LÝ VOUCHER SÀN (NẾU CÓ) ---
+        double summaryTotalPlatformDiscount = 0.0;
+        if (request.getPlatformVoucherCode() != null && !request.getPlatformVoucherCode().isBlank()) {
+            // TODO: Viết hàm truy vấn voucher Sàn (không gắn với shop_id) và tính toán discount
+            // Ví dụ: summaryTotalPlatformDiscount = platformVoucher.calculateDiscount(summaryTotalItemsSubtotal);
+        }
+
+        // Tính TỔNG THANH TOÁN cuối cùng của cả phiên
+        double finalShippingFee = Math.max(0.0, summaryTotalOriginalShippingFee - summaryTotalShippingDiscount);
+        double grandTotal = Math.max(0.0, summaryTotalItemsSubtotal + finalShippingFee - summaryTotalShopDiscount - summaryTotalPlatformDiscount);
+
+        PaymentSummaryResponse paymentSummary = PaymentSummaryResponse.builder()
+                .totalItemsSubtotal(summaryTotalItemsSubtotal)
+                .totalOriginalShippingFee(summaryTotalOriginalShippingFee)
+                .totalShippingDiscount(summaryTotalShippingDiscount)
+                .finalShippingFee(finalShippingFee)
+                .totalShopDiscount(summaryTotalShopDiscount)
+                .totalPlatformDiscount(summaryTotalPlatformDiscount)
+                .grandTotal(grandTotal)
+                .paymentMethod(request.getPaymentMethod())
+                .build();
+
+        return CheckoutResponse.builder()
+                .checkoutSessionId("CHK-" + System.currentTimeMillis())
+                .orders(createdOrderResponses)
+                .paymentSummary(paymentSummary)
+                .build();
+    }
+
+
+
+    // HELPER METHODS
     // Xây dựng mô tả voucher để hiển thị trên UI
     private String buildVoucherDescription(VoucherEntity voucher) {
         return switch (voucher.getDiscountType()) {
