@@ -7,14 +7,12 @@ body:
   content: |-
     {
         "selectedCartItemIds": [
-            12,
-            13
-            
+            9
         ],
-        "voucherCode": "WINTER2026"
+        "voucherCode": "HIKIW50K"
     }
 auth:
   type: bearer
   credentials:
-    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjY0OTUzLCJpYXQiOjE3NzUyNjEzNTMsImp0aSI6ImE2ZmIxYzIwLTY4YjctNGJkZi1iODllLTFjMDkyMjRiNGMzNCIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.2obt9_XaoQOVrHQm8e8Gb2hAyPvUFH3xnjKKm1LB-qyzD0xvkuDXfWkE2QIkH4z62COlsDWC-eJIFUhPcPBFUw
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjcxNzI0LCJpYXQiOjE3NzUyNjgxMjQsImp0aSI6ImU0ZTNiMzE4LTcyM2QtNDQ5Yi1hMWMzLTk5MDE3NjM0YTkwYiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.xsrWoEQCGcjaudmIBFcL5cxBHibNSkWIK21Cwuq1sltq0lSonlhGSMk0eTd2AXV5ouhaA3QTwW5YICTmslca_A
 order: 2841895888959452

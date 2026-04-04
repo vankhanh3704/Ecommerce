@@ -334,6 +334,12 @@ public class OrderService {
     }
 
 
+    // Lấy đơn hàng của user đang đăng nhập
+    public List<OrderResponse> getMyOrders(Long currentUserId) {
+        return orderMapper.toResponseList(
+                orderRepository.findByUser_IdOrderByCreatedDateDesc(currentUserId)
+        );
+    }
 
     // HELPER METHODS
     // Xây dựng mô tả voucher để hiển thị trên UI
@@ -351,7 +357,7 @@ public class OrderService {
     private List<CartItemEntity> getAndValidateCartItems(List<Long> selectedCartItemIds, Long userId) {
         List<CartItemEntity> items = cartItemRepository.findAllById(selectedCartItemIds);
 
-        if(items.size() != selectedCartItemIds.size()){
+        if (items.size() != selectedCartItemIds.size()) {
             throw new AppException(ErrorCode.CART_ITEM_NOT_EXISTED);
         }
 
@@ -381,11 +387,12 @@ public class OrderService {
 
     private void saveStatusHistory(OrderEntity savedOrder, OrderStatus status, String message) {
         orderStatusHistoryRepository.save(OrderStatusHistoryEntity.builder()
-                        .order(savedOrder)
-                        .status(status)
-                        .note(message)
+                .order(savedOrder)
+                .status(status)
+                .note(message)
                 .build());
     }
+
     private List<CartItemResponse> buildCartItemResponses(List<CartItemEntity> items) {
         return items.stream().map(item -> CartItemResponse.builder()
                 .cartItemId(item.getCartItemId())
@@ -395,13 +402,13 @@ public class OrderService {
                 .sku(item.getProductVariant().getSku())
                 .productImageUrl(item.getProductVariant().getImageUrl())
                 .variantValues(item.getProductVariant().getVariantMappings().stream()
-                                .map(mapping -> VariantInfo.builder()
-                                        .variantName(mapping.getVariantValue().getVariant().getVariantName())
-                                        .valueName(mapping.getVariantValue().getValueName())
-                                        .imageUrl(mapping.getVariantValue().getImageUrl())
-                                        .build())
-                                .collect(Collectors.toList())
-                        )
+                        .map(mapping -> VariantInfo.builder()
+                                .variantName(mapping.getVariantValue().getVariant().getVariantName())
+                                .valueName(mapping.getVariantValue().getValueName())
+                                .imageUrl(mapping.getVariantValue().getImageUrl())
+                                .build())
+                        .collect(Collectors.toList())
+                )
                 .discountPercentage(item.getProductVariant().getDiscountPercentage())
                 .price(item.getProductVariant().getPrice())
                 .oldPrice(item.getProductVariant().getOldPrice())
@@ -411,6 +418,7 @@ public class OrderService {
                 .inStock(item.getProductVariant().getInStock())
                 .build()).toList();
     }
+
     private OrderResponse buildOrderResponse(Long orderId) {
         OrderEntity order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));

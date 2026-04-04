@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get my orders(token)
+url: ""
+method: GET
+order: 4054955596754817

@@ -6,16 +6,20 @@ body:
   type: json
   content: |-
     {
-      "userId": 12,
-      "receiverName": "Nguyễn Văn A",
-      "receiverPhone": "0901234567",
-      "shippingAddress": "123 Đường ABC, Quận 1, TP. Hồ Chí Minh",
-      "paymentMethod": "CARD",
-      "voucherCode": "WINTER2026",
-      "note": "Giao hàng vào giờ hành chính giúp mình"
+      "selectedCartItemIds": [12],
+      "receiverName": "Nguyễn Văn Mua",
+      "receiverPhone": "0987654321",
+      "shippingAddress": "Tầng 5, Toà nhà ABC, Phường Bến Nghé, Quận 1, TP.HCM",
+      "paymentMethod": "COD",
+      "shopVoucherCodes": {
+        "1": "HIKIW50K",
+        "3": "GIAM10K_SHOP3"
+      },
+      "platformVoucherCode": "FREESHIP_EXTRA",
+      "note": "Gọi trước 30 phút khi giao hàng nhé."
     }
 auth:
   type: bearer
   credentials:
-    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MjIxMTI1LCJpYXQiOjE3NzUyMTc1MjUsImp0aSI6ImVlZWI4ODcyLTg5ZmUtNDI1MS04ZWZkLTFhNWM3MTg3YWYyMCIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.guezB1LSigcGCE_PyRGN5-rdIt44zgMG8QR3E5B5fw0VE3qVg5NJTbQbn6f-7ODlBUj8KkrKIhznga6IpaDF3Q
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1Mjc1OTYyLCJpYXQiOjE3NzUyNzIzNjIsImp0aSI6IjM4NDczYzczLTAyNGUtNGE5ZS05ZjNlLTExMTBjNGFmZmFkNSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.ro_WBwGWMaK2CopetdZLWpb1MtN_1A0FMgnkZYyswSeKlJh3L6dD_QV6JRVBULf_7a8B___dq-UUVXi88-xGUQ
 order: 1775167272243

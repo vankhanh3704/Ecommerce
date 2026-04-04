@@ -7,12 +7,10 @@ import com.hikiw.ecommerce.module.order.dto.*;
 import com.hikiw.ecommerce.module.order.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +38,13 @@ public class OrderController {
         return ApiResponse.<CheckoutResponse>builder()
                 .result(orderService.createOrder(request, securityUtil.getCurrentUserId()))
                 .message("Orders created successfully")
+                .build();
+    }
+
+    @GetMapping
+    public ApiResponse<List<OrderResponse>> getUserOrders() {
+        return ApiResponse.<List<OrderResponse>>builder()
+                .result(orderService.getMyOrders(securityUtil.getCurrentUserId()))
                 .build();
     }
 }
