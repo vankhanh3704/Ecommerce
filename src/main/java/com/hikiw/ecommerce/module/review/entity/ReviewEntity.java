@@ -1,7 +1,6 @@
 package com.hikiw.ecommerce.module.review.entity;
 import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
 import com.hikiw.ecommerce.common.constant.BaseEntity;
-import com.hikiw.ecommerce.common.entity.BaseEntity;
 import com.hikiw.ecommerce.module.order.entity.OrderItemEntity;
 import com.hikiw.ecommerce.module.product.entity.ProductEntity;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
