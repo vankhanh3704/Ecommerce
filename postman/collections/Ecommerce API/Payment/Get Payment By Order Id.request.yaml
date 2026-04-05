@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Payment By Order Id
+url: ""
+method: GET
+order: 3975519405745081

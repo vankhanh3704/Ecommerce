@@ -8,6 +8,7 @@ import com.hikiw.ecommerce.Enum.PaymentStatus;
 import com.hikiw.ecommerce.common.Exception.AppException;
 import com.hikiw.ecommerce.module.order.entity.OrderEntity;
 import com.hikiw.ecommerce.module.order.repository.OrderRepository;
+import com.hikiw.ecommerce.module.payment.dto.PaymentCallbackRequest;
 import com.hikiw.ecommerce.module.payment.dto.PaymentCreationRequest;
 import com.hikiw.ecommerce.module.payment.dto.PaymentResponse;
 import com.hikiw.ecommerce.module.payment.entity.PaymentEntity;
@@ -89,6 +90,60 @@ public class PaymentService {
     }
 
 
+    // ========== CALLBACK TỪ CỔNG THANH TOÁN ==========
+    @Transactional
+    public PaymentResponse handleCallback(PaymentCallbackRequest request) {
+        PaymentEntity payment = paymentRepository
+                .findByReferenceCode(request.getReferenceCode())
+                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_EXISTED));
+
+        if (!verifySecureHash(request)) {
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
+
+        if (payment.getPaymentStatus() == PaymentStatus.PAID) {
+            return paymentMapper.toResponse(payment);
+        }
+
+        payment.setTransactionId(request.getTransactionId());
+        payment.setGatewayMessage(request.getMessage());
+        payment.setRawResponse(request.getRawResponse());
+
+        if (Boolean.TRUE.equals(request.getIsSuccess())) {
+            payment.setPaymentStatus(PaymentStatus.PAID);
+            payment.setPaymentDate(LocalDateTime.now());
+
+            // Lặp qua tất cả đơn hàng con, đổi status thành PAID và CONFIRMED
+            for (OrderEntity order : payment.getOrders()) {
+                order.setPaymentStatus(PaymentStatus.PAID);
+                order.setOrderStatus(OrderStatus.CONFIRMED);
+            }
+            orderRepository.saveAll(payment.getOrders());
+
+        } else {
+            payment.setPaymentStatus(PaymentStatus.UNPAID);
+        }
+
+        paymentRepository.save(payment);
+        return paymentMapper.toResponse(payment);
+    }
+
+
+
+    public PaymentResponse getPaymentByOrderId(Long orderId) {
+        return paymentRepository.findByOrders_OrderId(orderId)
+                .map(paymentMapper::toResponse)
+                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_EXISTED));
+    }
+
+    public PaymentResponse getPaymentById(Long paymentId) {
+        return paymentRepository.findById(paymentId)
+                .map(paymentMapper::toResponse)
+                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_EXISTED));
+    }
+
+
+
     // ========== COD — Xác nhận ngay ==========
     @Transactional
     public PaymentResponse confirmCodPayment(Long paymentId) {
@@ -138,5 +193,12 @@ public class PaymentService {
         // TODO: Tích hợp thực tế với VNPay / MoMo / ZaloPay
         // Đây là placeholder
         return "https://payment-gateway.example.com/pay?ref=" + payment.getReferenceCode();
+    }
+
+    // Hàm giả lập check chữ ký
+    private boolean verifySecureHash(PaymentCallbackRequest request) {
+        // TODO: Viết logic lấy SecretKey băm dữ liệu theo tài liệu của VNPay/MoMo
+        // Hiện tại giả lập luôn return true để test
+        return true;
     }
 }

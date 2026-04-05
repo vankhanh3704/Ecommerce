@@ -17,6 +17,7 @@ public interface PaymentMapper {
     @Mapping(target = "paymentUrl", ignore = true)
     @Mapping(target = "orderIds", expression = "java(mapOrderIds(entity.getOrders()))")
     @Mapping(target = "orderCodes", expression = "java(mapOrderCodes(entity.getOrders()))")
+    @Mapping(target ="createdDate", source = "createdDate")
     PaymentResponse toResponse(PaymentEntity entity);
 
     default List<Long> mapOrderIds(List<OrderEntity> orders) {
