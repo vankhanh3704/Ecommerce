@@ -1,0 +1,18 @@
+$kind: http-request
+name: Update order
+url: "{{baseUrl}}/api/orders/:orderId/status"
+method: PUT
+pathVariables:
+  orderId: "5"
+body:
+  type: json
+  content: |-
+    {
+        "newStatus" : "CONFIRMED",
+        "note" : ""
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MzAzNTg5LCJpYXQiOjE3NzUyOTk5ODksImp0aSI6ImQzY2Y1ZWZkLWZmYzItNDkzNy1hM2E2LTU1MGI2YmE1MzIwYyIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.WhZyxWZN45ql0QZZYMQVf2zoTPJO9AWe1IJoiioIZ8MphYouWXt9BBY-DISM1g2k31DDPnXjOw_23NFAgTXvdA
+order: 4501448048027095

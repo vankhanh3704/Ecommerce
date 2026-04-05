@@ -1,0 +1,11 @@
+$kind: http-request
+name: Cancel by user
+url: "{{baseUrl}}/api/orders/my-orders/:orderId/cancel"
+method: PUT
+pathVariables:
+  orderId: "5"
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MzU0OTY4LCJpYXQiOjE3NzUzNTEzNjgsImp0aSI6IjQwYzIxOTM4LWYzOTctNGVkMy1iMDgxLWY1MzIyMjU4Y2UwOSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.clNWTr-rkBizTOVhAZeipcUwxuLgIU4eaAf2vwTQ222zN9I-28vlryPQ0SKP8IL9DmuojbVxt_9BJhzKzWMUwQ
+order: 4502257323562808

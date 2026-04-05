@@ -48,6 +48,8 @@ public enum ErrorCode {
     VOUCHER_ALREADY_USED(1037, "Voucher already used", HttpStatus.BAD_REQUEST),
     CART_IS_EMPTY(1038, "Cart is empty", HttpStatus.BAD_REQUEST),
     ORDER_NOT_EXISTED(1039, "Order not existed", HttpStatus.NOT_FOUND),
+    ORDER_STATUS_INVALID_TRANSITION(1040, "Invalid order status transition", HttpStatus.BAD_REQUEST),
+    ORDER_CANNOT_CANCEL(1041, "Order cannot be canceled", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get order by Id (adm)
+url: ""
+method: GET
+order: 4381088313961915

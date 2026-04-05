@@ -341,6 +341,75 @@ public class OrderService {
         );
     }
 
+
+    // ========== LẤY CHI TIẾT ĐƠN HÀNG ==========
+    // Kiểm tra đơn hàng có thuộc về user đang đăng nhập không
+    public OrderResponse getMyOrderById(Long orderId, Long currentUserId) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
+
+        // User chỉ xem được đơn của mình
+        if (!order.getUser().getId().equals(currentUserId)) {
+            throw new AppException(ErrorCode.ORDER_NOT_EXISTED);
+        }
+
+        return buildOrderResponse(orderId);
+    }
+
+    // ========== ADMIN — Quản lý đơn hàng ==========
+
+    public List<OrderResponse> getAllOrders() {
+        return orderMapper.toResponseList(orderRepository.findAll());
+    }
+
+    public OrderResponse getOrderById(Long orderId) {
+        return buildOrderResponse(orderId);
+    }
+
+    public OrderResponse getOrderByCode(String orderCode) {
+        OrderEntity order = orderRepository.findByOrderCode(orderCode)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
+        return buildOrderResponse(order.getOrderId());
+    }
+
+    @Transactional
+    public OrderResponse updateOrderStatus(Long orderId, UpdateOrderStatusRequest request) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
+
+        validateStatusTransition(order.getOrderStatus(), request.getNewStatus());
+        order.setOrderStatus(request.getNewStatus());
+        orderRepository.save(order);
+
+        saveStatusHistory(order, request.getNewStatus(), request.getNote());
+
+        return buildOrderResponse(orderId);
+    }
+
+    @Transactional
+    public OrderResponse cancelOrderByAdmin(Long orderId, String reason) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
+        return cancelOrder(order, reason);
+    }
+
+    @Transactional
+    public OrderResponse cancelMyOrder(Long orderId, String reason, Long currentUserId) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
+
+        // Chỉ hủy được đơn của mình
+        if (!order.getUser().getId().equals(currentUserId)) {
+            throw new AppException(ErrorCode.ORDER_NOT_EXISTED);
+        }
+
+        return cancelOrder(order, reason);
+    }
+
+
+
+
+
     // HELPER METHODS
     // Xây dựng mô tả voucher để hiển thị trên UI
     private String buildVoucherDescription(VoucherEntity voucher) {
@@ -475,4 +544,36 @@ public class OrderService {
         return subtotal;
     }
 
+
+    private void validateStatusTransition(OrderStatus current, OrderStatus next) {
+        boolean valid = switch (current) {
+            case PENDING -> next == OrderStatus.CONFIRMED || next == OrderStatus.CANCELLED;
+            case CONFIRMED -> next == OrderStatus.SHIPPING || next == OrderStatus.CANCELLED;
+            case SHIPPING -> next == OrderStatus.DELIVERED;
+            default -> false;
+        };
+        if (!valid) throw new AppException(ErrorCode.ORDER_STATUS_INVALID_TRANSITION);
+    }
+
+    private OrderResponse cancelOrder(OrderEntity order, String reason) {
+        if (order.getOrderStatus() != OrderStatus.PENDING
+                && order.getOrderStatus() != OrderStatus.CONFIRMED) {
+            throw new AppException(ErrorCode.ORDER_CANNOT_CANCEL);
+        }
+
+        // Hoàn lại stock
+        for (OrderItemEntity item : order.getOrderItems()) {
+            ProductVariantEntity variant = item.getProductVariant();
+            variant.setStock(variant.getStock() + item.getQuantity());
+            variant.setSoldCount(Math.max(0, variant.getSoldCount() - item.getQuantity()));
+            productVariantRepository.save(variant);
+        }
+
+        order.setOrderStatus(OrderStatus.CANCELLED);
+        orderRepository.save(order);
+        saveStatusHistory(order, OrderStatus.CANCELLED,
+                reason != null ? reason : "Order cancelled");
+
+        return buildOrderResponse(order.getOrderId());
+    }
 }
