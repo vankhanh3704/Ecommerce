@@ -1,0 +1,16 @@
+$kind: http-request
+name: Create Payment
+url: "{{baseUrl}}/api/payment"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "orderIds": [4],
+      "paymentMethod": "COD"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MzYxMTUwLCJpYXQiOjE3NzUzNTc1NTAsImp0aSI6IjVkNmMwY2FjLTE2NDEtNGU1Yi1iMGU1LTA2Nzg5NWM3Y2M4NSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.oxE--ujBevdM86JbmTEfLTP-796wqI_FwFBQEFuAW2QMX8eonO7ODXQCWgeMBSF58CTsFsNzOfxzvK7dm0PUeA
+order: 1775357508924

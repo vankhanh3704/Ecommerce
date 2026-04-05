@@ -3,6 +3,7 @@ package com.hikiw.ecommerce.module.payment.entity;
 
 import com.hikiw.ecommerce.Enum.PaymentMethod;
 import com.hikiw.ecommerce.Enum.PaymentStatus;
+import com.hikiw.ecommerce.common.constant.BaseEntity;
 import com.hikiw.ecommerce.module.order.entity.OrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "payment")
-public class PaymentEntity {
+public class PaymentEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
