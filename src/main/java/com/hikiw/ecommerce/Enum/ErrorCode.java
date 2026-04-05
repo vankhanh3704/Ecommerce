@@ -50,7 +50,10 @@ public enum ErrorCode {
     ORDER_NOT_EXISTED(1039, "Order not existed", HttpStatus.NOT_FOUND),
     ORDER_STATUS_INVALID_TRANSITION(1040, "Invalid order status transition", HttpStatus.BAD_REQUEST),
     ORDER_CANNOT_CANCEL(1041, "Order cannot be canceled", HttpStatus.BAD_REQUEST),
-    UNAUTHORIZED_ACTION(1042, "Unauthorized action", HttpStatus.UNAUTHORIZED)
+    UNAUTHORIZED_ACTION(1042, "Unauthorized action", HttpStatus.UNAUTHORIZED),
+    PAYMENT_ALREADY_EXISTED(1043, "Payment already existed for this order", HttpStatus.BAD_REQUEST),
+    ORDER_CANNOT_PAY(1044, "Order cannot be paid (maybe it's cancelled)", HttpStatus.BAD_REQUEST),
+    PAYMENT_NOT_EXISTED(1045, "Payment not existed", HttpStatus.NOT_FOUND)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
