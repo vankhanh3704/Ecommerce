@@ -4,6 +4,7 @@ import com.hikiw.ecommerce.Enum.OrderStatus;
 import com.hikiw.ecommerce.Enum.PaymentMethod;
 import com.hikiw.ecommerce.Enum.PaymentStatus;
 import com.hikiw.ecommerce.common.constant.BaseEntity;
+import com.hikiw.ecommerce.module.payment.entity.PaymentEntity;
 import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.module.voucher.entity.VoucherEntity;
@@ -97,6 +98,10 @@ public class OrderEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method", nullable = false)
     PaymentMethod paymentMethod;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id") // Sẽ sinh ra cột payment_id trong bảng orders
+    PaymentEntity payment;
 
     @Column(columnDefinition = "TEXT")
     String note;
