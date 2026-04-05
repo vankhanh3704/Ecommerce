@@ -55,6 +55,10 @@ public enum ErrorCode {
     ORDER_CANNOT_PAY(1044, "Order cannot be paid (maybe it's cancelled)", HttpStatus.BAD_REQUEST),
     PAYMENT_NOT_EXISTED(1045, "Payment not existed", HttpStatus.NOT_FOUND),
     PAYMENT_CANNOT_REFUND(1046, "Payment cannot be refunded (maybe it's not paid yet)", HttpStatus.BAD_REQUEST),
+    ORDER_ITEM_NOT_EXISTED(1047, "Order item not existed", HttpStatus.NOT_FOUND),
+    REVIEW_NOT_AUTHORIZED(1048, "User not authorized to review this product", HttpStatus.UNAUTHORIZED),
+    REVIEW_ORDER_NOT_DELIVERED(1049, "Order must be delivered before review", HttpStatus.BAD_REQUEST),
+    REVIEW_ALREADY_EXISTED(1050, "Review already existed for this order item", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi
