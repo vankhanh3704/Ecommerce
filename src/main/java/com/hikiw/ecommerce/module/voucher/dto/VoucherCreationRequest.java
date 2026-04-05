@@ -36,4 +36,9 @@ public class VoucherCreationRequest {
 
     @NotNull(message = "End date is required")
     LocalDateTime endDate;
+
+    @Min(value = 1, message = "User usage limit must be at least 1")
+    Integer userUsageLimit = 1; // Giới hạn số lần dùng trên 1 khách hàng (Mặc định là 1)
+
+    Long shopId; // Để biết Voucher này thuộc về Shop nào (Null nếu là Voucher toàn sàn)
 }

@@ -15,11 +15,13 @@ public interface VoucherMapper {
     @Mapping(target = "voucherId", ignore = true)
     @Mapping(target = "isActive", constant = "true")
     @Mapping(target = "usages", ignore = true)
+    @Mapping(target = "shop.shopId", source = "shopId")
     VoucherEntity toEntity(VoucherCreationRequest entity);
 
     @Mapping(target = "voucherId", source = "voucherId")
     @Mapping(target = "isValid", expression = "java(entity.isValid())")
     @Mapping(target = "isActive", source = "isActive")
+    @Mapping(target = "shopId", source = "shop.shopId")
     VoucherResponse toResponse(VoucherEntity entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

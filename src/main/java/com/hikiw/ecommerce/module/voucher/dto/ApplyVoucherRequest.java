@@ -19,4 +19,6 @@ public class ApplyVoucherRequest {
 
     @NotNull(message = "Order amount is required")
     Double orderAmount; // tổng tiền hàng (chưa tính phí ship và chưa trừ giảm giá) mà khách đang định mua.
+
+    private Long shopId; // THÊM DÒNG NÀY (Có thể null nếu đơn không có shop hoặc check voucher sàn)
 }

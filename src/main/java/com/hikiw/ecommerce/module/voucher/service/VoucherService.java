@@ -4,6 +4,9 @@ package com.hikiw.ecommerce.module.voucher.service;
 import com.hikiw.ecommerce.Enum.DiscountType;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.common.Exception.AppException;
+import com.hikiw.ecommerce.configuration.SecurityUtil;
+import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
+import com.hikiw.ecommerce.module.shop.repository.ShopRepository;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.module.user.repository.UserRepository;
 import com.hikiw.ecommerce.module.voucher.dto.*;
@@ -34,6 +37,9 @@ public class VoucherService {
     VoucherMapper voucherMapper;
     UserRepository userRepository;
 
+    ShopRepository shopRepository; // Thêm ShopRepo
+    SecurityUtil securityUtils; // Thêm SecurityUtil để lấy thông tin user hiện tại
+
     @Transactional
     public VoucherResponse createVoucher(VoucherCreationRequest request){
         if(voucherRepository.existsByCode(request.getCode())){
@@ -44,6 +50,13 @@ public class VoucherService {
             throw new AppException(ErrorCode.VOUCHER_END_DATE_BEFORE_START_DATE);
         }
         VoucherEntity voucherEntity = voucherMapper.toEntity(request);
+
+        if (voucherEntity.getShop() != null) {
+            ShopEntity shop = shopRepository.findById(voucherEntity.getShop().getShopId())
+                    .orElseThrow(() -> new AppException(ErrorCode.SHOP_NOT_EXISTED));
+            validateShopOwnership(shop);
+        }
+
         voucherEntity.setCode(request.getCode().toUpperCase()); // Mã voucher luôn được lưu dưới dạng chữ hoa
         return voucherMapper.toResponse(voucherRepository.save(voucherEntity));
     }
@@ -53,6 +66,7 @@ public class VoucherService {
         VoucherEntity voucherEntity = voucherRepository.findById(voucherId)
                 .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_EXISTED));
 
+        validateShopOwnership(voucherEntity.getShop());
         voucherMapper.updateVoucher(voucherEntity, request);
         return voucherMapper.toResponse(voucherRepository.save(voucherEntity));
 
@@ -61,6 +75,8 @@ public class VoucherService {
     @Transactional
     public void deleteVoucher(Long voucherId){
         VoucherEntity entity = voucherRepository.findById(voucherId).orElseThrow(()-> new AppException(ErrorCode.VOUCHER_NOT_EXISTED));
+        // BẢO MẬT: Phải là chủ shop mới được xóa
+        validateShopOwnership(entity.getShop());
         entity.setIsActive(false);
         voucherRepository.save(entity);
     }
@@ -91,10 +107,19 @@ public class VoucherService {
         if(!voucher.isValid()){
             throw new AppException(ErrorCode.VOUCHER_EXPIRED);
         }
-        // kiểm tra xem user đã dùng voucher hay chưa
-        if(voucherUsageRepository.existsByVoucher_VoucherIdAndUser_Id(voucher.getVoucherId(), request.getUserId() )){
-            throw new AppException(ErrorCode.VOUCHER_ALREADY_USED);
+
+
+        if (voucher.getShop() != null) {
+            if (request.getShopId() == null || !voucher.getShop().getShopId().equals(request.getShopId())) {
+                throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION); // Thay bằng mã lỗi VOUCHER_NOT_FOR_THIS_SHOP
+            }
         }
+
+        int userUsedCount = voucherUsageRepository.countByVoucher_VoucherIdAndUser_Id(voucher.getVoucherId(), request.getUserId());
+        if(userUsedCount >= voucher.getUserUsageLimit()){
+            throw new AppException(ErrorCode.VOUCHER_ALREADY_USED); // Hoặc mã lỗi VOUCHER_USER_LIMIT_REACHED
+        }
+
         // kiểm tra đơn hàng có đạt mức tối thiểu không
         if (request.getOrderAmount() < voucher.getMinSpend()) {
             throw new AppException(ErrorCode.VOUCHER_MIN_SPEND_NOT_MET);
@@ -132,7 +157,8 @@ public class VoucherService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-        // Lưu lịch sử sử dụng
+        // Hibernate sẽ tự động ném ra ObjectOptimisticLockingFailureException
+        // nếu 2 request cùng lúc cố gắng ghi đè số usedCount của voucher này.
         VoucherUsageEntity usage = VoucherUsageEntity.builder()
                 .voucher(voucher)
                 .user(user)
@@ -145,5 +171,15 @@ public class VoucherService {
         voucherRepository.save(voucher);
 
         log.info("Voucher {} confirmed for order {}", voucher.getCode(), orderId);
+    }
+
+    private void validateShopOwnership(ShopEntity shop) {
+        if (shop != null) {
+            Long currentUserId = securityUtils.getCurrentUserId();
+            // Nếu không phải là chủ shop (và giả sử chưa xét Role Admin ở đây) thì chặn
+            if (!shop.getOwner().getId().equals(currentUserId)) {
+                throw new AppException(ErrorCode.UNAUTHORIZED_ACTION); // Hoặc tạo mã lỗi SHOP_ACCESS_DENIED
+            }
+        }
     }
 }

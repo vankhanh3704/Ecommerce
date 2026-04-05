@@ -50,6 +50,13 @@ public class VoucherEntity extends BaseAuditEntity {
     @Column(name = "used_count")
     Integer usedCount = 0;
 
+    @Builder.Default
+    @Column(name = "user_usage_limit")
+    Integer userUsageLimit = 1;
+
+    @Version
+    Long version; // để xử lý đồng thời (optimistic locking)
+
     @OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL, orphanRemoval = true)
     List<VoucherUsageEntity> usages = new ArrayList<>();
 

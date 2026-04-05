@@ -19,4 +19,5 @@ public class ApplyVoucherResponse {
     Double discountAmount;   // Số tiền được giảm
     Double finalAmount;      // Tiền sau giảm
     Boolean isFreeShipping;  // Có miễn phí ship không
+    Long shopId;
 }

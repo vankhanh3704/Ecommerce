@@ -28,5 +28,6 @@ VoucherResponse {
 
     Boolean isValid; // check xem còn hiệu lực hay không ( dựa vào ngày hết hạn và số lần sử dụng đã dùng)
 
-
+    Integer userUsageLimit;
+    Long shopId;
 }
