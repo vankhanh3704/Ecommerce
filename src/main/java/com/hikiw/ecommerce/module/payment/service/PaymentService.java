@@ -129,6 +129,28 @@ public class PaymentService {
     }
 
 
+    // refund
+    @Transactional
+    public PaymentResponse refundPayment(Long paymentId, String reason) {
+        PaymentEntity payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_EXISTED));
+
+        if (payment.getPaymentStatus() != PaymentStatus.PAID) {
+            throw new AppException(ErrorCode.PAYMENT_CANNOT_REFUND);
+        }
+
+        payment.setPaymentStatus(PaymentStatus.REFUNDED);
+        payment.setGatewayMessage("Refunded: " + (reason != null ? reason : "No reason provided"));
+        paymentRepository.save(payment);
+
+        for (OrderEntity order : payment.getOrders()) {
+            order.setPaymentStatus(PaymentStatus.REFUNDED);
+        }
+        orderRepository.saveAll(payment.getOrders());
+
+        return paymentMapper.toResponse(payment);
+    }
+
 
     public PaymentResponse getPaymentByOrderId(Long orderId) {
         return paymentRepository.findByOrders_OrderId(orderId)

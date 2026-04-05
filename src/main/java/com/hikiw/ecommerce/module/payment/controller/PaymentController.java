@@ -51,4 +51,15 @@ public class PaymentController {
                 .result(paymentService.getPaymentById(paymentId))
                 .build();
     }
+
+
+    @PutMapping("/{paymentId}/refund")
+    public ApiResponse<PaymentResponse> refundPayment(
+            @PathVariable Long paymentId,
+            @RequestParam(required = false) String reason) {
+        return ApiResponse.<PaymentResponse>builder()
+                .result(paymentService.refundPayment(paymentId, reason))
+                .message("Payment refunded successfully")
+                .build();
+    }
 }
