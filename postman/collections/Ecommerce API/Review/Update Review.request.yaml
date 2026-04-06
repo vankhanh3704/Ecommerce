@@ -1,0 +1,7 @@
+$kind: http-request
+name: Update Review
+url: "{{baseUrl}}/api/reviews/:reviewId"
+method: PUT
+pathVariables:
+  reviewId: ""
+order: 1838686849376495

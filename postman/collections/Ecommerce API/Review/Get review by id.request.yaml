@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get review by id
+url: ""
+method: GET
+order: 4358256910859064

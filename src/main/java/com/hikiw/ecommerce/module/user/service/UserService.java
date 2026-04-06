@@ -74,9 +74,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
     @PreAuthorize("hasRole('ADMIN')")
+
     public UserResponse updateUser(Long userId, UserUpdateRequest request){
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not exists"));
+        userEntity.setPassword(passwordEncoder.encode(request.getPassword()));
         userMapper.toUpdateUser(userEntity, request);
+        HashSet<RoleEntity> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add); // map với role trong db nếu có, không có thì phải tạo
+        userEntity.setRoles(roles);
         return userMapper.toUserResponse(userRepository.save(userEntity));
     }
 }

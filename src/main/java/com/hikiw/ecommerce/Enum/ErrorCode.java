@@ -58,7 +58,9 @@ public enum ErrorCode {
     ORDER_ITEM_NOT_EXISTED(1047, "Order item not existed", HttpStatus.NOT_FOUND),
     REVIEW_NOT_AUTHORIZED(1048, "User not authorized to review this product", HttpStatus.UNAUTHORIZED),
     REVIEW_ORDER_NOT_DELIVERED(1049, "Order must be delivered before review", HttpStatus.BAD_REQUEST),
-    REVIEW_ALREADY_EXISTED(1050, "Review already existed for this order item", HttpStatus.BAD_REQUEST)
+    REVIEW_ALREADY_EXISTED(1050, "Review already existed for this order item", HttpStatus.BAD_REQUEST),
+    REVIEW_NOT_EXISTED(1051, "Review not existed", HttpStatus.NOT_FOUND),
+    REVIEW_REPLY_ALREADY_EXISTED(1052, "Review reply already existed for this review", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

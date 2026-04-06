@@ -1,0 +1,30 @@
+$kind: http-request
+name: Create Review
+url: "{{baseUrl}}/api/reviews"
+method: POST
+body:
+  type: json
+  content: |-
+    // {
+    //   "orderItemId": 3,
+    //   "rating": 5,
+    //   "comment": "Chất vải cực kỳ mát, form chuẩn như hình. Shop đóng gói siêu cẩn thận, 10 điểm không có nhưng!",
+    //   "imageUrls": [
+    //     "https://res.cloudinary.com/demo/image/upload/v1/ao-thun-mat-truoc.jpg",
+    //     "https://res.cloudinary.com/demo/image/upload/v1/ao-thun-mat-sau.jpg"
+    //   ],
+    //   "isAnonymous": false
+    // }
+
+    {
+      "orderItemId": 3,
+      "rating": 3,
+      "comment": "Giao hàng hơi lâu do vướng cuối tuần. Hàng tạm ổn so với tầm giá.",
+      "isAnonymous": true
+    }
+auth:
+  credentials:
+    - key: token
+      value: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1MzgyOTE0LCJpYXQiOjE3NzUzNzkzMTQsImp0aSI6IjA2ZDAzYjFjLTY2YWMtNDgxOC04YTQ5LTkwODg1YTlkOTJmZiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.CJF1I6QUzrWmM_ZuU7-TWSblagvuQ0epsxC8D9abcl7yy5yYj5kSVNbhU67WbgALsVaxwhDbHbM1Bmy6-74LwQ
+  type: bearer
+order: 1775379166080

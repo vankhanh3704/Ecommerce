@@ -9,9 +9,13 @@ import com.hikiw.ecommerce.common.Exception.AppException;
 import com.hikiw.ecommerce.module.order.entity.OrderItemEntity;
 import com.hikiw.ecommerce.module.order.repository.OrderItemRepository;
 import com.hikiw.ecommerce.module.product.entity.ProductEntity;
+import com.hikiw.ecommerce.module.review.dto.ReplyReviewRequest;
 import com.hikiw.ecommerce.module.review.dto.ReviewCreationRequest;
 import com.hikiw.ecommerce.module.review.dto.ReviewResponse;
+import com.hikiw.ecommerce.module.review.dto.ReviewUpdateRequest;
 import com.hikiw.ecommerce.module.review.entity.ReviewEntity;
+import com.hikiw.ecommerce.module.review.entity.ReviewHelpfulEntity;
+import com.hikiw.ecommerce.module.review.entity.ReviewReplyEntity;
 import com.hikiw.ecommerce.module.review.mapper.ReviewMapper;
 import com.hikiw.ecommerce.module.review.repository.ReviewHelpfulRepository;
 import com.hikiw.ecommerce.module.review.repository.ReviewReplyRepository;
@@ -84,7 +88,118 @@ public class ReviewService {
         return buildReviewResponse(saved);
     }
 
+    // update review
+    @Transactional
+    public ReviewResponse updateReview(Long reviewId, ReviewUpdateRequest request, Long currentUserId){
+        ReviewEntity review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new AppException(ErrorCode.REVIEW_NOT_EXISTED));
 
+        if(!review.getUser().getId().equals(currentUserId)){
+            throw new AppException(ErrorCode.REVIEW_NOT_AUTHORIZED);
+        }
+
+        if(request.getRating() != null){
+            review.setRating(request.getRating());
+        }
+        if(request.getComment() != null) {
+            review.setComment(request.getComment());
+        }
+        if(request.getImageUrls() != null){
+            review.setImages(toJsonString(request.getImageUrls()));
+        }
+        if(request.getIsAnonymous() != null){
+            review.setIsAnonymous(request.getIsAnonymous());
+        }
+        return buildReviewResponse(reviewRepository.save(review));
+    }
+    // delete review
+    @Transactional
+    public void deleteReview(Long reviewId, Long currentUserId) {
+        ReviewEntity review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new AppException(ErrorCode.REVIEW_NOT_EXISTED));
+
+        if (!review.getUser().getId().equals(currentUserId)) {
+            throw new AppException(ErrorCode.REVIEW_NOT_AUTHORIZED);
+        }
+        review.setIsActive(false);
+        reviewRepository.save(review);
+    }
+
+
+    public List<ReviewResponse> getReviewsByUser(Long userId) {
+        return reviewRepository
+                .findByUser_IdAndIsActiveTrueOrderByCreatedDateDesc(userId)
+                .stream()
+                .map(this::buildReviewResponse)
+                .toList();
+    }
+
+
+    public ReviewResponse getReviewById(Long reviewId) {
+        ReviewEntity review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new AppException(ErrorCode.REVIEW_NOT_EXISTED));
+        return buildReviewResponse(review);
+    }
+
+
+    // HELPFUL
+    @Transactional
+    public ReviewResponse markHelpful(Long reviewId, Long currentUserId) {
+        ReviewEntity review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new AppException(ErrorCode.REVIEW_NOT_EXISTED));
+
+        UserEntity user = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        // Kiểm tra xem đã "Thả hữu ích" chưa
+        var helpfulOpt = reviewHelpfulRepository.findByReview_ReviewIdAndUser_Id(reviewId, currentUserId);
+
+        if (helpfulOpt.isPresent()) {
+            // Đã bấm rồi -> Bấm lại là HỦY (Unlike)
+            reviewHelpfulRepository.delete(helpfulOpt.get());
+            review.setHelpfulCount(Math.max(0, review.getHelpfulCount() - 1));
+        } else {
+            // Chưa bấm -> THÊM MỚI (Like)
+            ReviewHelpfulEntity newHelpful = ReviewHelpfulEntity.builder()
+                    .review(review)
+                    .user(user)
+                    .build();
+            reviewHelpfulRepository.save(newHelpful);
+            review.setHelpfulCount(review.getHelpfulCount() + 1);
+        }
+
+        return buildReviewResponse(reviewRepository.save(review));
+    }
+
+    //  SHOP REPLY
+    @Transactional
+    public ReviewResponse replyToReview(Long reviewId, ReplyReviewRequest request, Long currentUserId) {
+        ReviewEntity review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new AppException(ErrorCode.REVIEW_NOT_EXISTED));
+
+        if (reviewReplyRepository.existsByReview_ReviewId(reviewId)) {
+            throw new AppException(ErrorCode.REVIEW_REPLY_ALREADY_EXISTED);
+        }
+
+        //  KIỂM TRA CHỦ SHOP
+        Long shopOwnerId = review.getProduct().getShop().getOwner().getId();
+        if (!shopOwnerId.equals(currentUserId)) {
+            throw new AppException(ErrorCode.UNAUTHORIZED_ACTION); // Báo lỗi không có quyền
+        }
+
+        UserEntity user = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        ReviewReplyEntity reply = ReviewReplyEntity.builder()
+                .review(review)
+                .user(user)
+                .replyText(request.getReplyText())
+                .build();
+
+        reviewReplyRepository.save(reply);
+        review.setReply(reply);
+        return buildReviewResponse(review);
+    }
 
     // Private helper method
 

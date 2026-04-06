@@ -1,0 +1,19 @@
+$kind: http-request
+name: replyToReview
+url: "{{baseUrl}}/api/reviews/:reviewId/reply"
+method: POST
+pathVariables:
+  - key: reviewId
+    value: "2"
+body:
+  type: json
+  content: |-
+    {
+      "replyText": "Shop mình bán hàng dỏm đó, xin lỗi bạn nha!"
+    }
+auth:
+  credentials:
+    - key: token
+      value: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1NDc5NDk0LCJpYXQiOjE3NzU0NzU4OTQsImp0aSI6IjIwNDc5ZDJmLWJkNjQtNGEyOS04MjRmLTA5NDllMGEwNTE5YiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.H4dt6p829eYxSsMOi0pPoKMTLiqFA9bOR1rIiWkN9bURnFnETYNasF_KSYE4C2TC15FmXMKYtgaxD09G35bLVA
+  type: bearer
+order: 4499538901419646
