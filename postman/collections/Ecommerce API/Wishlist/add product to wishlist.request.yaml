@@ -1,0 +1,11 @@
+$kind: http-request
+name: add product to wishlist
+url: "{{baseUrl}}/api/wishlist/products/:productId"
+method: POST
+pathVariables:
+  productId: "1"
+auth:
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1NTMyMzMyLCJpYXQiOjE3NzU1Mjg3MzIsImp0aSI6IjMxMTZiMTdmLTlkM2QtNDNmNi1hZDhjLTQ5MGFkZTM5ZDYwOSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.gWUrYz2TlSSrsUX_OMqnMyj3KJQV4OzxpoPqd7JWp7ddqGKy5spUL8OH4Iq8sV3_3tG-yAzUrv4kIQB51jhEuw
+  type: bearer
+order: 1775515645699

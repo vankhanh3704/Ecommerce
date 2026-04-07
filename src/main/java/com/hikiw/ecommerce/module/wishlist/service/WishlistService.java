@@ -8,7 +8,7 @@ import com.hikiw.ecommerce.module.product.repository.ProductRepository;
 import com.hikiw.ecommerce.module.product_variant.entity.ProductVariantEntity;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.module.user.repository.UserRepository;
-import com.hikiw.ecommerce.module.wishlist.dto.WishlistCreationRequest;
+import com.hikiw.ecommerce.module.wishlist.dto.WishlistRequest;
 import com.hikiw.ecommerce.module.wishlist.dto.WishlistResponse;
 import com.hikiw.ecommerce.module.wishlist.entity.WishlistEntity;
 import com.hikiw.ecommerce.module.wishlist.mapper.WishlistMapper;
@@ -33,14 +33,14 @@ public class WishlistService {
 
     // adđ product to wishlist
     @Transactional
-    public WishlistResponse addProductToWishlist(WishlistCreationRequest request) {
-        if(wishlistRepository.existsByUser_IdAndProduct_ProductId(request.getUserId(), request.getProductId())) {
+    public WishlistResponse addProductToWishlist(Long productId, Long userId) {
+        if(wishlistRepository.existsByUser_IdAndProduct_ProductId(userId, productId)) {
             throw new AppException(ErrorCode.WISHLIST_ITEM_ALREADY_EXISTED);
         }
-        UserEntity user = userRepository.findById(request.getUserId())
+        UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-        ProductEntity product = productRepository.findById(request.getProductId())
+        ProductEntity product = productRepository.findById(productId)
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
         WishlistEntity wishlist = WishlistEntity.builder()
@@ -50,6 +50,32 @@ public class WishlistService {
         return buildWishlistResponse(wishlistRepository.save(wishlist));
     }
 
+
+
+
+
+    // remove product from wishlist
+    @Transactional
+    public void removeProductFromWishlist(Long productId, Long userId) {
+        if (!wishlistRepository.existsByUser_IdAndProduct_ProductId(userId, productId)) {
+            throw new AppException(ErrorCode.WISHLIST_ITEM_NOT_EXISTED);
+        }
+
+        wishlistRepository.deleteByUser_IdAndProduct_ProductIdCustom(userId, productId);
+    }
+
+
+    // ========== TOGGLE — ADD NẾU CHƯA CÓ, XÓA NẾU ĐÃ CÓ ==========
+    @Transactional
+    public boolean toggleWishlist(Long productId, Long userId) {
+        if (wishlistRepository.existsByUser_IdAndProduct_ProductId(userId, productId)) {
+            wishlistRepository.deleteByUser_IdAndProduct_ProductIdCustom(userId, productId);
+            return false; // false = đã xóa
+        } else {
+            addProductToWishlist(productId, userId);
+            return true;  // true = đã thêm
+        }
+    }
     // private helper method
     private WishlistResponse buildWishlistResponse(WishlistEntity entity){
         WishlistResponse response = wishlistMapper.toResponse(entity);
@@ -92,4 +118,6 @@ public class WishlistService {
         }
         return response;
     }
+
+
 }

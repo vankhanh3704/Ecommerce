@@ -1,0 +1,11 @@
+$kind: http-request
+name: remove
+url: "{{baseUrl}}/api/wishlist/products/:productId"
+method: DELETE
+pathVariables:
+  productId: ""
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1NTM4MDY0LCJpYXQiOjE3NzU1MzQ0NjQsImp0aSI6IjA0ZThiNjFjLWNlZDQtNDc0ZC1hMDBiLTNlNmU1NWM2ODUxYiIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.OstXO6HE4ZMkheXbGbmXC6bR-rB0JjgliUrdpkJrjLo5GYOGzUJOc_JRq-X8qAdlFokc964mhJQQUlGx-nbaYA
+order: 3572234872094742
