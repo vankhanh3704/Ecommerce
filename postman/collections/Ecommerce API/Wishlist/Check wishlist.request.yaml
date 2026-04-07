@@ -1,0 +1,5 @@
+$kind: http-request
+name: Check wishlist
+url: ""
+method: GET
+order: 4455456145346802

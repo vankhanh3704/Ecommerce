@@ -8,8 +8,8 @@ import com.hikiw.ecommerce.module.product.repository.ProductRepository;
 import com.hikiw.ecommerce.module.product_variant.entity.ProductVariantEntity;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.module.user.repository.UserRepository;
-import com.hikiw.ecommerce.module.wishlist.dto.WishlistRequest;
 import com.hikiw.ecommerce.module.wishlist.dto.WishlistResponse;
+import com.hikiw.ecommerce.module.wishlist.dto.WishlistSummaryResponse;
 import com.hikiw.ecommerce.module.wishlist.entity.WishlistEntity;
 import com.hikiw.ecommerce.module.wishlist.mapper.WishlistMapper;
 import com.hikiw.ecommerce.module.wishlist.repository.WishlistRepository;
@@ -117,6 +117,25 @@ public class WishlistService {
             }
         }
         return response;
+    }
+
+    public WishlistSummaryResponse getMyWishlist(Long userId) {
+        List<WishlistEntity> wishlistItems = wishlistRepository.findByUser_IdOrderByCreatedDateDesc(userId);
+
+        List<WishlistResponse> responses = wishlistItems.stream()
+                .map(this::buildWishlistResponse)
+                .toList();
+
+        return WishlistSummaryResponse.builder()
+                .userId(userId)
+                .totalItems(wishlistRepository.countByUser_Id(userId))
+                .items(responses)
+                .build();
+    }
+
+    // Kiểm tra xem sản phẩm đã có trong wishlist của user chưa
+    public boolean isInWishlist(Long productId, Long userId) {
+        return wishlistRepository.existsByUser_IdAndProduct_ProductId(userId, productId);
     }
 
 

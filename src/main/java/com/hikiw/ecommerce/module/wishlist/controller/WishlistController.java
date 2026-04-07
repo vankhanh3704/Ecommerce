@@ -3,8 +3,8 @@ package com.hikiw.ecommerce.module.wishlist.controller;
 import com.hikiw.ecommerce.common.Response.ApiResponse;
 import com.hikiw.ecommerce.configuration.SecurityUtil;
 import com.hikiw.ecommerce.module.wishlist.dto.ToggleWishlistResponse;
-import com.hikiw.ecommerce.module.wishlist.dto.WishlistRequest;
 import com.hikiw.ecommerce.module.wishlist.dto.WishlistResponse;
+import com.hikiw.ecommerce.module.wishlist.dto.WishlistSummaryResponse;
 import com.hikiw.ecommerce.module.wishlist.service.WishlistService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +45,21 @@ public class WishlistController {
                         .isWishListed(isWishlisted)
                         .message(isWishlisted ? "Added to wishlist" : "Removed from wishlist")
                         .build())
+                .build();
+    }
+
+    // Giúp Frontend biết nên "tô màu đỏ" hay "để trắng" trái tim (nút Yêu thích) khi người dùng mở trang web lên.
+    @GetMapping("/products/{productId}/check")
+    public ApiResponse<Boolean> checkWishlist(@PathVariable Long productId) {
+        return ApiResponse.<Boolean>builder()
+                .result(wishlistService.isInWishlist(productId, securityUtil.getCurrentUserId()))
+                .build();
+    }
+
+    @GetMapping
+    public ApiResponse<WishlistSummaryResponse> getMyWishlist() {
+        return ApiResponse.<WishlistSummaryResponse>builder()
+                .result(wishlistService.getMyWishlist(securityUtil.getCurrentUserId()))
                 .build();
     }
 }
