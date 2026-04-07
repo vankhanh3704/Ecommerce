@@ -1,17 +1,26 @@
 package com.hikiw.ecommerce.module.user.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class UserCreationRequest {
+    @NotBlank
     String username;
-    String password;
+    @NotBlank String password;
+    String fullName;
+    String email;
+    String phoneNumber;
+    // Admin có quyền chỉ định role ngay lúc tạo (Ví dụ: truyền vào ["ADMIN", "USER"])
+    Set<String> roles;
 
 
 }

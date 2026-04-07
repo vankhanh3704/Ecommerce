@@ -2,12 +2,14 @@ package com.hikiw.ecommerce.module.user.controller;
 
 
 import com.hikiw.ecommerce.common.Response.ApiResponse;
+import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
 import com.hikiw.ecommerce.module.user.dto.UserCreationRequest;
 import com.hikiw.ecommerce.module.user.dto.UserResponse;
 import com.hikiw.ecommerce.module.user.service.UserService;
 import com.hikiw.ecommerce.module.user.dto.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +22,34 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public ApiResponse<UserResponse> createUser(@RequestBody UserCreationRequest request){
+    public ApiResponse<UserResponse> createUser(@RequestBody UserCreationRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request)).build();
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<UserResponse> getUserById(@PathVariable Long userId){
+    public ApiResponse<UserResponse> getUserById(@PathVariable Long userId) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getUserById(userId)).build();
     }
+
     @GetMapping
-    public ApiResponse<List<UserResponse>> getUsers(){
-        return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.getUsers())
+    public ApiResponse<Page<UserResponse>> getUsers(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ApiResponse.<Page<UserResponse>>builder()
+                .result(userService.getUsers(page, size))
                 .build();
     }
+
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable Long userId){
+    public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
+
+
     @PutMapping("/{userId}")
-    public ApiResponse<UserResponse> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequest request){
+    public ApiResponse<UserResponse> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(userId, request))
                 .build();

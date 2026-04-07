@@ -7,11 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class UserUpdateRequest {
-    String username;
-    String password;
+    String fullName;
+    String email;
+    String phoneNumber;
+    Set<String> roles;
 }

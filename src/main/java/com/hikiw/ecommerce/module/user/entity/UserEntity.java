@@ -2,6 +2,7 @@ package com.hikiw.ecommerce.module.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hikiw.ecommerce.Enum.Gender;
+import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
 import com.hikiw.ecommerce.module.cart.entity.CartEntity;
 import com.hikiw.ecommerce.module.role.entity.RoleEntity;
 import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
@@ -24,7 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity extends BaseAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -62,6 +63,6 @@ public class UserEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     CartEntity cart;
 
-    
+
 
 }
