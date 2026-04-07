@@ -1,0 +1,95 @@
+package com.hikiw.ecommerce.module.wishlist.service;
+
+
+import com.hikiw.ecommerce.Enum.ErrorCode;
+import com.hikiw.ecommerce.common.Exception.AppException;
+import com.hikiw.ecommerce.module.product.entity.ProductEntity;
+import com.hikiw.ecommerce.module.product.repository.ProductRepository;
+import com.hikiw.ecommerce.module.product_variant.entity.ProductVariantEntity;
+import com.hikiw.ecommerce.module.user.entity.UserEntity;
+import com.hikiw.ecommerce.module.user.repository.UserRepository;
+import com.hikiw.ecommerce.module.wishlist.dto.WishlistCreationRequest;
+import com.hikiw.ecommerce.module.wishlist.dto.WishlistResponse;
+import com.hikiw.ecommerce.module.wishlist.entity.WishlistEntity;
+import com.hikiw.ecommerce.module.wishlist.mapper.WishlistMapper;
+import com.hikiw.ecommerce.module.wishlist.repository.WishlistRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
+public class WishlistService {
+    WishlistRepository wishlistRepository;
+    ProductRepository productRepository;
+    UserRepository userRepository;
+    WishlistMapper wishlistMapper;
+
+
+    // adđ product to wishlist
+    @Transactional
+    public WishlistResponse addProductToWishlist(WishlistCreationRequest request) {
+        if(wishlistRepository.existsByUser_IdAndProduct_ProductId(request.getUserId(), request.getProductId())) {
+            throw new AppException(ErrorCode.WISHLIST_ITEM_ALREADY_EXISTED);
+        }
+        UserEntity user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        ProductEntity product = productRepository.findById(request.getProductId())
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+
+        WishlistEntity wishlist = WishlistEntity.builder()
+                .user(user)
+                .product(product)
+                .build();
+        return buildWishlistResponse(wishlistRepository.save(wishlist));
+    }
+
+    // private helper method
+    private WishlistResponse buildWishlistResponse(WishlistEntity entity){
+        WishlistResponse response = wishlistMapper.toResponse(entity);
+
+        ProductEntity product = entity.getProduct();
+        List<ProductVariantEntity> variants = product.getVariants();
+
+        // Lấy ảnh chính của product
+        if (product.getImages() != null && !product.getImages().isEmpty()) {
+            product.getImages().stream()
+                    .filter(img -> Boolean.TRUE.equals(img.getIsPrimary()))
+                    .findFirst()
+                    .ifPresent(img -> response.setProductImageUrl(img.getImageUrl()));
+        }
+
+        // Tính min/max price và isInStock từ variants
+        if (variants != null && !variants.isEmpty()) {
+            List<ProductVariantEntity> activeVariants = variants.stream()
+                    .filter(v -> Boolean.TRUE.equals(v.getIsActive()))
+                    .toList();
+
+            if (!activeVariants.isEmpty()) {
+                double minPrice = activeVariants.stream()
+                        .mapToDouble(ProductVariantEntity::getPrice)
+                        .min()
+                        .orElse(0.0);
+
+                double maxPrice = activeVariants.stream()
+                        .mapToDouble(ProductVariantEntity::getPrice)
+                        .max()
+                        .orElse(0.0);
+
+                boolean hasStock = activeVariants.stream()
+                        .anyMatch(v -> v.getStock() != null && v.getStock() > 0);
+
+                response.setMinPrice(minPrice);
+                response.setMaxPrice(maxPrice);
+                response.setIsInStock(hasStock);
+            }
+        }
+        return response;
+    }
+}
