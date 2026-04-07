@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     // các api public( không cầu authen)
-    private final String[] PUBLIC_ENDPOINTS = {  "/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh" };
+    private final String[] PUBLIC_ENDPOINTS = {  "/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh", "/auth/register" };
 
 
     CustomerJwtDecoder customerJwtDecoder;

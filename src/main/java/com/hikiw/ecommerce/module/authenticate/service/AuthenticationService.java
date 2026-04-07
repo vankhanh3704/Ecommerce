@@ -1,19 +1,27 @@
 package com.hikiw.ecommerce.module.authenticate.service;
 
 
+import com.hikiw.ecommerce.common.constant.PredefinedRole;
 import com.hikiw.ecommerce.module.authenticate.dto.*;
 import com.hikiw.ecommerce.module.authenticate.entity.InvalidatedToken;
 import com.hikiw.ecommerce.module.authenticate.entity.RefreshToken;
 import com.hikiw.ecommerce.module.authenticate.repository.InvalidatedTokenRepository;
+import com.hikiw.ecommerce.module.cart.entity.CartEntity;
+import com.hikiw.ecommerce.module.cart.repository.CartRepository;
+import com.hikiw.ecommerce.module.role.entity.RoleEntity;
+import com.hikiw.ecommerce.module.role.repository.RoleRepository;
+import com.hikiw.ecommerce.module.user.dto.UserResponse;
 import com.hikiw.ecommerce.module.user.entity.UserEntity;
 import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.common.Exception.AppException;
+import com.hikiw.ecommerce.module.user.mapper.UserMapper;
 import com.hikiw.ecommerce.module.user.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,6 +37,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.StringJoiner;
 import java.util.UUID;
 
@@ -49,6 +58,10 @@ public class AuthenticationService {
 
     UserRepository userRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
+
+    RoleRepository roleRepository;
+    UserMapper userMapper;
+    CartRepository cartRepository;
 
 
     // service kiểm tra đăng nhập đc không
@@ -148,7 +161,7 @@ public class AuthenticationService {
 
     // refresh token
     public AuthenticationResponse refreshToken(RefreshToken refreshToken) throws ParseException, JOSEException {
-        var signedJWT = verifyToken(refreshToken.getToken(), false).getJWTClaimsSet();
+        var signedJWT = verifyToken(refreshToken.getToken(), true).getJWTClaimsSet();
         var jit = signedJWT.getJWTID();
         var expiryTime = signedJWT.getExpirationTime();
 
@@ -178,6 +191,7 @@ public class AuthenticationService {
                 .expirationTime(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
+                .claim("userId", user.getId())
                 .build();
 
         // sau đó chuyển JWTClaimsSet thành JSON rồi đóng gói lại thành payload để kí
@@ -196,5 +210,36 @@ public class AuthenticationService {
             throw new RuntimeException(e);
         }
         return jwsObject.serialize();
+    }
+
+    // ========== 1. ĐĂNG KÝ (Bổ sung từ Phase trước) ==========
+    @Transactional
+    public UserResponse register(RegisterRequest request) {
+        if (userRepository.existsByUsername(request.getUsername()) ||
+                userRepository.existsByEmail(request.getEmail())) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+        RoleEntity userRole = roleRepository.findById(PredefinedRole.USER_ROLE)
+                .orElseThrow(() -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION));
+
+        HashSet<RoleEntity> roles = new HashSet<>();
+        roles.add(userRole);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        UserEntity newUser = UserEntity.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .fullName(request.getFullName())
+                .email(request.getEmail())
+                .roles(roles)
+                .build();
+
+        UserEntity savedUser = userRepository.save(newUser);
+        CartEntity newCart = CartEntity.builder()
+                .user(savedUser)
+                .build();
+        cartRepository.save(newCart);
+
+        return userMapper.toUserResponse(userRepository.save(newUser));
     }
 }

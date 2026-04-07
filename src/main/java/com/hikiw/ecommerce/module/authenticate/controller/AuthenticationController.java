@@ -4,7 +4,9 @@ import com.hikiw.ecommerce.common.Response.ApiResponse;
 import com.hikiw.ecommerce.module.authenticate.dto.*;
 import com.hikiw.ecommerce.module.authenticate.entity.RefreshToken;
 import com.hikiw.ecommerce.module.authenticate.service.AuthenticationService;
+import com.hikiw.ecommerce.module.user.dto.UserResponse;
 import com.nimbusds.jose.JOSEException;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -50,4 +52,11 @@ public class AuthenticationController {
                 .build();
     }
 
+    @PostMapping("/register")
+    public ApiResponse<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(authenticationService.register(request))
+                .message("User registered successfully")
+                .build();
+    }
 }

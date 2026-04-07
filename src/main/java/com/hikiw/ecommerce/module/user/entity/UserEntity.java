@@ -1,6 +1,7 @@
 package com.hikiw.ecommerce.module.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hikiw.ecommerce.Enum.Gender;
 import com.hikiw.ecommerce.module.cart.entity.CartEntity;
 import com.hikiw.ecommerce.module.role.entity.RoleEntity;
 import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
@@ -10,6 +11,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +29,29 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(unique = true, nullable = false)
     String username;
+    @Column(nullable = false)
     String password;
 
-//    String fullName;
-//    String email;
-//    String phoneNumber;
+    // --- THÔNG TIN CÁ NHÂN ---
+    @Column(name = "full_name")
+    String fullName;
+
+    @Column(unique = true)
+    String email;
+
+    @Column(name = "phone_number", unique = true, length = 20)
+    String phoneNumber;
+
+    @Column(name = "avatar_url")
+    String avatarUrl;
+
+    @Column(name = "date_of_birth")
+    LocalDate dateOfBirth;
+
+    @Enumerated(EnumType.STRING)
+    Gender gender;
 
     @ManyToMany
     Set<RoleEntity> roles;
@@ -42,5 +61,7 @@ public class UserEntity {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     CartEntity cart;
+
+    
 
 }
