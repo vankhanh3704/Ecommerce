@@ -1,0 +1,14 @@
+$kind: http-request
+name: Register
+url: "{{baseUrl}}/auth/register"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "username": "taikhoan1",
+        "password":"123456",
+        "fullName" : "Tài khoản test 1",
+        "email" : "taikhoan1@gmail.com" 
+    }
+order: 2599539499337370
