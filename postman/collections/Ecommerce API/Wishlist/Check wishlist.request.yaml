@@ -1,5 +1,11 @@
 $kind: http-request
 name: Check wishlist
-url: ""
+url: "{{baseUrl}}/api/wishlist/products/:productId/check"
 method: GET
+pathVariables:
+  productId: "1"
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJoaWtpLmNvbSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc1NTY0NjQyLCJpYXQiOjE3NzU1NjEwNDIsImp0aSI6IjFiMmViY2U1LTJjYTUtNGIwYy04ZTM5LTIwZDg1N2U4ODVhMSIsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.PHWtJ1RYwoxzgjn9i4KFNYe5ZEB7drDt0EsahmVcwAIfHNNluz7Fdh79EZPlZkptU6vm1pY60XRuJuJ8KuivLg
 order: 4455456145346802
