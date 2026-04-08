@@ -8,6 +8,7 @@ import com.hikiw.ecommerce.Enum.ErrorCode;
 import com.hikiw.ecommerce.common.Exception.AppException;
 import com.hikiw.ecommerce.module.role.repository.RoleRepository;
 import com.hikiw.ecommerce.common.constant.PredefinedRole;
+import com.hikiw.ecommerce.module.user.dto.UserProfileUpdateRequest;
 import com.hikiw.ecommerce.module.user.dto.UserUpdateRequest;
 import com.hikiw.ecommerce.module.user.dto.UserCreationRequest;
 import com.hikiw.ecommerce.module.user.dto.UserResponse;
@@ -129,5 +130,36 @@ public class UserService {
     }
 
 
+
+    public UserResponse getMyProfile(Long userId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        return userMapper.toUserResponse(user);
+    }
+
+    // Cập nhật profile cá nhân (không bao gồm username, password, roles)
+    @Transactional
+    public UserResponse updateMyProfile(Long userId, UserProfileUpdateRequest request) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        // 1. Kiểm tra Email có bị trùng với người khác không
+        if (request.getEmail() != null
+                && !request.getEmail().equals(user.getEmail())
+                && userRepository.existsByEmail(request.getEmail())) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
+        // 2. Kiểm tra Số điện thoại có bị trùng với người khác không
+        if (request.getPhoneNumber() != null
+                && !request.getPhoneNumber().equals(user.getPhoneNumber())
+                && userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
+        // 3. Tiến hành map dữ liệu và lưu
+        userMapper.updateUserProfileFromRequest(request, user);
+        return userMapper.toUserResponse(userRepository.save(user));
+    }
 
 }

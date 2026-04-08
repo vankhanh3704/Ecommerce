@@ -3,7 +3,9 @@ package com.hikiw.ecommerce.module.user.controller;
 
 import com.hikiw.ecommerce.common.Response.ApiResponse;
 import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
+import com.hikiw.ecommerce.configuration.SecurityUtil;
 import com.hikiw.ecommerce.module.user.dto.UserCreationRequest;
+import com.hikiw.ecommerce.module.user.dto.UserProfileUpdateRequest;
 import com.hikiw.ecommerce.module.user.dto.UserResponse;
 import com.hikiw.ecommerce.module.user.service.UserService;
 import com.hikiw.ecommerce.module.user.dto.UserUpdateRequest;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     UserService userService;
+    SecurityUtil securityUtil;
 
     @PostMapping
     public ApiResponse<UserResponse> createUser(@RequestBody UserCreationRequest request) {
@@ -52,6 +55,22 @@ public class UserController {
     public ApiResponse<UserResponse> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(userId, request))
+                .build();
+    }
+
+
+    @GetMapping("/me")
+    public ApiResponse<UserResponse> getMyProfile() {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getMyProfile(securityUtil.getCurrentUserId()))
+                .build();
+    }
+
+    @PutMapping("/me")
+    public ApiResponse<UserResponse> updateMyProfile(@RequestBody UserProfileUpdateRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.updateMyProfile(securityUtil.getCurrentUserId() ,request))
+                .message("Profile updated successfully")
                 .build();
     }
 }

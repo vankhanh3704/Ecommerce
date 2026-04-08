@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get my profile
+url: "{{baseUrl}}/api/users/me"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjIiLCJzY29wZSI6IlJPTEVfQURNSU4iLCJpc3MiOiJoaWtpLmNvbSIsImV4cCI6MTc3NTY0Mjc5MSwiaWF0IjoxNzc1NjM5MTkxLCJ1c2VySWQiOjUsImp0aSI6IjNkMjgyMDk0LTUxY2QtNGZlMS1iNGJmLTE0MjY3YzBlZTBmOSJ9.eJ9yVzyqbt4ym0GZSvB3KjUgwJ-assRkmJfkcH0q3Y1X23hAqJNg61FwHt47JL7T-i7p-1KDZVSNbg_tzHtXhw
+order: 3999176143667759

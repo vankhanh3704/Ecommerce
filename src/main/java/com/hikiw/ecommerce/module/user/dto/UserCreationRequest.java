@@ -1,5 +1,6 @@
 package com.hikiw.ecommerce.module.user.dto;
 
+import com.hikiw.ecommerce.Enum.Gender;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class UserCreationRequest {
     String fullName;
     String email;
     String phoneNumber;
+    Gender gender;
     // Admin có quyền chỉ định role ngay lúc tạo (Ví dụ: truyền vào ["ADMIN", "USER"])
     Set<String> roles;
 
