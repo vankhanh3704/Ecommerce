@@ -1,13 +1,11 @@
 package com.hikiw.ecommerce.module.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hikiw.ecommerce.Enum.Gender;
 import com.hikiw.ecommerce.common.constant.BaseAuditEntity;
+import com.hikiw.ecommerce.module.address.entity.AddressEntity;
 import com.hikiw.ecommerce.module.cart.entity.CartEntity;
 import com.hikiw.ecommerce.module.role.entity.RoleEntity;
 import com.hikiw.ecommerce.module.shop.entity.ShopEntity;
-import com.hikiw.ecommerce.module.voucher.entity.VoucherEntity;
-import com.hikiw.ecommerce.module.voucher.entity.VoucherUsageEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -63,6 +61,8 @@ public class UserEntity extends BaseAuditEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     CartEntity cart;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    List<AddressEntity> addresses = new ArrayList<>();
 
 }

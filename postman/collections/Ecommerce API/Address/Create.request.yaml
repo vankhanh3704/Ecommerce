@@ -1,0 +1,22 @@
+$kind: http-request
+name: Create
+url: "{{baseUrl}}/api/addresses"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "receiverName": "Nguyễn Văn A",
+      "receiverPhone": "0901234567",
+      "city": "Hà Nội",
+      "district": "Quận Cầu Giấy",
+      "ward": "Phường Dịch Vọng",
+      "streetDetail": "Tòa nhà Epic Tower, Số 19 Duy Tân",
+      "isDefault": true,
+      "addressType": "HOME"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjIiLCJzY29wZSI6IlJPTEVfQURNSU4iLCJpc3MiOiJoaWtpLmNvbSIsImV4cCI6MTc3NTY0NDc1MiwiaWF0IjoxNzc1NjQxMTUyLCJ1c2VySWQiOjUsImp0aSI6IjM5YmY3YzMzLWUwNzgtNGZiMi04NWRhLWFkMzBjYjJhMDliNiJ9.iOZehVl3FTYxDSzbvgC1smw_70juHpWe4Yh5ki3EZ3FKRTPexaxuACYJsf_PksJVTsT5l0GsTurg2EQSeRB2QQ
+order: 484337101772806

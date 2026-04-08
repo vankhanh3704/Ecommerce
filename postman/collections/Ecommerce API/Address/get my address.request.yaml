@@ -1,0 +1,5 @@
+$kind: http-request
+name: get my address
+url: "{{baseUrl}}/api/addresses"
+method: GET
+order: 1775641107473

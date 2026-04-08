@@ -1,0 +1,24 @@
+$kind: http-request
+name: Update
+url: "{{baseUrl}}/api/addresses/:addressId"
+method: PUT
+pathVariables:
+  addressId: "2"
+body:
+  type: json
+  content: |-
+    {
+      "receiverName": "Hoàng Khánh văn",
+      "receiverPhone": "0326793703",
+      "city": "Hà Nội",
+      "district": "Quận Cầu Giấy",
+      "ward": "Phường Dịch Vọng",
+      "streetDetail": "Ngõ 35, Đường Trần Thái Tông",
+      "isDefault": true,
+      "addressType": "HOME"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjIiLCJzY29wZSI6IlJPTEVfQURNSU4iLCJpc3MiOiJoaWtpLmNvbSIsImV4cCI6MTc3NTY0NDc1MiwiaWF0IjoxNzc1NjQxMTUyLCJ1c2VySWQiOjUsImp0aSI6IjM5YmY3YzMzLWUwNzgtNGZiMi04NWRhLWFkMzBjYjJhMDliNiJ9.iOZehVl3FTYxDSzbvgC1smw_70juHpWe4Yh5ki3EZ3FKRTPexaxuACYJsf_PksJVTsT5l0GsTurg2EQSeRB2QQ
+order: 2245883586342329

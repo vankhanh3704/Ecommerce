@@ -62,7 +62,9 @@ public enum ErrorCode {
     REVIEW_NOT_EXISTED(1051, "Review not existed", HttpStatus.NOT_FOUND),
     REVIEW_REPLY_ALREADY_EXISTED(1052, "Review reply already existed for this review", HttpStatus.BAD_REQUEST),
     WISHLIST_ITEM_ALREADY_EXISTED(1053, "Wishlist item already existed for this user and product", HttpStatus.BAD_REQUEST),
-    WISHLIST_ITEM_NOT_EXISTED(1054, "Wishlist item not existed for this user and product", HttpStatus.NOT_FOUND)
+    WISHLIST_ITEM_NOT_EXISTED(1054, "Wishlist item not existed for this user and product", HttpStatus.NOT_FOUND),
+    ADDRESS_NOT_EXISTED(1055, "Address not existed", HttpStatus.NOT_FOUND),
+    CANNOT_DELETE_DEFAULT_ADDRESS(1056, "Cannot delete default address", HttpStatus.BAD_REQUEST)
     ;
     // mỗi errorCode có 3 thuộc tính
     private int code; // trả về mã lỗi

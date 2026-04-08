@@ -1,0 +1,11 @@
+$kind: http-request
+name: Delete
+url: "{{baseUrl}}/api/addresses/:addressId"
+method: DELETE
+pathVariables:
+  addressId: "2"
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjIiLCJzY29wZSI6IlJPTEVfQURNSU4iLCJpc3MiOiJoaWtpLmNvbSIsImV4cCI6MTc3NTY0NDc1MiwiaWF0IjoxNzc1NjQxMTUyLCJ1c2VySWQiOjUsImp0aSI6IjM5YmY3YzMzLWUwNzgtNGZiMi04NWRhLWFkMzBjYjJhMDliNiJ9.iOZehVl3FTYxDSzbvgC1smw_70juHpWe4Yh5ki3EZ3FKRTPexaxuACYJsf_PksJVTsT5l0GsTurg2EQSeRB2QQ
+order: 2843757249539238

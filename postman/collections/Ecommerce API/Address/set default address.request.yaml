@@ -1,0 +1,7 @@
+$kind: http-request
+name: set default address
+url: "{{baseUrl}}/api/addresses/:addressId/default"
+method: PUT
+pathVariables:
+  addressId: ""
+order: 2813876779914074
